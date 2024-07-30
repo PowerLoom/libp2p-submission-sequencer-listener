@@ -7,6 +7,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	log "github.com/sirupsen/logrus"
 	"os"
+	"strings"
 )
 
 var SettingsObj *Settings
@@ -33,8 +34,8 @@ type Settings struct {
 
 func LoadConfig() {
 	//time.Sleep(10 * time.Second)
-	//file, err := os.Open(strings.TrimSuffix(os.Getenv("CONFIG_PATH"), "/") + "/config/settings.json")
-	file, err := os.Open("/Users/mukundrawat/power2/proto-snapshot-collector/config/settings.json")
+	file, err := os.Open(strings.TrimSuffix(os.Getenv("CONFIG_PATH"), "/") + "/config/settings.json")
+	//file, err := os.Open("/Users/mukundrawat/power2/proto-snapshot-collector/config/settings.json")
 	if err != nil {
 		log.Fatalf("Failed to open config file: %v", err)
 	}
