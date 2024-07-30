@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  snapshot-collector:
+    image: proto-snapshot-listener
+    expose:
+      - 9100
+      - 9988
+    ports:
+      - 9100:9100
+      - 9988:9988
+    volumes:
+      - ./shared_volume:/keys
+    environment:
+      - SIGNER_ACCOUNT_ADDRESS=$SIGNER_ACCOUNT_ADDRESS
+      - SIGNER_ACCOUNT_PRIVATE_KEY=$SIGNER_ACCOUNT_PRIVATE_KEY
+      - IPFS_URL=$IPFS_URL
+      - IPFS_API_KEY=$IPFS_API_KEY
+      - IPFS_API_SECRET=$IPFS_API_SECRET
+      - PROTOCOL_STATE_CONTRACT=$PROTOCOL_STATE_CONTRACT
+      - PROST_RPC_URL=$PROST_RPC_URL
+      - PROST_CHAIN_ID=$PROST_CHAIN_ID
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - SEQUENCER_ID=$SEQUENCER_ID
+      - RELAYER_RENDEZVOUS_POINT=$RELAYER_RENDEZVOUS_POINT
+      - RELAYER_PRIVATE_KEY=$RELAYER_PRIVATE_KEY
+      - BLOCK_TIME=$BLOCK_TIME
+      - FULL_NODES=$FULL_NODES
+      - AUTH_READ_TOKEN=$AUTH_READ_TOKEN
+    command:
+      bash -c  "sh collector_autofill.sh && sh init_processes.sh"
+
+  redis:
+    command: redis-server --appendonly yes
+    image: "redis:alpine"
+    expose:
+      - 6379
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: on-failure
