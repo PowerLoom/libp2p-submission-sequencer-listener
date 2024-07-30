@@ -6,7 +6,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 module.exports = {
     apps : [
         {
-            name   : "proto-snapshot-collector",
+            name   : "proto-snapshot-listener",
             script : "./cmd/cmd",
             cwd : `${__dirname}/cmd`,
             // max_restarts: MAX_RESTART,

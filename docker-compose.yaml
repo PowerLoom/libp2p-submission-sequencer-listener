@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  snapshot-collector:
+  snapshot-listener:
     image: proto-snapshot-listener
     expose:
       - 9100
@@ -29,19 +29,4 @@ services:
       - FULL_NODES=$FULL_NODES
       - AUTH_READ_TOKEN=$AUTH_READ_TOKEN
     command:
-      bash -c  "sh collector_autofill.sh && sh init_processes.sh"
-
-  redis:
-    command: redis-server --appendonly yes
-    image: "redis:alpine"
-    expose:
-      - 6379
-    ports:
-      - 6379:6379
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
-    restart: on-failure
+      bash -c  "sh listener_autofill.sh && sh init_processes.sh"
