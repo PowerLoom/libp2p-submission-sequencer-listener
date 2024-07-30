@@ -23,6 +23,7 @@ Clone the repository against the testnet branch.
 
     - Optionally, you may also set the following variables:
         - `REDIS_HOST` & `REDIS_PORT`: The redis server connection url (if you wish to use a separate one).
+        - `SLACK_REPORTING_URL`: The reporting url for sending alert notifications.
 
 2. Build the image
 
