@@ -33,13 +33,10 @@ func TestMain(m *testing.M) {
 
 	// Initialize the config settings
 	config.SettingsObj = &config.Settings{
-		ChainID:                 11165,
-		ContractAddress:         "0x10c5E2ee14006B3860d4FdF6B173A30553ea6333",
-		ClientUrl:               "https://rpc-prost-1h-sv2cc82c3x.t.conduit.xyz",
-		SignerAccountAddressStr: "0x2132Bc41C5a9eAD0895B26cC2450FA3c35D07017",
-		AuthReadToken:           "valid-token",
-		RedisHost:               mr.Host(),
-		RedisPort:               mr.Port(),
+		ContractAddress: "0x10c5E2ee14006B3860d4FdF6B173A30553ea6333",
+		AuthReadToken:   "valid-token",
+		RedisHost:       mr.Host(),
+		RedisPort:       mr.Port(),
 	}
 
 	redis.RedisClient = redis.NewRedisClient()

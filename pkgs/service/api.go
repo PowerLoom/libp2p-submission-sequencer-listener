@@ -849,9 +849,7 @@ func handleDailyRewards(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleTotalRewards(w http.ResponseWriter, r *http.Request) {
-	var dailySubmissionCount int64
-
-	var request DailyRewardsRequest
+	var request RewardsRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -869,40 +867,10 @@ func handleTotalRewards(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	day := int64(request.Day)
-
-	var rewards int
-	key := redis.SlotSubmissionKey(strconv.Itoa(slotID), strconv.Itoa(request.Day))
-
-	// Try to get from Redis
-	dailySubmissionCountFromCache, err := redis.Get(r.Context(), key)
-
-	if err != nil || dailySubmissionCountFromCache == "" {
-		slotIDBigInt := big.NewInt(int64(slotID))
-		count, err := FetchSlotSubmissionCount(slotIDBigInt, big.NewInt(day))
-		if err != nil {
-			http.Error(w, "Failed to fetch submission count: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		dailySubmissionCount = count.Int64()
-		slotRewardsForDayKey := redis.SlotRewardsForDay(strconv.Itoa(slotID), strconv.Itoa(request.Day))
-		redis.Set(r.Context(), slotRewardsForDayKey, strconv.FormatInt(dailySubmissionCount, 10), 0)
-	} else if dailySubmissionCountFromCache != "" {
-		dailyCount, err := strconv.ParseInt(dailySubmissionCountFromCache, 10, 64)
-		if err != nil {
-			log.Errorf("Failed to parse daily submission count from cache: %v", err)
-		}
-		dailySubmissionCount = dailyCount
-	}
-
-	log.Debugln("DailySnapshotQuota: ", dailySnapshotQuota)
-
-	cmp := big.NewInt(dailySubmissionCount).Cmp(dailySnapshotQuota)
-	if cmp >= 0 {
-		rewards = int(new(big.Int).Div(rewardBasePoints, big.NewInt(baseExponent)).Int64())
-	} else {
-		rewards = 0
+	slotRewardPoints, err := getTotalRewards(slotID)
+	if err != nil {
+		http.Error(w, "Failed to fetch slot reward points: "+err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	response := struct {
@@ -917,7 +885,7 @@ func handleTotalRewards(w http.ResponseWriter, r *http.Request) {
 			Response int  `json:"response"`
 		}{
 			Success:  true,
-			Response: rewards,
+			Response: int(slotRewardPoints),
 		},
 		RequestID: r.Context().Value("request_id").(string),
 	}

@@ -7,11 +7,14 @@ import (
 	"Listen/pkgs/service"
 	"Listen/pkgs/utils"
 	"sync"
+	"time"
 )
 
 func main() {
 	utils.InitLogger()
 	config.LoadConfig()
+
+	service.InitializeReportingService(config.SettingsObj.SlackReportingUrl, 5*time.Second)
 
 	var wg sync.WaitGroup
 
