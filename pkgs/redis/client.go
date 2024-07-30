@@ -8,8 +8,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-redis/redis/v8"
-	log "github.com/sirupsen/logrus"
-	"math/big"
 	"time"
 )
 
@@ -93,47 +91,4 @@ func SetProcessLog(ctx context.Context, key string, logEntry map[string]interfac
 	}
 
 	return nil
-}
-
-func GetValidSubmissionKeys(ctx context.Context, epochID *big.Int, headers []string) ([]string, error) {
-	var allKeys []string
-	for _, header := range headers {
-		keys := RedisClient.SMembers(ctx, SubmissionSetByHeaderKey(epochID.Uint64(), header)).Val()
-		if len(keys) > 0 {
-			allKeys = append(allKeys, keys...)
-		}
-	}
-	return allKeys, nil
-}
-
-func ResetCollectorDBSubmissions(ctx context.Context, epochID *big.Int, headers []string) {
-	// Define the set key based on whether epochID is provided
-	var setKey string
-	for _, header := range headers {
-		setKey = SubmissionSetByHeaderKey(epochID.Uint64(), header)
-
-		// Retrieve all keys from the set
-		keysToDelete, err := RedisClient.SMembers(ctx, setKey).Result()
-		if err != nil {
-			log.Errorf("Error retrieving keys from set: %v", err)
-			common.SendFailureNotification("Redis error", err.Error(), time.Now().String(), "High")
-			return
-		}
-
-		// Delete the keys
-		if len(keysToDelete) > 0 {
-			_, err := RedisClient.Del(ctx, keysToDelete...).Result()
-			if err != nil {
-				common.SendFailureNotification("Redis error", err.Error(), time.Now().String(), "High")
-				log.Errorf("Error deleting keys: %v", err)
-			} else {
-				log.Debugf("Deleted %d keys.\n", len(keysToDelete))
-			}
-
-			// Optionally, delete the set itself to clean up
-			RedisClient.Del(ctx, setKey)
-		} else {
-			//log.Debugln("No keys found to delete.")
-		}
-	}
 }

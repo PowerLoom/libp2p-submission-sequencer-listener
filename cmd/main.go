@@ -2,6 +2,7 @@ package main
 
 import (
 	"Listen/config"
+	"Listen/pkgs/prost"
 	"Listen/pkgs/redis"
 	"Listen/pkgs/service"
 	"Listen/pkgs/utils"
@@ -14,6 +15,8 @@ func main() {
 
 	var wg sync.WaitGroup
 
+	prost.ConfigureClient()
+	prost.ConfigureContractInstance()
 	redis.RedisClient = redis.NewRedisClient()
 
 	service.ConfigureRelayer()

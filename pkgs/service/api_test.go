@@ -2,6 +2,7 @@ package service
 
 import (
 	"Listen/config"
+	"Listen/pkgs"
 	"Listen/pkgs/prost"
 	"Listen/pkgs/redis"
 	"Listen/pkgs/utils"
@@ -18,6 +19,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 )
 
 var mr *miniredis.Miniredis
@@ -274,7 +276,7 @@ func TestHandleDailyRewards(t *testing.T) {
 
 func TestHandleTotalSubmissions(t *testing.T) {
 	config.SettingsObj.AuthReadToken = "valid-token"
-	//Day = big.NewInt(5)
+	redis.Set(context.Background(), pkgs.SequencerDayKey, "5", 0)
 
 	redis.Set(context.Background(), redis.SlotSubmissionKey("1", "5"), "100", 0)
 	redis.Set(context.Background(), redis.SlotSubmissionKey("1", "4"), "120", 0)
@@ -369,6 +371,1015 @@ func TestHandleTotalSubmissions(t *testing.T) {
 				err := json.Unmarshal([]byte(responseBody), &response)
 				assert.NoError(t, err)
 				assert.Equal(t, tt.response, response.Info.Response)
+			}
+		})
+	}
+}
+
+func TestHandleFinalizedBatchSubmissions(t *testing.T) {
+	config.SettingsObj.AuthReadToken = "valid-token"
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("finalized_batch_submissions", "1"),
+		map[string]interface{}{
+			"epoch_id":                "1",
+			"finalized_batches_count": 3,
+			"finalized_batch_ids":     []string{"1", "2", "3"},
+			"timestamp":               float64(123456),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("finalized_batch_submissions", "2"),
+		map[string]interface{}{
+			"epoch_id":                "2",
+			"finalized_batches_count": 1,
+			"finalized_batch_ids":     []string{"4"},
+			"timestamp":               float64(12345678),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("finalized_batch_submissions", "3"),
+		map[string]interface{}{
+			"epoch_id":                "3",
+			"finalized_batches_count": 5,
+			"finalized_batch_ids":     []string{"5", "6", "7", "8", "9"},
+			"timestamp":               float64(123456789),
+		},
+		0,
+	)
+
+	tests := []struct {
+		name       string
+		body       string
+		statusCode int
+		response   []map[string]interface{}
+	}{
+		{
+			name:       "Valid token, past epochs 1",
+			body:       `{"token": "valid-token", "past_epochs": 1}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":                "3",
+					"finalized_batches_count": 5,
+					"finalized_batch_ids":     []interface{}{"5", "6", "7", "8", "9"},
+					"timestamp":               float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Valid token, past epochs 0",
+			body:       `{"token": "valid-token", "past_batches": 0}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":                "1",
+					"finalized_batches_count": 3,
+					"finalized_batch_ids":     []string{"1", "2", "3"},
+					"timestamp":               float64(123456),
+				},
+				{
+					"epoch_id":                "2",
+					"finalized_batches_count": 1,
+					"finalized_batch_ids":     []string{"4"},
+					"timestamp":               float64(12345678),
+				},
+				{
+					"epoch_id":                "3",
+					"finalized_batches_count": 5,
+					"finalized_batch_ids":     []interface{}{"5", "6", "7", "8", "9"},
+					"timestamp":               float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Invalid token",
+			body:       `{"token": "invalid-token", "past_epochs": 1}`,
+			statusCode: http.StatusUnauthorized,
+			response:   nil,
+		},
+		{
+			name:       "Negative past batches",
+			body:       `{"token": "valid-token", "past_epochs": -1}`,
+			statusCode: http.StatusBadRequest,
+			response:   nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("POST", "/finalizedBatchSubmissions", strings.NewReader(tt.body))
+			if err != nil {
+				t.Fatal(err)
+			}
+			req.Header.Set("Content-Type", "application/json")
+
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(handleFinalizedBatchSubmissions)
+			testHandler := RequestMiddleware(handler)
+			testHandler.ServeHTTP(rr, req)
+
+			responseBody := rr.Body.String()
+			t.Log("Response Body:", responseBody)
+
+			assert.Equal(t, tt.statusCode, rr.Code)
+
+			if tt.statusCode == http.StatusOK {
+				var response struct {
+					Info struct {
+						Success bool                     `json:"success"`
+						Logs    []map[string]interface{} `json:"logs"`
+					} `json:"info"`
+					RequestID string `json:"request_id"`
+				}
+				err = json.NewDecoder(rr.Body).Decode(&response)
+				assert.NoError(t, err)
+				actualResp, _ := json.Marshal(tt.response)
+				expectedResp, _ := json.Marshal(response.Info.Logs)
+				assert.Equal(t, expectedResp, actualResp)
+			}
+		})
+	}
+}
+
+func TestHandleTriggeredCollectionFlows(t *testing.T) {
+	config.SettingsObj.AuthReadToken = "valid-token"
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("triggered_collection_flow", "1"),
+		map[string]interface{}{
+			"epoch_id":      "12",
+			"start_block":   "100",
+			"current_block": "220",
+			"header_count":  "120",
+			"timestamp":     float64(123456),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("triggered_collection_flow", "2"),
+		map[string]interface{}{
+			"epoch_id":      "13",
+			"start_block":   "220",
+			"current_block": "340",
+			"header_count":  "120",
+			"timestamp":     float64(12345678),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("triggered_collection_flow", "3"),
+		map[string]interface{}{
+			"epoch_id":      "14",
+			"start_block":   "340",
+			"current_block": "460",
+			"header_count":  "120",
+			"timestamp":     float64(123456789),
+		},
+		0,
+	)
+
+	tests := []struct {
+		name       string
+		body       string
+		statusCode int
+		response   []map[string]interface{}
+	}{
+		{
+			name:       "Valid token, past epochs 1",
+			body:       `{"token": "valid-token", "past_epochs": 1}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":      "14",
+					"start_block":   "340",
+					"current_block": "460",
+					"header_count":  "120",
+					"timestamp":     float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Valid token, past epochs 0",
+			body:       `{"token": "valid-token", "past_epochs": 0}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":      "12",
+					"start_block":   "100",
+					"current_block": "220",
+					"header_count":  "120",
+					"timestamp":     float64(123456),
+				},
+				{
+					"epoch_id":      "13",
+					"start_block":   "220",
+					"current_block": "340",
+					"header_count":  "120",
+					"timestamp":     float64(12345678),
+				},
+				{
+					"epoch_id":      "14",
+					"start_block":   "340",
+					"current_block": "460",
+					"header_count":  "120",
+					"timestamp":     float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Invalid token",
+			body:       `{"token": "invalid-token", "past_epochs": 1}`,
+			statusCode: http.StatusUnauthorized,
+			response:   nil,
+		},
+		{
+			name:       "Negative past epochs",
+			body:       `{"token": "valid-token", "past_epochs": -1}`,
+			statusCode: http.StatusBadRequest,
+			response:   nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("POST", "/triggeredCollectionFlows", strings.NewReader(tt.body))
+			if err != nil {
+				t.Fatal(err)
+			}
+			req.Header.Set("Content-Type", "application/json")
+
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(handleTriggeredCollectionFlows)
+			testHandler := RequestMiddleware(handler)
+			testHandler.ServeHTTP(rr, req)
+
+			responseBody := rr.Body.String()
+			t.Log("Response Body:", responseBody)
+
+			assert.Equal(t, tt.statusCode, rr.Code)
+
+			if tt.statusCode == http.StatusOK {
+				var response struct {
+					Info struct {
+						Success bool                     `json:"success"`
+						Logs    []map[string]interface{} `json:"logs"`
+					} `json:"info"`
+					RequestID string `json:"request_id"`
+				}
+				err = json.NewDecoder(rr.Body).Decode(&response)
+				assert.NoError(t, err)
+				actualResp, _ := json.Marshal(tt.response)
+				expectedResp, _ := json.Marshal(response.Info.Logs)
+				assert.Equal(t, expectedResp, actualResp)
+			}
+		})
+	}
+}
+
+func TestHandleBuiltBatches(t *testing.T) {
+	config.SettingsObj.AuthReadToken = "valid-token"
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("build_batch", "1"),
+		map[string]interface{}{
+			"epoch_id":          "1",
+			"batch_id":          1,
+			"batch_cid":         "cid1",
+			"submissions_count": 3,
+			"submissions":       []interface{}{"sub1", "sub2", "sub3"},
+			"timestamp":         float64(123456),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("build_batch", "2"),
+		map[string]interface{}{
+			"epoch_id":          "2",
+			"batch_id":          2,
+			"batch_cid":         "cid2",
+			"submissions_count": 1,
+			"submissions":       []interface{}{"sub4"},
+			"timestamp":         float64(12345678),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("build_batch", "3"),
+		map[string]interface{}{
+			"epoch_id":          "3",
+			"batch_id":          3,
+			"batch_cid":         "cid3",
+			"submissions_count": 5,
+			"submissions":       []interface{}{"sub5", "sub6", "sub7", "sub8", "sub9"},
+			"timestamp":         float64(123456789),
+		},
+		0,
+	)
+
+	tests := []struct {
+		name       string
+		body       string
+		statusCode int
+		response   []map[string]interface{}
+	}{
+		{
+			name:       "Valid token, past batches 1",
+			body:       `{"token": "valid-token", "past_batches": 1}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":          "3",
+					"batch_id":          float64(3),
+					"batch_cid":         "cid3",
+					"submissions_count": float64(5),
+					"submissions":       []interface{}{"sub5", "sub6", "sub7", "sub8", "sub9"},
+					"timestamp":         float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Valid token, past batches 0",
+			body:       `{"token": "valid-token", "past_batches": 0}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":          "1",
+					"batch_id":          float64(1),
+					"batch_cid":         "cid1",
+					"submissions_count": float64(3),
+					"submissions":       []interface{}{"sub1", "sub2", "sub3"},
+					"timestamp":         float64(123456),
+				},
+				{
+					"epoch_id":          "2",
+					"batch_id":          float64(2),
+					"batch_cid":         "cid2",
+					"submissions_count": float64(1),
+					"submissions":       []interface{}{"sub4"},
+					"timestamp":         float64(12345678),
+				},
+				{
+					"epoch_id":          "3",
+					"batch_id":          float64(3),
+					"batch_cid":         "cid3",
+					"submissions_count": float64(5),
+					"submissions":       []interface{}{"sub5", "sub6", "sub7", "sub8", "sub9"},
+					"timestamp":         float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Invalid token",
+			body:       `{"token": "invalid-token", "past_batches": 1}`,
+			statusCode: http.StatusUnauthorized,
+			response:   nil,
+		},
+		{
+			name:       "Negative past batches",
+			body:       `{"token": "valid-token", "past_batches": -1}`,
+			statusCode: http.StatusBadRequest,
+			response:   nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("POST", "/builtBatches", strings.NewReader(tt.body))
+			if err != nil {
+				t.Fatal(err)
+			}
+			req.Header.Set("Content-Type", "application/json")
+
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(handleBuiltBatches)
+			testHandler := RequestMiddleware(handler)
+			testHandler.ServeHTTP(rr, req)
+
+			responseBody := rr.Body.String()
+			t.Log("Response Body:", responseBody)
+
+			assert.Equal(t, tt.statusCode, rr.Code)
+
+			if tt.statusCode == http.StatusOK {
+				var response struct {
+					Info struct {
+						Success bool                     `json:"success"`
+						Logs    []map[string]interface{} `json:"logs"`
+					} `json:"info"`
+					RequestID string `json:"request_id"`
+				}
+				err = json.NewDecoder(rr.Body).Decode(&response)
+				assert.NoError(t, err)
+				actualResp, _ := json.Marshal(tt.response)
+				expectedResp, _ := json.Marshal(response.Info.Logs)
+				assert.Equal(t, expectedResp, actualResp)
+			}
+		})
+	}
+}
+
+func TestHandleCommittedSubmissionBatches(t *testing.T) {
+	config.SettingsObj.AuthReadToken = "valid-token"
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("commit_submission_batch", "1"),
+		map[string]interface{}{
+			"epoch_id":  "1",
+			"batch_id":  1,
+			"tx_hash":   "0x123",
+			"signer":    "0xabc",
+			"nonce":     "1",
+			"timestamp": float64(123456),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("commit_submission_batch", "2"),
+		map[string]interface{}{
+			"epoch_id":  "2",
+			"batch_id":  2,
+			"tx_hash":   "0x456",
+			"signer":    "0xdef",
+			"nonce":     "2",
+			"timestamp": float64(12345678),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("commit_submission_batch", "3"),
+		map[string]interface{}{
+			"epoch_id":  "3",
+			"batch_id":  3,
+			"tx_hash":   "0x789",
+			"signer":    "0xghi",
+			"nonce":     "3",
+			"timestamp": float64(123456789),
+		},
+		0,
+	)
+
+	tests := []struct {
+		name       string
+		body       string
+		statusCode int
+		response   []map[string]interface{}
+	}{
+		{
+			name:       "Valid token, past batches 1",
+			body:       `{"token": "valid-token", "past_batches": 1}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":  "3",
+					"batch_id":  float64(3),
+					"tx_hash":   "0x789",
+					"signer":    "0xghi",
+					"nonce":     "3",
+					"timestamp": float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Valid token, past batches 0",
+			body:       `{"token": "valid-token", "past_batches": 0}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":  "1",
+					"batch_id":  float64(1),
+					"tx_hash":   "0x123",
+					"signer":    "0xabc",
+					"nonce":     "1",
+					"timestamp": float64(123456),
+				},
+				{
+					"epoch_id":  "2",
+					"batch_id":  float64(2),
+					"tx_hash":   "0x456",
+					"signer":    "0xdef",
+					"nonce":     "2",
+					"timestamp": float64(12345678),
+				},
+				{
+					"epoch_id":  "3",
+					"batch_id":  float64(3),
+					"tx_hash":   "0x789",
+					"signer":    "0xghi",
+					"nonce":     "3",
+					"timestamp": float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Invalid token",
+			body:       `{"token": "invalid-token", "past_batches": 1}`,
+			statusCode: http.StatusUnauthorized,
+			response:   nil,
+		},
+		{
+			name:       "Negative past batches",
+			body:       `{"token": "valid-token", "past_batches": -1}`,
+			statusCode: http.StatusBadRequest,
+			response:   nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("POST", "/committedSubmissionBatches", strings.NewReader(tt.body))
+			if err != nil {
+				t.Fatal(err)
+			}
+			req.Header.Set("Content-Type", "application/json")
+
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(handleCommittedSubmissionBatches)
+			testHandler := RequestMiddleware(handler)
+			testHandler.ServeHTTP(rr, req)
+
+			responseBody := rr.Body.String()
+			t.Log("Response Body:", responseBody)
+
+			assert.Equal(t, tt.statusCode, rr.Code)
+
+			if tt.statusCode == http.StatusOK {
+				var response struct {
+					Info struct {
+						Success bool                     `json:"success"`
+						Logs    []map[string]interface{} `json:"logs"`
+					} `json:"info"`
+					RequestID string `json:"request_id"`
+				}
+				err = json.NewDecoder(rr.Body).Decode(&response)
+				assert.NoError(t, err)
+				actualResp, _ := json.Marshal(tt.response)
+				expectedResp, _ := json.Marshal(response.Info.Logs)
+				assert.Equal(t, expectedResp, actualResp)
+			}
+		})
+	}
+}
+
+func TestHandleBatchResubmissions(t *testing.T) {
+	config.SettingsObj.AuthReadToken = "valid-token"
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("batch_resubmission", "1"),
+		map[string]interface{}{
+			"epoch_id":  "1",
+			"batch_id":  1,
+			"tx_hash":   "0x123",
+			"signer":    "0xabc",
+			"nonce":     "1",
+			"timestamp": float64(123456),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("batch_resubmission", "2"),
+		map[string]interface{}{
+			"epoch_id":  "2",
+			"batch_id":  2,
+			"tx_hash":   "0x456",
+			"signer":    "0xdef",
+			"nonce":     "2",
+			"timestamp": float64(12345678),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("batch_resubmission", "3"),
+		map[string]interface{}{
+			"epoch_id":  "3",
+			"batch_id":  3,
+			"tx_hash":   "0x789",
+			"signer":    "0xghi",
+			"nonce":     "3",
+			"timestamp": float64(123456789),
+		},
+		0,
+	)
+
+	tests := []struct {
+		name       string
+		body       string
+		statusCode int
+		response   []map[string]interface{}
+	}{
+		{
+			name:       "Valid token, past batches 1",
+			body:       `{"token": "valid-token", "past_batches": 1}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":  "3",
+					"batch_id":  float64(3),
+					"tx_hash":   "0x789",
+					"signer":    "0xghi",
+					"nonce":     "3",
+					"timestamp": float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Valid token, past batches 0",
+			body:       `{"token": "valid-token", "past_batches": 0}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id":  "1",
+					"batch_id":  float64(1),
+					"tx_hash":   "0x123",
+					"signer":    "0xabc",
+					"nonce":     "1",
+					"timestamp": float64(123456),
+				},
+				{
+					"epoch_id":  "2",
+					"batch_id":  float64(2),
+					"tx_hash":   "0x456",
+					"signer":    "0xdef",
+					"nonce":     "2",
+					"timestamp": float64(12345678),
+				},
+				{
+					"epoch_id":  "3",
+					"batch_id":  float64(3),
+					"tx_hash":   "0x789",
+					"signer":    "0xghi",
+					"nonce":     "3",
+					"timestamp": float64(123456789),
+				},
+			},
+		},
+		{
+			name:       "Invalid token",
+			body:       `{"token": "invalid-token", "past_batches": 1}`,
+			statusCode: http.StatusUnauthorized,
+			response:   nil,
+		},
+		{
+			name:       "Negative past batches",
+			body:       `{"token": "valid-token", "past_batches": -1}`,
+			statusCode: http.StatusBadRequest,
+			response:   nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("POST", "/batchResubmissions", strings.NewReader(tt.body))
+			if err != nil {
+				t.Fatal(err)
+			}
+			req.Header.Set("Content-Type", "application/json")
+
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(handleBatchResubmissions)
+			testHandler := RequestMiddleware(handler)
+			testHandler.ServeHTTP(rr, req)
+
+			responseBody := rr.Body.String()
+			t.Log("Response Body:", responseBody)
+
+			assert.Equal(t, tt.statusCode, rr.Code)
+
+			if tt.statusCode == http.StatusOK {
+				var response struct {
+					Info struct {
+						Success bool                     `json:"success"`
+						Logs    []map[string]interface{} `json:"logs"`
+					} `json:"info"`
+					RequestID string `json:"request_id"`
+				}
+				err = json.NewDecoder(rr.Body).Decode(&response)
+				assert.NoError(t, err)
+				actualResp, _ := json.Marshal(tt.response)
+				expectedResp, _ := json.Marshal(response.Info.Logs)
+				assert.Equal(t, expectedResp, actualResp)
+			}
+		})
+	}
+}
+
+func TestHandleIncludedEpochSubmissionsCount(t *testing.T) {
+	config.SettingsObj.AuthReadToken = "valid-token"
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("build_batch", "1"),
+		map[string]interface{}{
+			"epoch_id":          "1",
+			"batch_id":          1,
+			"batch_cid":         "cid1",
+			"submissions_count": 3,
+			"submissions":       []interface{}{"sub1", "sub2", "sub3"},
+			"timestamp":         float64(123456),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("build_batch", "2"),
+		map[string]interface{}{
+			"epoch_id":          "2",
+			"batch_id":          2,
+			"batch_cid":         "cid2",
+			"submissions_count": 1,
+			"submissions":       []interface{}{"sub4"},
+			"timestamp":         float64(12345678),
+		},
+		0,
+	)
+
+	redis.SetProcessLog(context.Background(),
+		redis.TriggeredProcessLog("build_batch", "3"),
+		map[string]interface{}{
+			"epoch_id":          "3",
+			"batch_id":          3,
+			"batch_cid":         "cid3",
+			"submissions_count": 5,
+			"submissions":       []interface{}{"sub5", "sub6", "sub7", "sub8", "sub9"},
+			"timestamp":         float64(123456789),
+		},
+		0,
+	)
+
+	tests := []struct {
+		name       string
+		body       string
+		statusCode int
+		response   int
+	}{
+		{
+			name:       "Valid token, all epochs",
+			body:       `{"token": "valid-token", "past_epochs": 0}`,
+			statusCode: http.StatusOK,
+			response:   9,
+		},
+		{
+			name:       "Valid token, specific epochs",
+			body:       `{"token": "valid-token", "past_epochs": 2}`,
+			statusCode: http.StatusOK,
+			response:   6,
+		},
+		{
+			name:       "Invalid token",
+			body:       `{"token": "invalid-token", "past_epochs": 1}`,
+			statusCode: http.StatusUnauthorized,
+			response:   0,
+		},
+		{
+			name:       "Negative past epochs",
+			body:       `{"token": "valid-token", "past_epochs": -1}`,
+			statusCode: http.StatusBadRequest,
+			response:   0,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("POST", "/includedEpochSubmissions", strings.NewReader(tt.body))
+			if err != nil {
+				t.Fatal(err)
+			}
+			req.Header.Set("Content-Type", "application/json")
+
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(handleIncludedEpochSubmissionsCount)
+			testHandler := RequestMiddleware(handler)
+			testHandler.ServeHTTP(rr, req)
+
+			responseBody := rr.Body.String()
+			t.Log("Response Body:", responseBody)
+
+			assert.Equal(t, tt.statusCode, rr.Code)
+
+			if tt.statusCode == http.StatusOK {
+				var response struct {
+					Info struct {
+						Success          bool `json:"success"`
+						TotalSubmissions int  `json:"total_submissions"`
+					} `json:"info"`
+					RequestID string `json:"request_id"`
+				}
+				err = json.NewDecoder(rr.Body).Decode(&response)
+				assert.NoError(t, err)
+				assert.Equal(t, tt.response, response.Info.TotalSubmissions)
+			}
+		})
+	}
+}
+
+func TestHandleReceivedEpochSubmissionsCount(t *testing.T) {
+	config.SettingsObj.AuthReadToken = "valid-token"
+	redis.Set(context.Background(), redis.EpochSubmissionsCount(1), "3", time.Hour)
+	redis.Set(context.Background(), redis.EpochSubmissionsCount(2), "1", time.Hour)
+	redis.Set(context.Background(), redis.EpochSubmissionsCount(3), "5", time.Hour)
+
+	tests := []struct {
+		name       string
+		body       string
+		statusCode int
+		response   int
+	}{
+		{
+			name:       "Valid token, all epochs",
+			body:       `{"token": "valid-token", "past_epochs": 0}`,
+			statusCode: http.StatusOK,
+			response:   9,
+		},
+		{
+			name:       "Valid token, specific epochs",
+			body:       `{"token": "valid-token", "past_epochs": 2}`,
+			statusCode: http.StatusOK,
+			response:   6,
+		},
+		{
+			name:       "Invalid token",
+			body:       `{"token": "invalid-token", "past_epochs": 1}`,
+			statusCode: http.StatusUnauthorized,
+			response:   0,
+		},
+		{
+			name:       "Negative past epochs",
+			body:       `{"token": "valid-token", "past_epochs": -1}`,
+			statusCode: http.StatusBadRequest,
+			response:   0,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("POST", "/receivedEpochSubmissionsCount", strings.NewReader(tt.body))
+			if err != nil {
+				t.Fatal(err)
+			}
+			req.Header.Set("Content-Type", "application/json")
+
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(handleReceivedEpochSubmissionsCount)
+			testHandler := RequestMiddleware(handler)
+			testHandler.ServeHTTP(rr, req)
+
+			responseBody := rr.Body.String()
+			t.Log("Response Body:", responseBody)
+
+			assert.Equal(t, tt.statusCode, rr.Code)
+
+			if tt.statusCode == http.StatusOK {
+				var response struct {
+					Info struct {
+						Success          bool `json:"success"`
+						TotalSubmissions int  `json:"total_submissions"`
+					} `json:"info"`
+					RequestID string `json:"request_id"`
+				}
+				err = json.NewDecoder(rr.Body).Decode(&response)
+				assert.NoError(t, err)
+				assert.Equal(t, tt.response, response.Info.TotalSubmissions)
+			}
+		})
+	}
+}
+
+func TestHandleReceivedEpochSubmissions(t *testing.T) {
+	config.SettingsObj.AuthReadToken = "valid-token"
+
+	// Set test data in Redis
+	redis.RedisClient.HSet(context.Background(), redis.EpochSubmissionsKey(1), "submission1", `{"request": {"slotId": 1, "epochId": 1}}`)
+	redis.RedisClient.HSet(context.Background(), redis.EpochSubmissionsKey(1), "submission2", `{"request": {"slotId": 1, "epochId": 1}}`)
+	redis.RedisClient.HSet(context.Background(), redis.EpochSubmissionsKey(2), "submission3", `{"request": {"slotId": 1, "epochId": 2}}`)
+	redis.RedisClient.HSet(context.Background(), redis.EpochSubmissionsKey(2), "submission4", `{"request": {"slotId": 1, "epochId": 2}}`)
+	redis.RedisClient.HSet(context.Background(), redis.EpochSubmissionsKey(3), "submission5", `{"request": {"slotId": 1, "epochId": 3}}`)
+
+	tests := []struct {
+		name       string
+		body       string
+		statusCode int
+		response   []map[string]interface{}
+	}{
+		{
+			name:       "Valid token, past epochs 1",
+			body:       `{"token": "valid-token", "past_epochs": 1}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id": "3",
+					"submissions": map[string]interface{}{
+						"submission5": map[string]interface{}{
+							"request": map[string]interface{}{
+								"slotId":  1,
+								"epochId": 3,
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name:       "Valid token, past epochs 0",
+			body:       `{"token": "valid-token", "past_epochs": 0}`,
+			statusCode: http.StatusOK,
+			response: []map[string]interface{}{
+				{
+					"epoch_id": "1",
+					"submissions": map[string]interface{}{
+						"submission1": map[string]interface{}{
+							"request": map[string]interface{}{
+								"slotId":  1,
+								"epochId": 1,
+							},
+						},
+						"submission2": map[string]interface{}{
+							"request": map[string]interface{}{
+								"slotId":  1,
+								"epochId": 1,
+							},
+						},
+					},
+				},
+				{
+					"epoch_id": "2",
+					"submissions": map[string]interface{}{
+						"submission3": map[string]interface{}{
+							"request": map[string]interface{}{
+								"slotId":  1,
+								"epochId": 2,
+							},
+						},
+						"submission4": map[string]interface{}{
+							"request": map[string]interface{}{
+								"slotId":  1,
+								"epochId": 2,
+							},
+						},
+					},
+				},
+				{
+					"epoch_id": "3",
+					"submissions": map[string]interface{}{
+						"submission5": map[string]interface{}{
+							"request": map[string]interface{}{
+								"slotId":  1,
+								"epochId": 3,
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name:       "Invalid token",
+			body:       `{"token": "invalid-token", "past_epochs": 1}`,
+			statusCode: http.StatusUnauthorized,
+			response:   nil,
+		},
+		{
+			name:       "Negative past epochs",
+			body:       `{"token": "valid-token", "past_epochs": -1}`,
+			statusCode: http.StatusBadRequest,
+			response:   nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("POST", "/receivedEpochSubmissions", strings.NewReader(tt.body))
+			if err != nil {
+				t.Fatal(err)
+			}
+			req.Header.Set("Content-Type", "application/json")
+
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(handleReceivedEpochSubmissions)
+			testHandler := RequestMiddleware(handler)
+			testHandler.ServeHTTP(rr, req)
+
+			responseBody := rr.Body.String()
+			t.Log("Response Body:", responseBody)
+
+			assert.Equal(t, tt.statusCode, rr.Code)
+
+			if tt.statusCode == http.StatusOK {
+				var response struct {
+					Info struct {
+						Success bool                     `json:"success"`
+						Logs    []map[string]interface{} `json:"logs"`
+					} `json:"info"`
+					RequestID string `json:"request_id"`
+				}
+				err = json.NewDecoder(rr.Body).Decode(&response)
+				assert.NoError(t, err)
+				actualResp, _ := json.Marshal(tt.response)
+				expectedResp, _ := json.Marshal(response.Info.Logs)
+				assert.JSONEq(t, string(expectedResp), string(actualResp))
 			}
 		})
 	}

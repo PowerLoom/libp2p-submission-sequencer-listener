@@ -9,7 +9,6 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	log "github.com/sirupsen/logrus"
-	"math/big"
 	"time"
 )
 
@@ -28,18 +27,6 @@ func ConfigureClient() {
 }
 func ConfigureContractInstance() {
 	Instance, _ = contract.NewContract(common.HexToAddress(config.SettingsObj.ContractAddress), Client)
-}
-
-func UpdateSubmissionLimit(curBlock *big.Int) *big.Int {
-	var submissionLimit *big.Int
-	if window, err := Instance.SnapshotSubmissionWindow(&bind.CallOpts{}); err != nil {
-		log.Errorf("Failed to fetch snapshot submission window: %s\n", err.Error())
-	} else {
-		submissionLimit = new(big.Int).Add(curBlock, window)
-		submissionLimit = submissionLimit.Add(submissionLimit, big.NewInt(1))
-		log.Debugln("Snapshot Submission Limit:", submissionLimit)
-	}
-	return submissionLimit
 }
 
 func MustQuery[K any](ctx context.Context, call func(opts *bind.CallOpts) (val K, err error)) (K, error) {

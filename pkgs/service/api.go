@@ -2,6 +2,7 @@ package service
 
 import (
 	"Listen/config"
+	"Listen/pkgs"
 	"Listen/pkgs/prost"
 	"Listen/pkgs/redis"
 	"context"
@@ -14,6 +15,7 @@ import (
 	"math/big"
 	"net/http"
 	"strconv"
+	"strings"
 	"sync"
 )
 
@@ -41,12 +43,22 @@ type SubmissionsRequest struct {
 	PastDays int    `json:"past_days"`
 }
 
+type PastEpochsRequest struct {
+	Token      string `json:"token"`
+	PastEpochs int    `json:"past_epochs"`
+}
+
+type PastBatchesRequest struct {
+	Token       string `json:"token"`
+	PastBatches int    `json:"past_batches"`
+}
+
 type DailySubmissions struct {
 	Day         int   `json:"day"`
 	Submissions int64 `json:"submissions"`
 }
 
-func getTotalRewards(slotId int) (int, error) {
+func getTotalRewards(slotId int) (int64, error) {
 	ctx := context.Background()
 	slotIdStr := strconv.Itoa(slotId)
 
@@ -61,11 +73,16 @@ func getTotalRewards(slotId int) (int, error) {
 		}
 
 		totalSlotRewardsInt := totalSlotRewardsBigInt.Int64()
-		// TODO: Try to avoid query
-		day, err := prost.MustQuery[*big.Int](context.Background(), prost.Instance.DayCounter)
-		if err != nil {
-			log.Errorln("Unable to query day from contract")
+
+		var day *big.Int
+		dayStr, _ := redis.Get(context.Background(), pkgs.SequencerDayKey)
+		if dayStr == "" {
+			//	TODO: Report unhandled error
+			day, _ = prost.MustQuery[*big.Int](context.Background(), prost.Instance.DayCounter)
+		} else {
+			day, _ = new(big.Int).SetString(dayStr, 10)
 		}
+
 		currentDayRewardsKey := redis.SlotRewardsForDay(slotIdStr, day.String())
 		currentDayRewards, err := redis.Get(ctx, currentDayRewardsKey)
 
@@ -79,7 +96,7 @@ func getTotalRewards(slotId int) (int, error) {
 
 		redis.Set(ctx, totalSlotRewardsKey, totalSlotRewards, 0)
 
-		return int(totalSlotRewardsInt), nil
+		return totalSlotRewardsInt, nil
 	}
 
 	parsedRewards, err := strconv.ParseInt(totalSlotRewards, 10, 64)
@@ -87,7 +104,7 @@ func getTotalRewards(slotId int) (int, error) {
 		return 0, err
 	}
 
-	return int(parsedRewards), nil
+	return parsedRewards, nil
 }
 
 func FetchSlotRewardsPoints(slotId *big.Int) (*big.Int, error) {
@@ -150,10 +167,13 @@ func handleTotalSubmissions(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: Try to avoid query
-	day, err := prost.MustQuery[*big.Int](context.Background(), prost.Instance.DayCounter)
-	if err != nil {
-		log.Errorln("Unable to query day from contract")
+	var day *big.Int
+	dayStr, _ := redis.Get(context.Background(), pkgs.SequencerDayKey)
+	if dayStr == "" {
+		//	TODO: Report unhandled error
+		day, _ = prost.MustQuery[*big.Int](context.Background(), prost.Instance.DayCounter)
+	} else {
+		day, _ = new(big.Int).SetString(dayStr, 10)
 	}
 
 	currentDay := new(big.Int).Set(day)
@@ -194,6 +214,519 @@ func handleTotalSubmissions(w http.ResponseWriter, r *http.Request) {
 		}{
 			Success:  true,
 			Response: submissionsResponse,
+		},
+		RequestID: r.Context().Value("request_id").(string),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleFinalizedBatchSubmissions(w http.ResponseWriter, r *http.Request) {
+	var request PastEpochsRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate token
+	if request.Token != config.SettingsObj.AuthReadToken {
+		http.Error(w, "Incorrect Token!", http.StatusUnauthorized)
+		return
+	}
+
+	pastEpochs := request.PastEpochs
+	if pastEpochs < 0 {
+		http.Error(w, "Past epochs should be at least 0", http.StatusBadRequest)
+		return
+	}
+
+	keys := redis.RedisClient.Keys(context.Background(), fmt.Sprintf("%s.finalized_batch_submissions.*", pkgs.ProcessTriggerKey)).Val()
+
+	var logs []map[string]interface{}
+
+	for _, key := range keys {
+		entry, err := redis.Get(context.Background(), key)
+		if err != nil {
+			continue
+		}
+
+		var logEntry map[string]interface{}
+		err = json.Unmarshal([]byte(entry), &logEntry)
+		if err != nil {
+			continue
+		}
+
+		logs = append(logs, logEntry)
+	}
+
+	if pastEpochs > 0 && len(logs) > pastEpochs {
+		logs = logs[len(logs)-pastEpochs:]
+	}
+
+	response := struct {
+		Info struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		} `json:"info"`
+		RequestID string `json:"request_id"`
+	}{
+		Info: struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		}{
+			Success: true,
+			Logs:    logs,
+		},
+		RequestID: r.Context().Value("request_id").(string),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleTriggeredCollectionFlows(w http.ResponseWriter, r *http.Request) {
+	var request PastEpochsRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate token
+	if request.Token != config.SettingsObj.AuthReadToken {
+		http.Error(w, "Incorrect Token!", http.StatusUnauthorized)
+		return
+	}
+
+	pastEpochs := request.PastEpochs
+	if pastEpochs < 0 {
+		http.Error(w, "Past epochs should be at least 0", http.StatusBadRequest)
+		return
+	}
+
+	keys := redis.RedisClient.Keys(context.Background(), fmt.Sprintf("%s.triggered_collection_flow.*", pkgs.ProcessTriggerKey)).Val()
+
+	var logs []map[string]interface{}
+
+	for _, key := range keys {
+		entry, err := redis.Get(context.Background(), key)
+		if err != nil {
+			continue
+		}
+
+		var logEntry map[string]interface{}
+		err = json.Unmarshal([]byte(entry), &logEntry)
+		if err != nil {
+			continue
+		}
+
+		logs = append(logs, logEntry)
+	}
+
+	if pastEpochs > 0 && len(logs) > pastEpochs {
+		logs = logs[len(logs)-pastEpochs:]
+	}
+
+	response := struct {
+		Info struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		} `json:"info"`
+		RequestID string `json:"request_id"`
+	}{
+		Info: struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		}{
+			Success: true,
+			Logs:    logs,
+		},
+		RequestID: r.Context().Value("request_id").(string),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleBuiltBatches(w http.ResponseWriter, r *http.Request) {
+	var request PastBatchesRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate token
+	if request.Token != config.SettingsObj.AuthReadToken {
+		http.Error(w, "Incorrect Token!", http.StatusUnauthorized)
+		return
+	}
+
+	pastBatches := request.PastBatches
+	if pastBatches < 0 {
+		http.Error(w, "Past batches should be at least 0", http.StatusBadRequest)
+		return
+	}
+
+	keys := redis.RedisClient.Keys(context.Background(), fmt.Sprintf("%s.build_batch.*", pkgs.ProcessTriggerKey)).Val()
+
+	var logs []map[string]interface{}
+
+	for _, key := range keys {
+		entry, err := redis.Get(context.Background(), key)
+		if err != nil {
+			continue
+		}
+
+		var logEntry map[string]interface{}
+		err = json.Unmarshal([]byte(entry), &logEntry)
+		if err != nil {
+			continue
+		}
+
+		logs = append(logs, logEntry)
+	}
+
+	if pastBatches > 0 && len(logs) > pastBatches {
+		logs = logs[len(logs)-pastBatches:]
+	}
+
+	response := struct {
+		Info struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		} `json:"info"`
+		RequestID string `json:"request_id"`
+	}{
+		Info: struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		}{
+			Success: true,
+			Logs:    logs,
+		},
+		RequestID: r.Context().Value("request_id").(string),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleCommittedSubmissionBatches(w http.ResponseWriter, r *http.Request) {
+	var request PastBatchesRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate token
+	if request.Token != config.SettingsObj.AuthReadToken {
+		http.Error(w, "Incorrect Token!", http.StatusUnauthorized)
+		return
+	}
+
+	pastBatches := request.PastBatches
+	if pastBatches < 0 {
+		http.Error(w, "Past batches should be at least 0", http.StatusBadRequest)
+		return
+	}
+
+	keys := redis.RedisClient.Keys(context.Background(), fmt.Sprintf("%s.commit_submission_batch.*", pkgs.ProcessTriggerKey)).Val()
+
+	var logs []map[string]interface{}
+
+	for _, key := range keys {
+		entry, err := redis.Get(context.Background(), key)
+		if err != nil {
+			continue
+		}
+
+		var logEntry map[string]interface{}
+		err = json.Unmarshal([]byte(entry), &logEntry)
+		if err != nil {
+			continue
+		}
+
+		logs = append(logs, logEntry)
+	}
+
+	if pastBatches > 0 && len(logs) > pastBatches {
+		logs = logs[len(logs)-pastBatches:]
+	}
+
+	response := struct {
+		Info struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		} `json:"info"`
+		RequestID string `json:"request_id"`
+	}{
+		Info: struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		}{
+			Success: true,
+			Logs:    logs,
+		},
+		RequestID: r.Context().Value("request_id").(string),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleBatchResubmissions(w http.ResponseWriter, r *http.Request) {
+	var request PastBatchesRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate token
+	if request.Token != config.SettingsObj.AuthReadToken {
+		http.Error(w, "Incorrect Token!", http.StatusUnauthorized)
+		return
+	}
+
+	pastBatches := request.PastBatches
+	if pastBatches < 0 {
+		http.Error(w, "Past batches should be at least 0", http.StatusBadRequest)
+		return
+	}
+
+	keys := redis.RedisClient.Keys(context.Background(), fmt.Sprintf("%s.batch_resubmission.*", pkgs.ProcessTriggerKey)).Val()
+
+	var logs []map[string]interface{}
+
+	for _, key := range keys {
+		entry, err := redis.Get(context.Background(), key)
+		if err != nil {
+			continue
+		}
+
+		var logEntry map[string]interface{}
+		err = json.Unmarshal([]byte(entry), &logEntry)
+		if err != nil {
+			continue
+		}
+
+		logs = append(logs, logEntry)
+	}
+
+	if pastBatches > 0 && len(logs) > pastBatches {
+		logs = logs[len(logs)-pastBatches:]
+	}
+
+	response := struct {
+		Info struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		} `json:"info"`
+		RequestID string `json:"request_id"`
+	}{
+		Info: struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		}{
+			Success: true,
+			Logs:    logs,
+		},
+		RequestID: r.Context().Value("request_id").(string),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleIncludedEpochSubmissionsCount(w http.ResponseWriter, r *http.Request) {
+	var request PastEpochsRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate token
+	if request.Token != config.SettingsObj.AuthReadToken {
+		http.Error(w, "Incorrect Token!", http.StatusUnauthorized)
+		return
+	}
+
+	pastEpochs := request.PastEpochs
+	if pastEpochs < 0 {
+		http.Error(w, "Past epochs should be at least 0", http.StatusBadRequest)
+		return
+	}
+
+	keys := redis.RedisClient.Keys(context.Background(), fmt.Sprintf("%s.build_batch.*", pkgs.ProcessTriggerKey)).Val()
+
+	var totalSubmissions int
+
+	for _, key := range keys {
+		entry, err := redis.Get(context.Background(), key)
+		if err != nil {
+			continue
+		}
+
+		var logEntry map[string]interface{}
+		err = json.Unmarshal([]byte(entry), &logEntry)
+		if err != nil {
+			continue
+		}
+
+		if epochIdStr, ok := logEntry["epoch_id"].(string); ok {
+			epochId, err := strconv.Atoi(epochIdStr)
+			if err != nil {
+				continue
+			}
+			if pastEpochs == 0 || epochId >= pastEpochs {
+				if count, ok := logEntry["submissions_count"].(float64); ok {
+					totalSubmissions += int(count)
+				}
+			}
+		}
+	}
+
+	response := struct {
+		Info struct {
+			Success          bool `json:"success"`
+			TotalSubmissions int  `json:"total_submissions"`
+		} `json:"info"`
+		RequestID string `json:"request_id"`
+	}{
+		Info: struct {
+			Success          bool `json:"success"`
+			TotalSubmissions int  `json:"total_submissions"`
+		}{
+			Success:          true,
+			TotalSubmissions: totalSubmissions,
+		},
+		RequestID: r.Context().Value("request_id").(string),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleReceivedEpochSubmissionsCount(w http.ResponseWriter, r *http.Request) {
+	var request PastEpochsRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate token
+	if request.Token != config.SettingsObj.AuthReadToken {
+		http.Error(w, "Incorrect Token!", http.StatusUnauthorized)
+		return
+	}
+
+	pastEpochs := request.PastEpochs
+	if pastEpochs < 0 {
+		http.Error(w, "Past epochs should be at least 0", http.StatusBadRequest)
+		return
+	}
+
+	keys := redis.RedisClient.Keys(context.Background(), fmt.Sprintf("%s.*", pkgs.EpochSubmissionsCountKey)).Val()
+
+	var totalSubmissions int
+
+	for _, key := range keys {
+		entry, err := redis.Get(context.Background(), key)
+		if err != nil {
+			continue
+		}
+
+		epochId, err := strconv.Atoi(strings.Split(key, ".")[1])
+		if err != nil {
+			continue
+		}
+		if pastEpochs == 0 || epochId >= pastEpochs {
+			if count, err := strconv.Atoi(entry); err == nil {
+				totalSubmissions += int(count)
+			}
+		}
+	}
+
+	response := struct {
+		Info struct {
+			Success          bool `json:"success"`
+			TotalSubmissions int  `json:"total_submissions"`
+		} `json:"info"`
+		RequestID string `json:"request_id"`
+	}{
+		Info: struct {
+			Success          bool `json:"success"`
+			TotalSubmissions int  `json:"total_submissions"`
+		}{
+			Success:          true,
+			TotalSubmissions: totalSubmissions,
+		},
+		RequestID: r.Context().Value("request_id").(string),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleReceivedEpochSubmissions(w http.ResponseWriter, r *http.Request) {
+	var request PastEpochsRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate token
+	if request.Token != config.SettingsObj.AuthReadToken {
+		http.Error(w, "Incorrect Token!", http.StatusUnauthorized)
+		return
+	}
+
+	pastEpochs := request.PastEpochs
+	if pastEpochs < 0 {
+		http.Error(w, "Past epochs should be at least 0", http.StatusBadRequest)
+		return
+	}
+
+	// Fetch keys for epoch submissions
+	keys := redis.RedisClient.Keys(context.Background(), fmt.Sprintf("%s.*", pkgs.EpochSubmissionsKey)).Val()
+
+	var logs []map[string]interface{}
+
+	for _, key := range keys {
+		epochId := strings.TrimPrefix(key, fmt.Sprintf("%s.", pkgs.EpochSubmissionsKey))
+		epochLog := make(map[string]interface{})
+		epochLog["epoch_id"] = epochId
+
+		submissions := redis.RedisClient.HGetAll(context.Background(), key).Val()
+		submissionsMap := make(map[string]interface{})
+		for submissionId, submissionData := range submissions {
+			var submission interface{}
+			if err := json.Unmarshal([]byte(submissionData), &submission); err != nil {
+				continue
+			}
+			submissionsMap[submissionId] = submission
+		}
+		epochLog["submissions"] = submissionsMap
+
+		logs = append(logs, epochLog)
+	}
+
+	if pastEpochs > 0 && len(logs) > pastEpochs {
+		logs = logs[len(logs)-pastEpochs:]
+	}
+
+	response := struct {
+		Info struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		} `json:"info"`
+		RequestID string `json:"request_id"`
+	}{
+		Info: struct {
+			Success bool                     `json:"success"`
+			Logs    []map[string]interface{} `json:"logs"`
+		}{
+			Success: true,
+			Logs:    logs,
 		},
 		RequestID: r.Context().Value("request_id").(string),
 	}
@@ -316,7 +849,9 @@ func handleDailyRewards(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleTotalRewards(w http.ResponseWriter, r *http.Request) {
-	var request RewardsRequest
+	var dailySubmissionCount int64
+
+	var request DailyRewardsRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -334,10 +869,40 @@ func handleTotalRewards(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slotRewardPoints, err := getTotalRewards(slotID)
-	if err != nil {
-		http.Error(w, "Failed to fetch slot reward points: "+err.Error(), http.StatusInternalServerError)
-		return
+	day := int64(request.Day)
+
+	var rewards int
+	key := redis.SlotSubmissionKey(strconv.Itoa(slotID), strconv.Itoa(request.Day))
+
+	// Try to get from Redis
+	dailySubmissionCountFromCache, err := redis.Get(r.Context(), key)
+
+	if err != nil || dailySubmissionCountFromCache == "" {
+		slotIDBigInt := big.NewInt(int64(slotID))
+		count, err := FetchSlotSubmissionCount(slotIDBigInt, big.NewInt(day))
+		if err != nil {
+			http.Error(w, "Failed to fetch submission count: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		dailySubmissionCount = count.Int64()
+		slotRewardsForDayKey := redis.SlotRewardsForDay(strconv.Itoa(slotID), strconv.Itoa(request.Day))
+		redis.Set(r.Context(), slotRewardsForDayKey, strconv.FormatInt(dailySubmissionCount, 10), 0)
+	} else if dailySubmissionCountFromCache != "" {
+		dailyCount, err := strconv.ParseInt(dailySubmissionCountFromCache, 10, 64)
+		if err != nil {
+			log.Errorf("Failed to parse daily submission count from cache: %v", err)
+		}
+		dailySubmissionCount = dailyCount
+	}
+
+	log.Debugln("DailySnapshotQuota: ", dailySnapshotQuota)
+
+	cmp := big.NewInt(dailySubmissionCount).Cmp(dailySnapshotQuota)
+	if cmp >= 0 {
+		rewards = int(new(big.Int).Div(rewardBasePoints, big.NewInt(baseExponent)).Int64())
+	} else {
+		rewards = 0
 	}
 
 	response := struct {
@@ -352,7 +917,7 @@ func handleTotalRewards(w http.ResponseWriter, r *http.Request) {
 			Response int  `json:"response"`
 		}{
 			Success:  true,
-			Response: slotRewardPoints,
+			Response: rewards,
 		},
 		RequestID: r.Context().Value("request_id").(string),
 	}
@@ -387,7 +952,15 @@ func StartApiServer() {
 	mux.HandleFunc("/getTotalRewards", handleTotalRewards)
 	mux.HandleFunc("/getDailyRewards", handleDailyRewards)
 	mux.HandleFunc("/totalSubmissions", handleTotalSubmissions)
-
+	mux.HandleFunc("/triggeredCollectionFlows", handleTriggeredCollectionFlows)
+	mux.HandleFunc("/finalizedBatchSubmissions", handleFinalizedBatchSubmissions)
+	mux.HandleFunc("/builtBatches", handleBuiltBatches)
+	mux.HandleFunc("/committedSubmissionBatches", handleCommittedSubmissionBatches)
+	mux.HandleFunc("/batchResubmissions", handleBatchResubmissions)
+	mux.HandleFunc("/receivedEpochSubmissions", handleReceivedEpochSubmissions)
+	mux.HandleFunc("/receivedEpochSubmissionsCount", handleReceivedEpochSubmissionsCount)
+	mux.HandleFunc("/includedEpochSubmissionsCount", handleIncludedEpochSubmissionsCount)
+	// also add submission body per epoch
 	handler := RequestMiddleware(mux)
 
 	log.Println("Server is running on port 9988")
