@@ -3,15 +3,8 @@
   "ContractAddress": "PROTOCOL_STATE_CONTRACT",
   "RedisHost": "REDIS_HOST",
   "RedisPort": "REDIS_PORT",
-  "IPFSUrl": "IPFS_URL",
-  "SignerAccountAddress": "SIGNER_ACCOUNT_ADDRESS",
-  "PrivateKey": "SIGNER_ACCOUNT_PRIVATE_KEY",
-  "BatchSize": "BATCH_SIZE",
-  "ChainID": "PROST_CHAIN_ID",
-  "BlockTime": "BLOCK_TIME",
   "RelayerRendezvousPoint": "RELAYER_RENDEZVOUS_POINT",
   "RelayerPrivateKey": "RELAYER_PRIVATE_KEY",
-  "FullNodes": "FULL_NODES",
   "AuthReadToken": "AUTH_READ_TOKEN",
   "SlackReportingUrl": "SLACK_REPORTING_URL"
 }

@@ -46,7 +46,7 @@ sed -i'.backup' -e "s#PROST_RPC_URL#$PROST_RPC_URL#" \
                 -e "s#RELAYER_RENDEZVOUS_POINT#$RELAYER_RENDEZVOUS_POINT#" \
                 -e "s#SLACK_REPORTING_URL#$SLACK_REPORTING_URL#" \
                 -e "s#RELAYER_PRIVATE_KEY#$RELAYER_PRIVATE_KEY#" \
-                -e "s#AUTH_READ_TOKEN#$AUTH_READ_TOKEN#" \
+                -e "s#AUTH_READ_TOKEN#$AUTH_READ_TOKEN#" settings.json
 
 # Cleanup backup file
 rm settings.json.backup
