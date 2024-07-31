@@ -1,1 +1,1 @@
-docker-compose -f docker-compose.yaml up
+docker run --env-file .env -p 9000:9000 proto-snapshot-listener

@@ -1,23 +1,28 @@
-FROM golang:alpine3.17
+# Use the official Golang image as the build environment
+FROM golang:1.20 as builder
 
-ENV GO111MODULE=on
+# Set the working directory inside the container
+WORKDIR /app
 
-RUN rm -rf /var/cache/apk/* && \
-    rm -rf /tmp/*
-
-RUN apk update && apk add --no-cache ethtool nodejs npm bash gcc musl-dev libc-dev curl libffi-dev vim nano ca-certificates protoc
-
-RUN npm install pm2 -g
-RUN pm2 install pm2-logrotate && pm2 set pm2-logrotate:compress true && pm2 set pm2-logrotate:retain 7
-
-WORKDIR /src
+# Copy go.mod and go.sum files to the working directory
 COPY go.mod go.sum ./
+
+# Download the dependencies
 RUN go mod download
 
-# EXPOSE 9000
-
+# Copy the rest of the application code to the working directory
 COPY . .
-RUN chmod +x build.sh
-RUN ./build.sh
 
-RUN chmod +x init_processes.sh
+# Build the Go application
+RUN CGO_ENABLED=0 GOOS=linux go build -o /listener ./cmd/main.go
+
+# Use a minimal base image
+FROM scratch
+
+# Copy the binary from the builder stage
+COPY --from=builder /listener /listener
+
+# Expose port 9000
+
+# Command to run the application
+CMD ["/listener"]
