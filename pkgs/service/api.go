@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/cenkalti/backoff/v4"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
 	"math/big"
@@ -22,6 +23,7 @@ import (
 var (
 	rewardBasePoints   *big.Int
 	dailySnapshotQuota *big.Int
+	dataMarketAddress  common.Address
 )
 
 const baseExponent = int64(100000000)
@@ -78,7 +80,7 @@ func getTotalRewards(slotId int) (int64, error) {
 		dayStr, _ := redis.Get(context.Background(), pkgs.SequencerDayKey)
 		if dayStr == "" {
 			//	TODO: Report unhandled error
-			day, _ = prost.MustQuery[*big.Int](context.Background(), prost.Instance.DayCounter)
+			day, err = FetchDayCounter()
 		} else {
 			day, _ = new(big.Int).SetString(dayStr, 10)
 		}
@@ -114,7 +116,7 @@ func FetchSlotRewardsPoints(slotId *big.Int) (*big.Int, error) {
 	var points *big.Int
 
 	retryErr := backoff.Retry(func() error {
-		points, err = prost.Instance.SlotRewardPoints(&bind.CallOpts{}, slotId)
+		points, err = prost.Instance.SlotRewardPoints(&bind.CallOpts{}, dataMarketAddress, slotId)
 		return err
 	}, backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 5))
 
@@ -126,10 +128,26 @@ func FetchSlotRewardsPoints(slotId *big.Int) (*big.Int, error) {
 	return points, nil
 }
 
+func FetchDayCounter() (*big.Int, error) {
+	var err error
+	var dayCounter *big.Int
+
+	retryErr := backoff.Retry(func() error {
+		dayCounter, err = prost.Instance.DayCounter(&bind.CallOpts{}, dataMarketAddress)
+		return err
+	}, backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 5))
+
+	if retryErr != nil {
+		return nil, fmt.Errorf("failed to fetch day counter: %v", retryErr)
+	}
+
+	return dayCounter, nil
+}
+
 func getDailySubmissions(slotId int, day *big.Int) int64 {
 	if val, err := redis.Get(context.Background(), redis.SlotSubmissionKey(strconv.Itoa(slotId), day.String())); err != nil || val == "" {
 		subs, err := prost.MustQuery[*big.Int](context.Background(), func(opts *bind.CallOpts) (*big.Int, error) {
-			subs, err := prost.Instance.SlotSubmissionCount(opts, big.NewInt(int64(slotId)), day)
+			subs, err := prost.Instance.SlotSubmissionCount(opts, dataMarketAddress, big.NewInt(int64(slotId)), day)
 			return subs, err
 		})
 		if err != nil {
@@ -171,7 +189,7 @@ func handleTotalSubmissions(w http.ResponseWriter, r *http.Request) {
 	dayStr, _ := redis.Get(context.Background(), pkgs.SequencerDayKey)
 	if dayStr == "" {
 		//	TODO: Report unhandled error
-		day, _ = prost.MustQuery[*big.Int](context.Background(), prost.Instance.DayCounter)
+		day, _ = FetchDayCounter()
 	} else {
 		day, _ = new(big.Int).SetString(dayStr, 10)
 	}
@@ -739,16 +757,24 @@ func handleReceivedEpochSubmissions(w http.ResponseWriter, r *http.Request) {
 func FetchContractConstants(ctx context.Context) error {
 	var err error
 
-	dailySnapshotQuota, err = prost.MustQuery[*big.Int](ctx, prost.Instance.DailySnapshotQuota)
+	dataMarketAddress = common.HexToAddress(config.SettingsObj.DataMarketAddress)
 
-	if err != nil {
-		return fmt.Errorf("failed to fetch contract DailySnapshotQuota: %v", err)
+	snapshotQuotaErr := backoff.Retry(func() error {
+		dailySnapshotQuota, err = prost.Instance.DailySnapshotQuota(&bind.CallOpts{}, dataMarketAddress)
+		return err
+	}, backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 5))
+
+	if snapshotQuotaErr != nil {
+		return fmt.Errorf("failed to fetch contract DailySnapshotQuota: %v", snapshotQuotaErr)
 	}
 
-	rewardBasePoints, err = prost.MustQuery[*big.Int](ctx, prost.Instance.RewardBasePoints)
+	rewardsErr := backoff.Retry(func() error {
+		rewardBasePoints, err = prost.Instance.RewardBasePoints(&bind.CallOpts{}, dataMarketAddress)
+		return err
+	}, backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 5))
 
-	if err != nil {
-		return fmt.Errorf("failed to fetch contract RewardBasePoints: %v", err)
+	if rewardsErr != nil {
+		return fmt.Errorf("failed to fetch contract RewardBasePoints: %v", rewardsErr)
 	}
 
 	return nil
@@ -759,7 +785,7 @@ func FetchSlotSubmissionCount(slotID *big.Int, day *big.Int) (*big.Int, error) {
 	var err error
 
 	retryErr := backoff.Retry(func() error {
-		count, err = prost.Instance.SlotSubmissionCount(&bind.CallOpts{}, slotID, day)
+		count, err = prost.Instance.SlotSubmissionCount(&bind.CallOpts{}, dataMarketAddress, slotID, day)
 		return err
 	}, backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 5))
 

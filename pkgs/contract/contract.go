@@ -29,8 +29,8 @@ var (
 	_ = abi.ConvertType
 )
 
-// PowerloomProtocolStateRequest is an auto generated low-level Go binding around an user-defined struct.
-type PowerloomProtocolStateRequest struct {
+// PowerloomDataMarketRequest is an auto generated low-level Go binding around an user-defined struct.
+type PowerloomDataMarketRequest struct {
 	SlotId      *big.Int
 	Deadline    *big.Int
 	SnapshotCid string
@@ -38,20 +38,17 @@ type PowerloomProtocolStateRequest struct {
 	ProjectId   string
 }
 
-// PowerloomProtocolStateSlotInfo is an auto generated low-level Go binding around an user-defined struct.
-type PowerloomProtocolStateSlotInfo struct {
+// PowerloomDataMarketSlotInfo is an auto generated low-level Go binding around an user-defined struct.
+type PowerloomDataMarketSlotInfo struct {
 	SlotId                  *big.Int
 	SnapshotterAddress      common.Address
-	TimeSlot                *big.Int
 	RewardPoints            *big.Int
-	CurrentStreak           *big.Int
-	CurrentStreakBonus      *big.Int
 	CurrentDaySnapshotCount *big.Int
 }
 
 // ContractMetaData contains all meta data concerning the Contract contract.
 var ContractMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"slotsPerDay\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"externalStateAddress\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"snapshotterAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DailyTaskCompletedEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DayStartedEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"validatorAddr\",\"type\":\"address\"}],\"name\":\"DelayedAttestationSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DelayedBatchSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"snapshotterAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DelayedSnapshotSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"EpochReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectType\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"enableEpochId\",\"type\":\"uint256\"}],\"name\":\"ProjectTypeUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sequencerAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"SequencersUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"validatorAddr\",\"type\":\"address\"}],\"name\":\"SnapshotBatchAttestationSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotBatchFinalized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotBatchSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"epochEnd\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotFinalized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"snapshotterAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"ValidatorsUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"snapshotterAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"allSnapshottersUpdated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DailySnapshotQuota\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DeploymentBlockNumber\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EPOCH_SIZE\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SLOTS_PER_DAY\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SOURCE_CHAIN_BLOCK_TIME\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SOURCE_CHAIN_ID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"USE_BLOCK_NUMBER_AS_EPOCH_ID\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"internalType\":\"structPowerloomProtocolState.Request\",\"name\":\"request\",\"type\":\"tuple\"},{\"internalType\":\"bytes\",\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"acceptSnapshot\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"allSnapshotters\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"projectType\",\"type\":\"string\"}],\"name\":\"allowedProjectTypes\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"attestationFinalizedStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"finalized\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"attestationSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"validatorAddr\",\"type\":\"address\"}],\"name\":\"attestationsReceived\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"rootHash\",\"type\":\"bytes32\"}],\"name\":\"attestationsReceivedCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"}],\"name\":\"batchIdAttestationStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"status\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"batchIdToProjects\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"projectids\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"batchSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"checkDynamicConsensusAttestations\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"day\",\"type\":\"uint256\"}],\"name\":\"checkSlotTaskStatusForDay\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentBatchId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentEpoch\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dayCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"epochInfo\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"blocknumber\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochEnd\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"epochsInADay\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"externalState\",\"outputs\":[{\"internalType\":\"contractIExternalState\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"forceCompleteConsensusAttestations\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"forceSkipEpoch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"forceStartDay\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getEpochManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSequencers\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"getSlotInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"snapshotterAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"timeSlot\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"rewardPoints\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentStreak\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentStreakBonus\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentDaySnapshotCount\",\"type\":\"uint256\"}],\"internalType\":\"structPowerloomProtocolState.SlotInfo\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"getSlotStreak\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_slotId\",\"type\":\"uint256\"}],\"name\":\"getSnapshotterTimeSlot\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTotalSequencersCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTotalSnapshotterCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTotalValidatorsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getValidators\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"lastFinalizedSnapshot\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"lastSnapshotterAddressUpdate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_dayCounter\",\"type\":\"uint256\"}],\"name\":\"loadCurrentDay\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"snapshotCount\",\"type\":\"uint256\"}],\"name\":\"loadSlotSubmissions\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"}],\"name\":\"maxAttestationFinalizedRootHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"rootHash\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"}],\"name\":\"maxAttestationsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"maxSnapshotsCid\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"maxSnapshotsCidMap\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"maxSnapshotsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"minAttestationsForConsensus\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"minSubmissionsForConsensus\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"projectFirstEpochId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"messageHash\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"recoverAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"releaseEpoch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"rewardBasePoints\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"rewardsEnabled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"slotCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"slotRewardPoints\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"slotSnapshotterMapping\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"slotStreakCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"streak\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"day\",\"type\":\"uint256\"}],\"name\":\"slotSubmissionCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"snapshotStatus\",\"outputs\":[{\"internalType\":\"enumPowerloomProtocolState.SnapshotStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"snapshotSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"snapshotsReceived\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"name\":\"snapshotsReceivedCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"snapshotsReceivedSlot\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"streakBonusPoints\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"submitBatchAttestation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string[]\",\"name\":\"projectIds\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"snapshotCids\",\"type\":\"string[]\"}],\"name\":\"submitSubmissionBatch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"timeSlotCheck\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slot\",\"type\":\"uint256\"}],\"name\":\"timeSlotPreference\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"toggleRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"toggleTimeSlotCheck\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"totalSnapshotsReceived\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"enumPowerloomProtocolState.Role\",\"name\":\"role\",\"type\":\"uint8\"},{\"internalType\":\"address[]\",\"name\":\"_addresses\",\"type\":\"address[]\"},{\"internalType\":\"bool[]\",\"name\":\"_status\",\"type\":\"bool[]\"}],\"name\":\"updateAddresses\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_projectType\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"updateAllowedProjectType\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"newattestationSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateAttestationSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"newbatchSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateBatchSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"dailySnapshotQuota\",\"type\":\"uint256\"}],\"name\":\"updateDailySnapshotQuota\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateEpochManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"externalStateAddress\",\"type\":\"address\"}],\"name\":\"updateExternalStateAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_minAttestationsForConsensus\",\"type\":\"uint256\"}],\"name\":\"updateMinAttestationsForConsensus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_minSubmissionsForConsensus\",\"type\":\"uint256\"}],\"name\":\"updateMinSnapshottersForConsensus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"slotIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"submissionsList\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256\",\"name\":\"day\",\"type\":\"uint256\"}],\"name\":\"updateRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"newsnapshotSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateSnapshotSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"newrewardBasePoints\",\"type\":\"uint256\"}],\"name\":\"updaterewardBasePoints\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"newstreakBonusPoints\",\"type\":\"uint256\"}],\"name\":\"updatestreakBonusPoints\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"internalType\":\"structPowerloomProtocolState.Request\",\"name\":\"request\",\"type\":\"tuple\"},{\"internalType\":\"bytes\",\"name\":\"signature\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"signer\",\"type\":\"address\"}],\"name\":\"verify\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"}],\"name\":\"AddressEmptyCode\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"}],\"name\":\"ERC1967InvalidImplementation\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ERC1967NonPayable\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"FailedInnerCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidInitialization\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotInitializing\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"UUPSUnauthorizedCallContext\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"slot\",\"type\":\"bytes32\"}],\"name\":\"UUPSUnsupportedProxiableUUID\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"adminAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"AdminsUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"BatchSubmissionsCompleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"snapshotterAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DailyTaskCompletedEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"ownerAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"protocolState\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"}],\"name\":\"DataMarketCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DayStartedEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"validatorAddr\",\"type\":\"address\"}],\"name\":\"DelayedAttestationSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DelayedBatchSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"snapshotterAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DelayedSnapshotSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"EpochReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"version\",\"type\":\"uint64\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectType\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"enableEpochId\",\"type\":\"uint256\"}],\"name\":\"ProjectTypeUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string[]\",\"name\":\"projects\",\"type\":\"string[]\"},{\"indexed\":false,\"internalType\":\"bool[]\",\"name\":\"status\",\"type\":\"bool[]\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"enableEpochId\",\"type\":\"uint256\"}],\"name\":\"ProjectsUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sequencerAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"SequencersUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"validatorAddr\",\"type\":\"address\"}],\"name\":\"SnapshotBatchAttestationSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotBatchFinalized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotBatchSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"epochEnd\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotFinalized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"TriggerBatchResubmission\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"}],\"name\":\"Upgraded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"validator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"ValidatorAttestationsInvalidated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"ValidatorsUpdated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"EPOCH_SIZE\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"SOURCE_CHAIN_BLOCK_TIME\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"SOURCE_CHAIN_ID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"UPGRADE_INTERFACE_VERSION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"USE_BLOCK_NUMBER_AS_EPOCH_ID\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"allSnapshotters\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectType\",\"type\":\"string\"}],\"name\":\"allowedProjectTypes\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"_slotIds\",\"type\":\"uint256[]\"},{\"internalType\":\"address[]\",\"name\":\"_snapshotterAddresses\",\"type\":\"address[]\"}],\"name\":\"assignSnapshotterToSlots\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"attestationSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"attestationsReceived\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"attestationsReceivedCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"}],\"name\":\"batchIdAttestationStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"batchIdDivergentValidators\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"}],\"name\":\"batchIdSequencerAttestation\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"batchIdToProjects\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"batchSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"checkDynamicConsensusAttestations\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"day\",\"type\":\"uint256\"}],\"name\":\"checkSlotTaskStatusForDay\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"ownerAddress\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"}],\"name\":\"createDataMarket\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"currentBatchId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"currentEpoch\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"dailySnapshotQuota\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dataMarketCount\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"}],\"name\":\"dataMarketEnabled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dataMarketFactory\",\"outputs\":[{\"internalType\":\"contractDataMarketFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"dataMarketId\",\"type\":\"uint8\"}],\"name\":\"dataMarketIdToAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"dataMarkets\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"ownerAddress\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"enabled\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"createdAt\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"dayCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"deploymentBlockNumber\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"endBatchSubmissions\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"epochIdToBatchIds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"epochInfo\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"blocknumber\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochEnd\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"epochManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"epochsInADay\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"forceCompleteConsensusAttestations\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"forceSkipEpoch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getEpochManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getSequencerId\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getSequencers\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"getSlotInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"snapshotterAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"rewardPoints\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentDaySnapshotCount\",\"type\":\"uint256\"}],\"internalType\":\"structPowerloomDataMarket.SlotInfo\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"getSlotRewards\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"rewards\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getTotalSequencersCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTotalSnapshotterCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getTotalValidatorsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getValidators\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"initialOwner\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"lastFinalizedSnapshot\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_dayCounter\",\"type\":\"uint256\"}],\"name\":\"loadCurrentDay\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"snapshotCount\",\"type\":\"uint256\"}],\"name\":\"loadSlotSubmissions\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"}],\"name\":\"maxAttestationFinalizedRootHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"}],\"name\":\"maxAttestationsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"maxSnapshotsCid\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"minAttestationsForConsensus\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"minSubmissionsForConsensus\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"projectFirstEpochId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"proxiableUUID\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"releaseEpoch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"rewardBasePoints\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"rewardsEnabled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"_sequencerId\",\"type\":\"string\"}],\"name\":\"setSequencerId\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"slotCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"slotRewardPoints\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"slotRewards\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"slotSnapshotterMapping\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"}],\"name\":\"slotSubmissionCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"snapshotStatus\",\"outputs\":[{\"internalType\":\"enumPowerloomDataMarket.SnapshotStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"snapshotSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"snapshotterState\",\"outputs\":[{\"internalType\":\"contractSnapshotterState\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"submitBatchAttestation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"internalType\":\"structPowerloomDataMarket.Request\",\"name\":\"request\",\"type\":\"tuple\"},{\"internalType\":\"bytes\",\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"submitSnapshot\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string[]\",\"name\":\"projectIds\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"snapshotCids\",\"type\":\"string[]\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"submitSubmissionBatch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"enabled\",\"type\":\"bool\"}],\"name\":\"toggleDataMarket\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"toggleFallback\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"toggleRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"enumPowerloomDataMarket.Role\",\"name\":\"role\",\"type\":\"uint8\"},{\"internalType\":\"address[]\",\"name\":\"_addresses\",\"type\":\"address[]\"},{\"internalType\":\"bool[]\",\"name\":\"_status\",\"type\":\"bool[]\"}],\"name\":\"updateAddresses\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"_projectType\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"updateAllowedProjectType\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newattestationSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateAttestationSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newbatchSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateBatchSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"dailySnapshotQuota\",\"type\":\"uint256\"}],\"name\":\"updateDailySnapshotQuota\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateDataMarketFactory\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateEpochManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"address[]\",\"name\":\"_fallbackNodes\",\"type\":\"address[]\"},{\"internalType\":\"bool[]\",\"name\":\"_status\",\"type\":\"bool[]\"}],\"name\":\"updateFallbackNodes\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_minAttestationsForConsensus\",\"type\":\"uint256\"}],\"name\":\"updateMinAttestationsForConsensus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_minSubmissionsForConsensus\",\"type\":\"uint256\"}],\"name\":\"updateMinSnapshottersForConsensus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string[]\",\"name\":\"_projects\",\"type\":\"string[]\"},{\"internalType\":\"bool[]\",\"name\":\"_status\",\"type\":\"bool[]\"}],\"name\":\"updateProjects\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newRewardBasePoints\",\"type\":\"uint256\"}],\"name\":\"updateRewardBasePoints\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"slotIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"submissionsList\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256\",\"name\":\"day\",\"type\":\"uint256\"}],\"name\":\"updateRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newsnapshotSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateSnapshotSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateSnapshotterState\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newImplementation\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"upgradeToAndCall\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}]",
 }
 
 // ContractABI is the input ABI used to generate the binding from.
@@ -200,74 +197,12 @@ func (_Contract *ContractTransactorRaw) Transact(opts *bind.TransactOpts, method
 	return _Contract.Contract.contract.Transact(opts, method, params...)
 }
 
-// DailySnapshotQuota is a free data retrieval call binding the contract method 0xc7c7077e.
+// EPOCHSIZE is a free data retrieval call binding the contract method 0xc12c2aa9.
 //
-// Solidity: function DailySnapshotQuota() view returns(uint256)
-func (_Contract *ContractCaller) DailySnapshotQuota(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function EPOCH_SIZE(address dataMarket) view returns(uint8)
+func (_Contract *ContractCaller) EPOCHSIZE(opts *bind.CallOpts, dataMarket common.Address) (uint8, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "DailySnapshotQuota")
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// DailySnapshotQuota is a free data retrieval call binding the contract method 0xc7c7077e.
-//
-// Solidity: function DailySnapshotQuota() view returns(uint256)
-func (_Contract *ContractSession) DailySnapshotQuota() (*big.Int, error) {
-	return _Contract.Contract.DailySnapshotQuota(&_Contract.CallOpts)
-}
-
-// DailySnapshotQuota is a free data retrieval call binding the contract method 0xc7c7077e.
-//
-// Solidity: function DailySnapshotQuota() view returns(uint256)
-func (_Contract *ContractCallerSession) DailySnapshotQuota() (*big.Int, error) {
-	return _Contract.Contract.DailySnapshotQuota(&_Contract.CallOpts)
-}
-
-// DeploymentBlockNumber is a free data retrieval call binding the contract method 0xb1288f71.
-//
-// Solidity: function DeploymentBlockNumber() view returns(uint256)
-func (_Contract *ContractCaller) DeploymentBlockNumber(opts *bind.CallOpts) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "DeploymentBlockNumber")
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// DeploymentBlockNumber is a free data retrieval call binding the contract method 0xb1288f71.
-//
-// Solidity: function DeploymentBlockNumber() view returns(uint256)
-func (_Contract *ContractSession) DeploymentBlockNumber() (*big.Int, error) {
-	return _Contract.Contract.DeploymentBlockNumber(&_Contract.CallOpts)
-}
-
-// DeploymentBlockNumber is a free data retrieval call binding the contract method 0xb1288f71.
-//
-// Solidity: function DeploymentBlockNumber() view returns(uint256)
-func (_Contract *ContractCallerSession) DeploymentBlockNumber() (*big.Int, error) {
-	return _Contract.Contract.DeploymentBlockNumber(&_Contract.CallOpts)
-}
-
-// EPOCHSIZE is a free data retrieval call binding the contract method 0x62656003.
-//
-// Solidity: function EPOCH_SIZE() view returns(uint8)
-func (_Contract *ContractCaller) EPOCHSIZE(opts *bind.CallOpts) (uint8, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "EPOCH_SIZE")
+	err := _Contract.contract.Call(opts, &out, "EPOCH_SIZE", dataMarket)
 
 	if err != nil {
 		return *new(uint8), err
@@ -279,26 +214,26 @@ func (_Contract *ContractCaller) EPOCHSIZE(opts *bind.CallOpts) (uint8, error) {
 
 }
 
-// EPOCHSIZE is a free data retrieval call binding the contract method 0x62656003.
+// EPOCHSIZE is a free data retrieval call binding the contract method 0xc12c2aa9.
 //
-// Solidity: function EPOCH_SIZE() view returns(uint8)
-func (_Contract *ContractSession) EPOCHSIZE() (uint8, error) {
-	return _Contract.Contract.EPOCHSIZE(&_Contract.CallOpts)
+// Solidity: function EPOCH_SIZE(address dataMarket) view returns(uint8)
+func (_Contract *ContractSession) EPOCHSIZE(dataMarket common.Address) (uint8, error) {
+	return _Contract.Contract.EPOCHSIZE(&_Contract.CallOpts, dataMarket)
 }
 
-// EPOCHSIZE is a free data retrieval call binding the contract method 0x62656003.
+// EPOCHSIZE is a free data retrieval call binding the contract method 0xc12c2aa9.
 //
-// Solidity: function EPOCH_SIZE() view returns(uint8)
-func (_Contract *ContractCallerSession) EPOCHSIZE() (uint8, error) {
-	return _Contract.Contract.EPOCHSIZE(&_Contract.CallOpts)
+// Solidity: function EPOCH_SIZE(address dataMarket) view returns(uint8)
+func (_Contract *ContractCallerSession) EPOCHSIZE(dataMarket common.Address) (uint8, error) {
+	return _Contract.Contract.EPOCHSIZE(&_Contract.CallOpts, dataMarket)
 }
 
-// SLOTSPERDAY is a free data retrieval call binding the contract method 0xe479b88d.
+// SOURCECHAINBLOCKTIME is a free data retrieval call binding the contract method 0x0f34e6a9.
 //
-// Solidity: function SLOTS_PER_DAY() view returns(uint256)
-func (_Contract *ContractCaller) SLOTSPERDAY(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function SOURCE_CHAIN_BLOCK_TIME(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) SOURCECHAINBLOCKTIME(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "SLOTS_PER_DAY")
+	err := _Contract.contract.Call(opts, &out, "SOURCE_CHAIN_BLOCK_TIME", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -310,26 +245,26 @@ func (_Contract *ContractCaller) SLOTSPERDAY(opts *bind.CallOpts) (*big.Int, err
 
 }
 
-// SLOTSPERDAY is a free data retrieval call binding the contract method 0xe479b88d.
+// SOURCECHAINBLOCKTIME is a free data retrieval call binding the contract method 0x0f34e6a9.
 //
-// Solidity: function SLOTS_PER_DAY() view returns(uint256)
-func (_Contract *ContractSession) SLOTSPERDAY() (*big.Int, error) {
-	return _Contract.Contract.SLOTSPERDAY(&_Contract.CallOpts)
+// Solidity: function SOURCE_CHAIN_BLOCK_TIME(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) SOURCECHAINBLOCKTIME(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.SOURCECHAINBLOCKTIME(&_Contract.CallOpts, dataMarket)
 }
 
-// SLOTSPERDAY is a free data retrieval call binding the contract method 0xe479b88d.
+// SOURCECHAINBLOCKTIME is a free data retrieval call binding the contract method 0x0f34e6a9.
 //
-// Solidity: function SLOTS_PER_DAY() view returns(uint256)
-func (_Contract *ContractCallerSession) SLOTSPERDAY() (*big.Int, error) {
-	return _Contract.Contract.SLOTSPERDAY(&_Contract.CallOpts)
+// Solidity: function SOURCE_CHAIN_BLOCK_TIME(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) SOURCECHAINBLOCKTIME(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.SOURCECHAINBLOCKTIME(&_Contract.CallOpts, dataMarket)
 }
 
-// SOURCECHAINBLOCKTIME is a free data retrieval call binding the contract method 0x351b6155.
+// SOURCECHAINID is a free data retrieval call binding the contract method 0x40e29707.
 //
-// Solidity: function SOURCE_CHAIN_BLOCK_TIME() view returns(uint256)
-func (_Contract *ContractCaller) SOURCECHAINBLOCKTIME(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function SOURCE_CHAIN_ID(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) SOURCECHAINID(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "SOURCE_CHAIN_BLOCK_TIME")
+	err := _Contract.contract.Call(opts, &out, "SOURCE_CHAIN_ID", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -341,57 +276,57 @@ func (_Contract *ContractCaller) SOURCECHAINBLOCKTIME(opts *bind.CallOpts) (*big
 
 }
 
-// SOURCECHAINBLOCKTIME is a free data retrieval call binding the contract method 0x351b6155.
+// SOURCECHAINID is a free data retrieval call binding the contract method 0x40e29707.
 //
-// Solidity: function SOURCE_CHAIN_BLOCK_TIME() view returns(uint256)
-func (_Contract *ContractSession) SOURCECHAINBLOCKTIME() (*big.Int, error) {
-	return _Contract.Contract.SOURCECHAINBLOCKTIME(&_Contract.CallOpts)
+// Solidity: function SOURCE_CHAIN_ID(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) SOURCECHAINID(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.SOURCECHAINID(&_Contract.CallOpts, dataMarket)
 }
 
-// SOURCECHAINBLOCKTIME is a free data retrieval call binding the contract method 0x351b6155.
+// SOURCECHAINID is a free data retrieval call binding the contract method 0x40e29707.
 //
-// Solidity: function SOURCE_CHAIN_BLOCK_TIME() view returns(uint256)
-func (_Contract *ContractCallerSession) SOURCECHAINBLOCKTIME() (*big.Int, error) {
-	return _Contract.Contract.SOURCECHAINBLOCKTIME(&_Contract.CallOpts)
+// Solidity: function SOURCE_CHAIN_ID(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) SOURCECHAINID(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.SOURCECHAINID(&_Contract.CallOpts, dataMarket)
 }
 
-// SOURCECHAINID is a free data retrieval call binding the contract method 0x74be2150.
+// UPGRADEINTERFACEVERSION is a free data retrieval call binding the contract method 0xad3cb1cc.
 //
-// Solidity: function SOURCE_CHAIN_ID() view returns(uint256)
-func (_Contract *ContractCaller) SOURCECHAINID(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function UPGRADE_INTERFACE_VERSION() view returns(string)
+func (_Contract *ContractCaller) UPGRADEINTERFACEVERSION(opts *bind.CallOpts) (string, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "SOURCE_CHAIN_ID")
+	err := _Contract.contract.Call(opts, &out, "UPGRADE_INTERFACE_VERSION")
 
 	if err != nil {
-		return *new(*big.Int), err
+		return *new(string), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
 
 	return out0, err
 
 }
 
-// SOURCECHAINID is a free data retrieval call binding the contract method 0x74be2150.
+// UPGRADEINTERFACEVERSION is a free data retrieval call binding the contract method 0xad3cb1cc.
 //
-// Solidity: function SOURCE_CHAIN_ID() view returns(uint256)
-func (_Contract *ContractSession) SOURCECHAINID() (*big.Int, error) {
-	return _Contract.Contract.SOURCECHAINID(&_Contract.CallOpts)
+// Solidity: function UPGRADE_INTERFACE_VERSION() view returns(string)
+func (_Contract *ContractSession) UPGRADEINTERFACEVERSION() (string, error) {
+	return _Contract.Contract.UPGRADEINTERFACEVERSION(&_Contract.CallOpts)
 }
 
-// SOURCECHAINID is a free data retrieval call binding the contract method 0x74be2150.
+// UPGRADEINTERFACEVERSION is a free data retrieval call binding the contract method 0xad3cb1cc.
 //
-// Solidity: function SOURCE_CHAIN_ID() view returns(uint256)
-func (_Contract *ContractCallerSession) SOURCECHAINID() (*big.Int, error) {
-	return _Contract.Contract.SOURCECHAINID(&_Contract.CallOpts)
+// Solidity: function UPGRADE_INTERFACE_VERSION() view returns(string)
+func (_Contract *ContractCallerSession) UPGRADEINTERFACEVERSION() (string, error) {
+	return _Contract.Contract.UPGRADEINTERFACEVERSION(&_Contract.CallOpts)
 }
 
-// USEBLOCKNUMBERASEPOCHID is a free data retrieval call binding the contract method 0x2d46247b.
+// USEBLOCKNUMBERASEPOCHID is a free data retrieval call binding the contract method 0x865fb4eb.
 //
-// Solidity: function USE_BLOCK_NUMBER_AS_EPOCH_ID() view returns(bool)
-func (_Contract *ContractCaller) USEBLOCKNUMBERASEPOCHID(opts *bind.CallOpts) (bool, error) {
+// Solidity: function USE_BLOCK_NUMBER_AS_EPOCH_ID(address dataMarket) view returns(bool)
+func (_Contract *ContractCaller) USEBLOCKNUMBERASEPOCHID(opts *bind.CallOpts, dataMarket common.Address) (bool, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "USE_BLOCK_NUMBER_AS_EPOCH_ID")
+	err := _Contract.contract.Call(opts, &out, "USE_BLOCK_NUMBER_AS_EPOCH_ID", dataMarket)
 
 	if err != nil {
 		return *new(bool), err
@@ -403,49 +338,18 @@ func (_Contract *ContractCaller) USEBLOCKNUMBERASEPOCHID(opts *bind.CallOpts) (b
 
 }
 
-// USEBLOCKNUMBERASEPOCHID is a free data retrieval call binding the contract method 0x2d46247b.
+// USEBLOCKNUMBERASEPOCHID is a free data retrieval call binding the contract method 0x865fb4eb.
 //
-// Solidity: function USE_BLOCK_NUMBER_AS_EPOCH_ID() view returns(bool)
-func (_Contract *ContractSession) USEBLOCKNUMBERASEPOCHID() (bool, error) {
-	return _Contract.Contract.USEBLOCKNUMBERASEPOCHID(&_Contract.CallOpts)
+// Solidity: function USE_BLOCK_NUMBER_AS_EPOCH_ID(address dataMarket) view returns(bool)
+func (_Contract *ContractSession) USEBLOCKNUMBERASEPOCHID(dataMarket common.Address) (bool, error) {
+	return _Contract.Contract.USEBLOCKNUMBERASEPOCHID(&_Contract.CallOpts, dataMarket)
 }
 
-// USEBLOCKNUMBERASEPOCHID is a free data retrieval call binding the contract method 0x2d46247b.
+// USEBLOCKNUMBERASEPOCHID is a free data retrieval call binding the contract method 0x865fb4eb.
 //
-// Solidity: function USE_BLOCK_NUMBER_AS_EPOCH_ID() view returns(bool)
-func (_Contract *ContractCallerSession) USEBLOCKNUMBERASEPOCHID() (bool, error) {
-	return _Contract.Contract.USEBLOCKNUMBERASEPOCHID(&_Contract.CallOpts)
-}
-
-// AcceptSnapshot is a free data retrieval call binding the contract method 0x154a6456.
-//
-// Solidity: function acceptSnapshot(uint256 slotId, string snapshotCid, uint256 epochId, string projectId, (uint256,uint256,string,uint256,string) request, bytes signature) view returns(bool)
-func (_Contract *ContractCaller) AcceptSnapshot(opts *bind.CallOpts, slotId *big.Int, snapshotCid string, epochId *big.Int, projectId string, request PowerloomProtocolStateRequest, signature []byte) (bool, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "acceptSnapshot", slotId, snapshotCid, epochId, projectId, request, signature)
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
-}
-
-// AcceptSnapshot is a free data retrieval call binding the contract method 0x154a6456.
-//
-// Solidity: function acceptSnapshot(uint256 slotId, string snapshotCid, uint256 epochId, string projectId, (uint256,uint256,string,uint256,string) request, bytes signature) view returns(bool)
-func (_Contract *ContractSession) AcceptSnapshot(slotId *big.Int, snapshotCid string, epochId *big.Int, projectId string, request PowerloomProtocolStateRequest, signature []byte) (bool, error) {
-	return _Contract.Contract.AcceptSnapshot(&_Contract.CallOpts, slotId, snapshotCid, epochId, projectId, request, signature)
-}
-
-// AcceptSnapshot is a free data retrieval call binding the contract method 0x154a6456.
-//
-// Solidity: function acceptSnapshot(uint256 slotId, string snapshotCid, uint256 epochId, string projectId, (uint256,uint256,string,uint256,string) request, bytes signature) view returns(bool)
-func (_Contract *ContractCallerSession) AcceptSnapshot(slotId *big.Int, snapshotCid string, epochId *big.Int, projectId string, request PowerloomProtocolStateRequest, signature []byte) (bool, error) {
-	return _Contract.Contract.AcceptSnapshot(&_Contract.CallOpts, slotId, snapshotCid, epochId, projectId, request, signature)
+// Solidity: function USE_BLOCK_NUMBER_AS_EPOCH_ID(address dataMarket) view returns(bool)
+func (_Contract *ContractCallerSession) USEBLOCKNUMBERASEPOCHID(dataMarket common.Address) (bool, error) {
+	return _Contract.Contract.USEBLOCKNUMBERASEPOCHID(&_Contract.CallOpts, dataMarket)
 }
 
 // AllSnapshotters is a free data retrieval call binding the contract method 0x3d15d0f4.
@@ -479,12 +383,12 @@ func (_Contract *ContractCallerSession) AllSnapshotters(addr common.Address) (bo
 	return _Contract.Contract.AllSnapshotters(&_Contract.CallOpts, addr)
 }
 
-// AllowedProjectTypes is a free data retrieval call binding the contract method 0x04d76d59.
+// AllowedProjectTypes is a free data retrieval call binding the contract method 0xc17b3434.
 //
-// Solidity: function allowedProjectTypes(string projectType) view returns(bool)
-func (_Contract *ContractCaller) AllowedProjectTypes(opts *bind.CallOpts, projectType string) (bool, error) {
+// Solidity: function allowedProjectTypes(address dataMarket, string projectType) view returns(bool)
+func (_Contract *ContractCaller) AllowedProjectTypes(opts *bind.CallOpts, dataMarket common.Address, projectType string) (bool, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "allowedProjectTypes", projectType)
+	err := _Contract.contract.Call(opts, &out, "allowedProjectTypes", dataMarket, projectType)
 
 	if err != nil {
 		return *new(bool), err
@@ -496,57 +400,26 @@ func (_Contract *ContractCaller) AllowedProjectTypes(opts *bind.CallOpts, projec
 
 }
 
-// AllowedProjectTypes is a free data retrieval call binding the contract method 0x04d76d59.
+// AllowedProjectTypes is a free data retrieval call binding the contract method 0xc17b3434.
 //
-// Solidity: function allowedProjectTypes(string projectType) view returns(bool)
-func (_Contract *ContractSession) AllowedProjectTypes(projectType string) (bool, error) {
-	return _Contract.Contract.AllowedProjectTypes(&_Contract.CallOpts, projectType)
+// Solidity: function allowedProjectTypes(address dataMarket, string projectType) view returns(bool)
+func (_Contract *ContractSession) AllowedProjectTypes(dataMarket common.Address, projectType string) (bool, error) {
+	return _Contract.Contract.AllowedProjectTypes(&_Contract.CallOpts, dataMarket, projectType)
 }
 
-// AllowedProjectTypes is a free data retrieval call binding the contract method 0x04d76d59.
+// AllowedProjectTypes is a free data retrieval call binding the contract method 0xc17b3434.
 //
-// Solidity: function allowedProjectTypes(string projectType) view returns(bool)
-func (_Contract *ContractCallerSession) AllowedProjectTypes(projectType string) (bool, error) {
-	return _Contract.Contract.AllowedProjectTypes(&_Contract.CallOpts, projectType)
+// Solidity: function allowedProjectTypes(address dataMarket, string projectType) view returns(bool)
+func (_Contract *ContractCallerSession) AllowedProjectTypes(dataMarket common.Address, projectType string) (bool, error) {
+	return _Contract.Contract.AllowedProjectTypes(&_Contract.CallOpts, dataMarket, projectType)
 }
 
-// AttestationFinalizedStatus is a free data retrieval call binding the contract method 0xbfefe303.
+// AttestationSubmissionWindow is a free data retrieval call binding the contract method 0xe1d5fbce.
 //
-// Solidity: function attestationFinalizedStatus(uint256 epochId, string projectId) view returns(bool finalized)
-func (_Contract *ContractCaller) AttestationFinalizedStatus(opts *bind.CallOpts, epochId *big.Int, projectId string) (bool, error) {
+// Solidity: function attestationSubmissionWindow(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) AttestationSubmissionWindow(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "attestationFinalizedStatus", epochId, projectId)
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
-}
-
-// AttestationFinalizedStatus is a free data retrieval call binding the contract method 0xbfefe303.
-//
-// Solidity: function attestationFinalizedStatus(uint256 epochId, string projectId) view returns(bool finalized)
-func (_Contract *ContractSession) AttestationFinalizedStatus(epochId *big.Int, projectId string) (bool, error) {
-	return _Contract.Contract.AttestationFinalizedStatus(&_Contract.CallOpts, epochId, projectId)
-}
-
-// AttestationFinalizedStatus is a free data retrieval call binding the contract method 0xbfefe303.
-//
-// Solidity: function attestationFinalizedStatus(uint256 epochId, string projectId) view returns(bool finalized)
-func (_Contract *ContractCallerSession) AttestationFinalizedStatus(epochId *big.Int, projectId string) (bool, error) {
-	return _Contract.Contract.AttestationFinalizedStatus(&_Contract.CallOpts, epochId, projectId)
-}
-
-// AttestationSubmissionWindow is a free data retrieval call binding the contract method 0x25129a3f.
-//
-// Solidity: function attestationSubmissionWindow() view returns(uint256)
-func (_Contract *ContractCaller) AttestationSubmissionWindow(opts *bind.CallOpts) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "attestationSubmissionWindow")
+	err := _Contract.contract.Call(opts, &out, "attestationSubmissionWindow", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -558,26 +431,26 @@ func (_Contract *ContractCaller) AttestationSubmissionWindow(opts *bind.CallOpts
 
 }
 
-// AttestationSubmissionWindow is a free data retrieval call binding the contract method 0x25129a3f.
+// AttestationSubmissionWindow is a free data retrieval call binding the contract method 0xe1d5fbce.
 //
-// Solidity: function attestationSubmissionWindow() view returns(uint256)
-func (_Contract *ContractSession) AttestationSubmissionWindow() (*big.Int, error) {
-	return _Contract.Contract.AttestationSubmissionWindow(&_Contract.CallOpts)
+// Solidity: function attestationSubmissionWindow(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) AttestationSubmissionWindow(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.AttestationSubmissionWindow(&_Contract.CallOpts, dataMarket)
 }
 
-// AttestationSubmissionWindow is a free data retrieval call binding the contract method 0x25129a3f.
+// AttestationSubmissionWindow is a free data retrieval call binding the contract method 0xe1d5fbce.
 //
-// Solidity: function attestationSubmissionWindow() view returns(uint256)
-func (_Contract *ContractCallerSession) AttestationSubmissionWindow() (*big.Int, error) {
-	return _Contract.Contract.AttestationSubmissionWindow(&_Contract.CallOpts)
+// Solidity: function attestationSubmissionWindow(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) AttestationSubmissionWindow(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.AttestationSubmissionWindow(&_Contract.CallOpts, dataMarket)
 }
 
-// AttestationsReceived is a free data retrieval call binding the contract method 0x33420a0c.
+// AttestationsReceived is a free data retrieval call binding the contract method 0xb09c5e2f.
 //
-// Solidity: function attestationsReceived(uint256 batchId, address validatorAddr) view returns(bool)
-func (_Contract *ContractCaller) AttestationsReceived(opts *bind.CallOpts, batchId *big.Int, validatorAddr common.Address) (bool, error) {
+// Solidity: function attestationsReceived(address dataMarket, uint256 batchId, address validator) view returns(bool)
+func (_Contract *ContractCaller) AttestationsReceived(opts *bind.CallOpts, dataMarket common.Address, batchId *big.Int, validator common.Address) (bool, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "attestationsReceived", batchId, validatorAddr)
+	err := _Contract.contract.Call(opts, &out, "attestationsReceived", dataMarket, batchId, validator)
 
 	if err != nil {
 		return *new(bool), err
@@ -589,26 +462,26 @@ func (_Contract *ContractCaller) AttestationsReceived(opts *bind.CallOpts, batch
 
 }
 
-// AttestationsReceived is a free data retrieval call binding the contract method 0x33420a0c.
+// AttestationsReceived is a free data retrieval call binding the contract method 0xb09c5e2f.
 //
-// Solidity: function attestationsReceived(uint256 batchId, address validatorAddr) view returns(bool)
-func (_Contract *ContractSession) AttestationsReceived(batchId *big.Int, validatorAddr common.Address) (bool, error) {
-	return _Contract.Contract.AttestationsReceived(&_Contract.CallOpts, batchId, validatorAddr)
+// Solidity: function attestationsReceived(address dataMarket, uint256 batchId, address validator) view returns(bool)
+func (_Contract *ContractSession) AttestationsReceived(dataMarket common.Address, batchId *big.Int, validator common.Address) (bool, error) {
+	return _Contract.Contract.AttestationsReceived(&_Contract.CallOpts, dataMarket, batchId, validator)
 }
 
-// AttestationsReceived is a free data retrieval call binding the contract method 0x33420a0c.
+// AttestationsReceived is a free data retrieval call binding the contract method 0xb09c5e2f.
 //
-// Solidity: function attestationsReceived(uint256 batchId, address validatorAddr) view returns(bool)
-func (_Contract *ContractCallerSession) AttestationsReceived(batchId *big.Int, validatorAddr common.Address) (bool, error) {
-	return _Contract.Contract.AttestationsReceived(&_Contract.CallOpts, batchId, validatorAddr)
+// Solidity: function attestationsReceived(address dataMarket, uint256 batchId, address validator) view returns(bool)
+func (_Contract *ContractCallerSession) AttestationsReceived(dataMarket common.Address, batchId *big.Int, validator common.Address) (bool, error) {
+	return _Contract.Contract.AttestationsReceived(&_Contract.CallOpts, dataMarket, batchId, validator)
 }
 
-// AttestationsReceivedCount is a free data retrieval call binding the contract method 0x66f94346.
+// AttestationsReceivedCount is a free data retrieval call binding the contract method 0x97b0b79f.
 //
-// Solidity: function attestationsReceivedCount(uint256 batchId, bytes32 rootHash) view returns(uint256 count)
-func (_Contract *ContractCaller) AttestationsReceivedCount(opts *bind.CallOpts, batchId *big.Int, rootHash [32]byte) (*big.Int, error) {
+// Solidity: function attestationsReceivedCount(address dataMarket, uint256 batchId, bytes32 finalizedCidsRootHash) view returns(uint256)
+func (_Contract *ContractCaller) AttestationsReceivedCount(opts *bind.CallOpts, dataMarket common.Address, batchId *big.Int, finalizedCidsRootHash [32]byte) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "attestationsReceivedCount", batchId, rootHash)
+	err := _Contract.contract.Call(opts, &out, "attestationsReceivedCount", dataMarket, batchId, finalizedCidsRootHash)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -620,26 +493,26 @@ func (_Contract *ContractCaller) AttestationsReceivedCount(opts *bind.CallOpts, 
 
 }
 
-// AttestationsReceivedCount is a free data retrieval call binding the contract method 0x66f94346.
+// AttestationsReceivedCount is a free data retrieval call binding the contract method 0x97b0b79f.
 //
-// Solidity: function attestationsReceivedCount(uint256 batchId, bytes32 rootHash) view returns(uint256 count)
-func (_Contract *ContractSession) AttestationsReceivedCount(batchId *big.Int, rootHash [32]byte) (*big.Int, error) {
-	return _Contract.Contract.AttestationsReceivedCount(&_Contract.CallOpts, batchId, rootHash)
+// Solidity: function attestationsReceivedCount(address dataMarket, uint256 batchId, bytes32 finalizedCidsRootHash) view returns(uint256)
+func (_Contract *ContractSession) AttestationsReceivedCount(dataMarket common.Address, batchId *big.Int, finalizedCidsRootHash [32]byte) (*big.Int, error) {
+	return _Contract.Contract.AttestationsReceivedCount(&_Contract.CallOpts, dataMarket, batchId, finalizedCidsRootHash)
 }
 
-// AttestationsReceivedCount is a free data retrieval call binding the contract method 0x66f94346.
+// AttestationsReceivedCount is a free data retrieval call binding the contract method 0x97b0b79f.
 //
-// Solidity: function attestationsReceivedCount(uint256 batchId, bytes32 rootHash) view returns(uint256 count)
-func (_Contract *ContractCallerSession) AttestationsReceivedCount(batchId *big.Int, rootHash [32]byte) (*big.Int, error) {
-	return _Contract.Contract.AttestationsReceivedCount(&_Contract.CallOpts, batchId, rootHash)
+// Solidity: function attestationsReceivedCount(address dataMarket, uint256 batchId, bytes32 finalizedCidsRootHash) view returns(uint256)
+func (_Contract *ContractCallerSession) AttestationsReceivedCount(dataMarket common.Address, batchId *big.Int, finalizedCidsRootHash [32]byte) (*big.Int, error) {
+	return _Contract.Contract.AttestationsReceivedCount(&_Contract.CallOpts, dataMarket, batchId, finalizedCidsRootHash)
 }
 
-// BatchIdAttestationStatus is a free data retrieval call binding the contract method 0xa047977d.
+// BatchIdAttestationStatus is a free data retrieval call binding the contract method 0xd4e1a3d1.
 //
-// Solidity: function batchIdAttestationStatus(uint256 batchId) view returns(bool status)
-func (_Contract *ContractCaller) BatchIdAttestationStatus(opts *bind.CallOpts, batchId *big.Int) (bool, error) {
+// Solidity: function batchIdAttestationStatus(address dataMarket, uint256 batchId) view returns(bool)
+func (_Contract *ContractCaller) BatchIdAttestationStatus(opts *bind.CallOpts, dataMarket common.Address, batchId *big.Int) (bool, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "batchIdAttestationStatus", batchId)
+	err := _Contract.contract.Call(opts, &out, "batchIdAttestationStatus", dataMarket, batchId)
 
 	if err != nil {
 		return *new(bool), err
@@ -651,26 +524,88 @@ func (_Contract *ContractCaller) BatchIdAttestationStatus(opts *bind.CallOpts, b
 
 }
 
-// BatchIdAttestationStatus is a free data retrieval call binding the contract method 0xa047977d.
+// BatchIdAttestationStatus is a free data retrieval call binding the contract method 0xd4e1a3d1.
 //
-// Solidity: function batchIdAttestationStatus(uint256 batchId) view returns(bool status)
-func (_Contract *ContractSession) BatchIdAttestationStatus(batchId *big.Int) (bool, error) {
-	return _Contract.Contract.BatchIdAttestationStatus(&_Contract.CallOpts, batchId)
+// Solidity: function batchIdAttestationStatus(address dataMarket, uint256 batchId) view returns(bool)
+func (_Contract *ContractSession) BatchIdAttestationStatus(dataMarket common.Address, batchId *big.Int) (bool, error) {
+	return _Contract.Contract.BatchIdAttestationStatus(&_Contract.CallOpts, dataMarket, batchId)
 }
 
-// BatchIdAttestationStatus is a free data retrieval call binding the contract method 0xa047977d.
+// BatchIdAttestationStatus is a free data retrieval call binding the contract method 0xd4e1a3d1.
 //
-// Solidity: function batchIdAttestationStatus(uint256 batchId) view returns(bool status)
-func (_Contract *ContractCallerSession) BatchIdAttestationStatus(batchId *big.Int) (bool, error) {
-	return _Contract.Contract.BatchIdAttestationStatus(&_Contract.CallOpts, batchId)
+// Solidity: function batchIdAttestationStatus(address dataMarket, uint256 batchId) view returns(bool)
+func (_Contract *ContractCallerSession) BatchIdAttestationStatus(dataMarket common.Address, batchId *big.Int) (bool, error) {
+	return _Contract.Contract.BatchIdAttestationStatus(&_Contract.CallOpts, dataMarket, batchId)
 }
 
-// BatchIdToProjects is a free data retrieval call binding the contract method 0x510c9f4c.
+// BatchIdDivergentValidators is a free data retrieval call binding the contract method 0x52ec368a.
 //
-// Solidity: function batchIdToProjects(uint256 batchId, uint256 ) view returns(string projectids)
-func (_Contract *ContractCaller) BatchIdToProjects(opts *bind.CallOpts, batchId *big.Int, arg1 *big.Int) (string, error) {
+// Solidity: function batchIdDivergentValidators(address dataMarket, uint256 batchId, uint256 idx) view returns(address)
+func (_Contract *ContractCaller) BatchIdDivergentValidators(opts *bind.CallOpts, dataMarket common.Address, batchId *big.Int, idx *big.Int) (common.Address, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "batchIdToProjects", batchId, arg1)
+	err := _Contract.contract.Call(opts, &out, "batchIdDivergentValidators", dataMarket, batchId, idx)
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// BatchIdDivergentValidators is a free data retrieval call binding the contract method 0x52ec368a.
+//
+// Solidity: function batchIdDivergentValidators(address dataMarket, uint256 batchId, uint256 idx) view returns(address)
+func (_Contract *ContractSession) BatchIdDivergentValidators(dataMarket common.Address, batchId *big.Int, idx *big.Int) (common.Address, error) {
+	return _Contract.Contract.BatchIdDivergentValidators(&_Contract.CallOpts, dataMarket, batchId, idx)
+}
+
+// BatchIdDivergentValidators is a free data retrieval call binding the contract method 0x52ec368a.
+//
+// Solidity: function batchIdDivergentValidators(address dataMarket, uint256 batchId, uint256 idx) view returns(address)
+func (_Contract *ContractCallerSession) BatchIdDivergentValidators(dataMarket common.Address, batchId *big.Int, idx *big.Int) (common.Address, error) {
+	return _Contract.Contract.BatchIdDivergentValidators(&_Contract.CallOpts, dataMarket, batchId, idx)
+}
+
+// BatchIdSequencerAttestation is a free data retrieval call binding the contract method 0x2564a9a6.
+//
+// Solidity: function batchIdSequencerAttestation(address dataMarket, uint256 batchId) view returns(bytes32)
+func (_Contract *ContractCaller) BatchIdSequencerAttestation(opts *bind.CallOpts, dataMarket common.Address, batchId *big.Int) ([32]byte, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "batchIdSequencerAttestation", dataMarket, batchId)
+
+	if err != nil {
+		return *new([32]byte), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
+
+	return out0, err
+
+}
+
+// BatchIdSequencerAttestation is a free data retrieval call binding the contract method 0x2564a9a6.
+//
+// Solidity: function batchIdSequencerAttestation(address dataMarket, uint256 batchId) view returns(bytes32)
+func (_Contract *ContractSession) BatchIdSequencerAttestation(dataMarket common.Address, batchId *big.Int) ([32]byte, error) {
+	return _Contract.Contract.BatchIdSequencerAttestation(&_Contract.CallOpts, dataMarket, batchId)
+}
+
+// BatchIdSequencerAttestation is a free data retrieval call binding the contract method 0x2564a9a6.
+//
+// Solidity: function batchIdSequencerAttestation(address dataMarket, uint256 batchId) view returns(bytes32)
+func (_Contract *ContractCallerSession) BatchIdSequencerAttestation(dataMarket common.Address, batchId *big.Int) ([32]byte, error) {
+	return _Contract.Contract.BatchIdSequencerAttestation(&_Contract.CallOpts, dataMarket, batchId)
+}
+
+// BatchIdToProjects is a free data retrieval call binding the contract method 0x474cfea6.
+//
+// Solidity: function batchIdToProjects(address dataMarket, uint256 batchId, uint256 idx) view returns(string)
+func (_Contract *ContractCaller) BatchIdToProjects(opts *bind.CallOpts, dataMarket common.Address, batchId *big.Int, idx *big.Int) (string, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "batchIdToProjects", dataMarket, batchId, idx)
 
 	if err != nil {
 		return *new(string), err
@@ -682,26 +617,26 @@ func (_Contract *ContractCaller) BatchIdToProjects(opts *bind.CallOpts, batchId 
 
 }
 
-// BatchIdToProjects is a free data retrieval call binding the contract method 0x510c9f4c.
+// BatchIdToProjects is a free data retrieval call binding the contract method 0x474cfea6.
 //
-// Solidity: function batchIdToProjects(uint256 batchId, uint256 ) view returns(string projectids)
-func (_Contract *ContractSession) BatchIdToProjects(batchId *big.Int, arg1 *big.Int) (string, error) {
-	return _Contract.Contract.BatchIdToProjects(&_Contract.CallOpts, batchId, arg1)
+// Solidity: function batchIdToProjects(address dataMarket, uint256 batchId, uint256 idx) view returns(string)
+func (_Contract *ContractSession) BatchIdToProjects(dataMarket common.Address, batchId *big.Int, idx *big.Int) (string, error) {
+	return _Contract.Contract.BatchIdToProjects(&_Contract.CallOpts, dataMarket, batchId, idx)
 }
 
-// BatchIdToProjects is a free data retrieval call binding the contract method 0x510c9f4c.
+// BatchIdToProjects is a free data retrieval call binding the contract method 0x474cfea6.
 //
-// Solidity: function batchIdToProjects(uint256 batchId, uint256 ) view returns(string projectids)
-func (_Contract *ContractCallerSession) BatchIdToProjects(batchId *big.Int, arg1 *big.Int) (string, error) {
-	return _Contract.Contract.BatchIdToProjects(&_Contract.CallOpts, batchId, arg1)
+// Solidity: function batchIdToProjects(address dataMarket, uint256 batchId, uint256 idx) view returns(string)
+func (_Contract *ContractCallerSession) BatchIdToProjects(dataMarket common.Address, batchId *big.Int, idx *big.Int) (string, error) {
+	return _Contract.Contract.BatchIdToProjects(&_Contract.CallOpts, dataMarket, batchId, idx)
 }
 
-// BatchSubmissionWindow is a free data retrieval call binding the contract method 0xb398c290.
+// BatchSubmissionWindow is a free data retrieval call binding the contract method 0x4d9c25d4.
 //
-// Solidity: function batchSubmissionWindow() view returns(uint256)
-func (_Contract *ContractCaller) BatchSubmissionWindow(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function batchSubmissionWindow(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) BatchSubmissionWindow(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "batchSubmissionWindow")
+	err := _Contract.contract.Call(opts, &out, "batchSubmissionWindow", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -713,26 +648,26 @@ func (_Contract *ContractCaller) BatchSubmissionWindow(opts *bind.CallOpts) (*bi
 
 }
 
-// BatchSubmissionWindow is a free data retrieval call binding the contract method 0xb398c290.
+// BatchSubmissionWindow is a free data retrieval call binding the contract method 0x4d9c25d4.
 //
-// Solidity: function batchSubmissionWindow() view returns(uint256)
-func (_Contract *ContractSession) BatchSubmissionWindow() (*big.Int, error) {
-	return _Contract.Contract.BatchSubmissionWindow(&_Contract.CallOpts)
+// Solidity: function batchSubmissionWindow(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) BatchSubmissionWindow(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.BatchSubmissionWindow(&_Contract.CallOpts, dataMarket)
 }
 
-// BatchSubmissionWindow is a free data retrieval call binding the contract method 0xb398c290.
+// BatchSubmissionWindow is a free data retrieval call binding the contract method 0x4d9c25d4.
 //
-// Solidity: function batchSubmissionWindow() view returns(uint256)
-func (_Contract *ContractCallerSession) BatchSubmissionWindow() (*big.Int, error) {
-	return _Contract.Contract.BatchSubmissionWindow(&_Contract.CallOpts)
+// Solidity: function batchSubmissionWindow(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) BatchSubmissionWindow(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.BatchSubmissionWindow(&_Contract.CallOpts, dataMarket)
 }
 
-// CheckDynamicConsensusAttestations is a free data retrieval call binding the contract method 0xac23e9ff.
+// CheckDynamicConsensusAttestations is a free data retrieval call binding the contract method 0x20cfff83.
 //
-// Solidity: function checkDynamicConsensusAttestations(uint256 batchId, uint256 epochId) view returns(bool)
-func (_Contract *ContractCaller) CheckDynamicConsensusAttestations(opts *bind.CallOpts, batchId *big.Int, epochId *big.Int) (bool, error) {
+// Solidity: function checkDynamicConsensusAttestations(address dataMarket, uint256 batchId, uint256 epochId) view returns(bool)
+func (_Contract *ContractCaller) CheckDynamicConsensusAttestations(opts *bind.CallOpts, dataMarket common.Address, batchId *big.Int, epochId *big.Int) (bool, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "checkDynamicConsensusAttestations", batchId, epochId)
+	err := _Contract.contract.Call(opts, &out, "checkDynamicConsensusAttestations", dataMarket, batchId, epochId)
 
 	if err != nil {
 		return *new(bool), err
@@ -744,26 +679,26 @@ func (_Contract *ContractCaller) CheckDynamicConsensusAttestations(opts *bind.Ca
 
 }
 
-// CheckDynamicConsensusAttestations is a free data retrieval call binding the contract method 0xac23e9ff.
+// CheckDynamicConsensusAttestations is a free data retrieval call binding the contract method 0x20cfff83.
 //
-// Solidity: function checkDynamicConsensusAttestations(uint256 batchId, uint256 epochId) view returns(bool)
-func (_Contract *ContractSession) CheckDynamicConsensusAttestations(batchId *big.Int, epochId *big.Int) (bool, error) {
-	return _Contract.Contract.CheckDynamicConsensusAttestations(&_Contract.CallOpts, batchId, epochId)
+// Solidity: function checkDynamicConsensusAttestations(address dataMarket, uint256 batchId, uint256 epochId) view returns(bool)
+func (_Contract *ContractSession) CheckDynamicConsensusAttestations(dataMarket common.Address, batchId *big.Int, epochId *big.Int) (bool, error) {
+	return _Contract.Contract.CheckDynamicConsensusAttestations(&_Contract.CallOpts, dataMarket, batchId, epochId)
 }
 
-// CheckDynamicConsensusAttestations is a free data retrieval call binding the contract method 0xac23e9ff.
+// CheckDynamicConsensusAttestations is a free data retrieval call binding the contract method 0x20cfff83.
 //
-// Solidity: function checkDynamicConsensusAttestations(uint256 batchId, uint256 epochId) view returns(bool)
-func (_Contract *ContractCallerSession) CheckDynamicConsensusAttestations(batchId *big.Int, epochId *big.Int) (bool, error) {
-	return _Contract.Contract.CheckDynamicConsensusAttestations(&_Contract.CallOpts, batchId, epochId)
+// Solidity: function checkDynamicConsensusAttestations(address dataMarket, uint256 batchId, uint256 epochId) view returns(bool)
+func (_Contract *ContractCallerSession) CheckDynamicConsensusAttestations(dataMarket common.Address, batchId *big.Int, epochId *big.Int) (bool, error) {
+	return _Contract.Contract.CheckDynamicConsensusAttestations(&_Contract.CallOpts, dataMarket, batchId, epochId)
 }
 
-// CheckSlotTaskStatusForDay is a free data retrieval call binding the contract method 0xd1dd6ddd.
+// CheckSlotTaskStatusForDay is a free data retrieval call binding the contract method 0xc00d0f9c.
 //
-// Solidity: function checkSlotTaskStatusForDay(uint256 slotId, uint256 day) view returns(bool)
-func (_Contract *ContractCaller) CheckSlotTaskStatusForDay(opts *bind.CallOpts, slotId *big.Int, day *big.Int) (bool, error) {
+// Solidity: function checkSlotTaskStatusForDay(address dataMarket, uint256 slotId, uint256 day) view returns(bool)
+func (_Contract *ContractCaller) CheckSlotTaskStatusForDay(opts *bind.CallOpts, dataMarket common.Address, slotId *big.Int, day *big.Int) (bool, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "checkSlotTaskStatusForDay", slotId, day)
+	err := _Contract.contract.Call(opts, &out, "checkSlotTaskStatusForDay", dataMarket, slotId, day)
 
 	if err != nil {
 		return *new(bool), err
@@ -775,26 +710,26 @@ func (_Contract *ContractCaller) CheckSlotTaskStatusForDay(opts *bind.CallOpts, 
 
 }
 
-// CheckSlotTaskStatusForDay is a free data retrieval call binding the contract method 0xd1dd6ddd.
+// CheckSlotTaskStatusForDay is a free data retrieval call binding the contract method 0xc00d0f9c.
 //
-// Solidity: function checkSlotTaskStatusForDay(uint256 slotId, uint256 day) view returns(bool)
-func (_Contract *ContractSession) CheckSlotTaskStatusForDay(slotId *big.Int, day *big.Int) (bool, error) {
-	return _Contract.Contract.CheckSlotTaskStatusForDay(&_Contract.CallOpts, slotId, day)
+// Solidity: function checkSlotTaskStatusForDay(address dataMarket, uint256 slotId, uint256 day) view returns(bool)
+func (_Contract *ContractSession) CheckSlotTaskStatusForDay(dataMarket common.Address, slotId *big.Int, day *big.Int) (bool, error) {
+	return _Contract.Contract.CheckSlotTaskStatusForDay(&_Contract.CallOpts, dataMarket, slotId, day)
 }
 
-// CheckSlotTaskStatusForDay is a free data retrieval call binding the contract method 0xd1dd6ddd.
+// CheckSlotTaskStatusForDay is a free data retrieval call binding the contract method 0xc00d0f9c.
 //
-// Solidity: function checkSlotTaskStatusForDay(uint256 slotId, uint256 day) view returns(bool)
-func (_Contract *ContractCallerSession) CheckSlotTaskStatusForDay(slotId *big.Int, day *big.Int) (bool, error) {
-	return _Contract.Contract.CheckSlotTaskStatusForDay(&_Contract.CallOpts, slotId, day)
+// Solidity: function checkSlotTaskStatusForDay(address dataMarket, uint256 slotId, uint256 day) view returns(bool)
+func (_Contract *ContractCallerSession) CheckSlotTaskStatusForDay(dataMarket common.Address, slotId *big.Int, day *big.Int) (bool, error) {
+	return _Contract.Contract.CheckSlotTaskStatusForDay(&_Contract.CallOpts, dataMarket, slotId, day)
 }
 
-// CurrentBatchId is a free data retrieval call binding the contract method 0x0a763da1.
+// CurrentBatchId is a free data retrieval call binding the contract method 0x5edba3d3.
 //
-// Solidity: function currentBatchId() view returns(uint256)
-func (_Contract *ContractCaller) CurrentBatchId(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function currentBatchId(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) CurrentBatchId(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "currentBatchId")
+	err := _Contract.contract.Call(opts, &out, "currentBatchId", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -806,30 +741,30 @@ func (_Contract *ContractCaller) CurrentBatchId(opts *bind.CallOpts) (*big.Int, 
 
 }
 
-// CurrentBatchId is a free data retrieval call binding the contract method 0x0a763da1.
+// CurrentBatchId is a free data retrieval call binding the contract method 0x5edba3d3.
 //
-// Solidity: function currentBatchId() view returns(uint256)
-func (_Contract *ContractSession) CurrentBatchId() (*big.Int, error) {
-	return _Contract.Contract.CurrentBatchId(&_Contract.CallOpts)
+// Solidity: function currentBatchId(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) CurrentBatchId(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.CurrentBatchId(&_Contract.CallOpts, dataMarket)
 }
 
-// CurrentBatchId is a free data retrieval call binding the contract method 0x0a763da1.
+// CurrentBatchId is a free data retrieval call binding the contract method 0x5edba3d3.
 //
-// Solidity: function currentBatchId() view returns(uint256)
-func (_Contract *ContractCallerSession) CurrentBatchId() (*big.Int, error) {
-	return _Contract.Contract.CurrentBatchId(&_Contract.CallOpts)
+// Solidity: function currentBatchId(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) CurrentBatchId(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.CurrentBatchId(&_Contract.CallOpts, dataMarket)
 }
 
-// CurrentEpoch is a free data retrieval call binding the contract method 0x76671808.
+// CurrentEpoch is a free data retrieval call binding the contract method 0x0736e19f.
 //
-// Solidity: function currentEpoch() view returns(uint256 begin, uint256 end, uint256 epochId)
-func (_Contract *ContractCaller) CurrentEpoch(opts *bind.CallOpts) (struct {
+// Solidity: function currentEpoch(address dataMarket) view returns(uint256 begin, uint256 end, uint256 epochId)
+func (_Contract *ContractCaller) CurrentEpoch(opts *bind.CallOpts, dataMarket common.Address) (struct {
 	Begin   *big.Int
 	End     *big.Int
 	EpochId *big.Int
 }, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "currentEpoch")
+	err := _Contract.contract.Call(opts, &out, "currentEpoch", dataMarket)
 
 	outstruct := new(struct {
 		Begin   *big.Int
@@ -848,34 +783,34 @@ func (_Contract *ContractCaller) CurrentEpoch(opts *bind.CallOpts) (struct {
 
 }
 
-// CurrentEpoch is a free data retrieval call binding the contract method 0x76671808.
+// CurrentEpoch is a free data retrieval call binding the contract method 0x0736e19f.
 //
-// Solidity: function currentEpoch() view returns(uint256 begin, uint256 end, uint256 epochId)
-func (_Contract *ContractSession) CurrentEpoch() (struct {
+// Solidity: function currentEpoch(address dataMarket) view returns(uint256 begin, uint256 end, uint256 epochId)
+func (_Contract *ContractSession) CurrentEpoch(dataMarket common.Address) (struct {
 	Begin   *big.Int
 	End     *big.Int
 	EpochId *big.Int
 }, error) {
-	return _Contract.Contract.CurrentEpoch(&_Contract.CallOpts)
+	return _Contract.Contract.CurrentEpoch(&_Contract.CallOpts, dataMarket)
 }
 
-// CurrentEpoch is a free data retrieval call binding the contract method 0x76671808.
+// CurrentEpoch is a free data retrieval call binding the contract method 0x0736e19f.
 //
-// Solidity: function currentEpoch() view returns(uint256 begin, uint256 end, uint256 epochId)
-func (_Contract *ContractCallerSession) CurrentEpoch() (struct {
+// Solidity: function currentEpoch(address dataMarket) view returns(uint256 begin, uint256 end, uint256 epochId)
+func (_Contract *ContractCallerSession) CurrentEpoch(dataMarket common.Address) (struct {
 	Begin   *big.Int
 	End     *big.Int
 	EpochId *big.Int
 }, error) {
-	return _Contract.Contract.CurrentEpoch(&_Contract.CallOpts)
+	return _Contract.Contract.CurrentEpoch(&_Contract.CallOpts, dataMarket)
 }
 
-// DayCounter is a free data retrieval call binding the contract method 0x99332c5e.
+// DailySnapshotQuota is a free data retrieval call binding the contract method 0x095cb210.
 //
-// Solidity: function dayCounter() view returns(uint256)
-func (_Contract *ContractCaller) DayCounter(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function dailySnapshotQuota(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) DailySnapshotQuota(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "dayCounter")
+	err := _Contract.contract.Call(opts, &out, "dailySnapshotQuota", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -887,30 +822,322 @@ func (_Contract *ContractCaller) DayCounter(opts *bind.CallOpts) (*big.Int, erro
 
 }
 
-// DayCounter is a free data retrieval call binding the contract method 0x99332c5e.
+// DailySnapshotQuota is a free data retrieval call binding the contract method 0x095cb210.
 //
-// Solidity: function dayCounter() view returns(uint256)
-func (_Contract *ContractSession) DayCounter() (*big.Int, error) {
-	return _Contract.Contract.DayCounter(&_Contract.CallOpts)
+// Solidity: function dailySnapshotQuota(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) DailySnapshotQuota(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.DailySnapshotQuota(&_Contract.CallOpts, dataMarket)
 }
 
-// DayCounter is a free data retrieval call binding the contract method 0x99332c5e.
+// DailySnapshotQuota is a free data retrieval call binding the contract method 0x095cb210.
 //
-// Solidity: function dayCounter() view returns(uint256)
-func (_Contract *ContractCallerSession) DayCounter() (*big.Int, error) {
-	return _Contract.Contract.DayCounter(&_Contract.CallOpts)
+// Solidity: function dailySnapshotQuota(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) DailySnapshotQuota(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.DailySnapshotQuota(&_Contract.CallOpts, dataMarket)
 }
 
-// EpochInfo is a free data retrieval call binding the contract method 0x3894228e.
+// DataMarketCount is a free data retrieval call binding the contract method 0xef829a3d.
 //
-// Solidity: function epochInfo(uint256 ) view returns(uint256 timestamp, uint256 blocknumber, uint256 epochEnd)
-func (_Contract *ContractCaller) EpochInfo(opts *bind.CallOpts, arg0 *big.Int) (struct {
+// Solidity: function dataMarketCount() view returns(uint8)
+func (_Contract *ContractCaller) DataMarketCount(opts *bind.CallOpts) (uint8, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "dataMarketCount")
+
+	if err != nil {
+		return *new(uint8), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint8)).(*uint8)
+
+	return out0, err
+
+}
+
+// DataMarketCount is a free data retrieval call binding the contract method 0xef829a3d.
+//
+// Solidity: function dataMarketCount() view returns(uint8)
+func (_Contract *ContractSession) DataMarketCount() (uint8, error) {
+	return _Contract.Contract.DataMarketCount(&_Contract.CallOpts)
+}
+
+// DataMarketCount is a free data retrieval call binding the contract method 0xef829a3d.
+//
+// Solidity: function dataMarketCount() view returns(uint8)
+func (_Contract *ContractCallerSession) DataMarketCount() (uint8, error) {
+	return _Contract.Contract.DataMarketCount(&_Contract.CallOpts)
+}
+
+// DataMarketEnabled is a free data retrieval call binding the contract method 0x75fd5c7c.
+//
+// Solidity: function dataMarketEnabled(address dataMarketAddress) view returns(bool)
+func (_Contract *ContractCaller) DataMarketEnabled(opts *bind.CallOpts, dataMarketAddress common.Address) (bool, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "dataMarketEnabled", dataMarketAddress)
+
+	if err != nil {
+		return *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+
+	return out0, err
+
+}
+
+// DataMarketEnabled is a free data retrieval call binding the contract method 0x75fd5c7c.
+//
+// Solidity: function dataMarketEnabled(address dataMarketAddress) view returns(bool)
+func (_Contract *ContractSession) DataMarketEnabled(dataMarketAddress common.Address) (bool, error) {
+	return _Contract.Contract.DataMarketEnabled(&_Contract.CallOpts, dataMarketAddress)
+}
+
+// DataMarketEnabled is a free data retrieval call binding the contract method 0x75fd5c7c.
+//
+// Solidity: function dataMarketEnabled(address dataMarketAddress) view returns(bool)
+func (_Contract *ContractCallerSession) DataMarketEnabled(dataMarketAddress common.Address) (bool, error) {
+	return _Contract.Contract.DataMarketEnabled(&_Contract.CallOpts, dataMarketAddress)
+}
+
+// DataMarketFactory is a free data retrieval call binding the contract method 0x5a5c908b.
+//
+// Solidity: function dataMarketFactory() view returns(address)
+func (_Contract *ContractCaller) DataMarketFactory(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "dataMarketFactory")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// DataMarketFactory is a free data retrieval call binding the contract method 0x5a5c908b.
+//
+// Solidity: function dataMarketFactory() view returns(address)
+func (_Contract *ContractSession) DataMarketFactory() (common.Address, error) {
+	return _Contract.Contract.DataMarketFactory(&_Contract.CallOpts)
+}
+
+// DataMarketFactory is a free data retrieval call binding the contract method 0x5a5c908b.
+//
+// Solidity: function dataMarketFactory() view returns(address)
+func (_Contract *ContractCallerSession) DataMarketFactory() (common.Address, error) {
+	return _Contract.Contract.DataMarketFactory(&_Contract.CallOpts)
+}
+
+// DataMarketIdToAddress is a free data retrieval call binding the contract method 0x0857b13f.
+//
+// Solidity: function dataMarketIdToAddress(uint8 dataMarketId) view returns(address dataMarketAddress)
+func (_Contract *ContractCaller) DataMarketIdToAddress(opts *bind.CallOpts, dataMarketId uint8) (common.Address, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "dataMarketIdToAddress", dataMarketId)
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// DataMarketIdToAddress is a free data retrieval call binding the contract method 0x0857b13f.
+//
+// Solidity: function dataMarketIdToAddress(uint8 dataMarketId) view returns(address dataMarketAddress)
+func (_Contract *ContractSession) DataMarketIdToAddress(dataMarketId uint8) (common.Address, error) {
+	return _Contract.Contract.DataMarketIdToAddress(&_Contract.CallOpts, dataMarketId)
+}
+
+// DataMarketIdToAddress is a free data retrieval call binding the contract method 0x0857b13f.
+//
+// Solidity: function dataMarketIdToAddress(uint8 dataMarketId) view returns(address dataMarketAddress)
+func (_Contract *ContractCallerSession) DataMarketIdToAddress(dataMarketId uint8) (common.Address, error) {
+	return _Contract.Contract.DataMarketIdToAddress(&_Contract.CallOpts, dataMarketId)
+}
+
+// DataMarkets is a free data retrieval call binding the contract method 0x5f9abf70.
+//
+// Solidity: function dataMarkets(address ) view returns(address ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId, bool enabled, address dataMarketAddress, uint256 createdAt)
+func (_Contract *ContractCaller) DataMarkets(opts *bind.CallOpts, arg0 common.Address) (struct {
+	OwnerAddress            common.Address
+	EpochSize               uint8
+	SourceChainId           *big.Int
+	SourceChainBlockTime    *big.Int
+	UseBlockNumberAsEpochId bool
+	Enabled                 bool
+	DataMarketAddress       common.Address
+	CreatedAt               *big.Int
+}, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "dataMarkets", arg0)
+
+	outstruct := new(struct {
+		OwnerAddress            common.Address
+		EpochSize               uint8
+		SourceChainId           *big.Int
+		SourceChainBlockTime    *big.Int
+		UseBlockNumberAsEpochId bool
+		Enabled                 bool
+		DataMarketAddress       common.Address
+		CreatedAt               *big.Int
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.OwnerAddress = *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+	outstruct.EpochSize = *abi.ConvertType(out[1], new(uint8)).(*uint8)
+	outstruct.SourceChainId = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
+	outstruct.SourceChainBlockTime = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
+	outstruct.UseBlockNumberAsEpochId = *abi.ConvertType(out[4], new(bool)).(*bool)
+	outstruct.Enabled = *abi.ConvertType(out[5], new(bool)).(*bool)
+	outstruct.DataMarketAddress = *abi.ConvertType(out[6], new(common.Address)).(*common.Address)
+	outstruct.CreatedAt = *abi.ConvertType(out[7], new(*big.Int)).(**big.Int)
+
+	return *outstruct, err
+
+}
+
+// DataMarkets is a free data retrieval call binding the contract method 0x5f9abf70.
+//
+// Solidity: function dataMarkets(address ) view returns(address ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId, bool enabled, address dataMarketAddress, uint256 createdAt)
+func (_Contract *ContractSession) DataMarkets(arg0 common.Address) (struct {
+	OwnerAddress            common.Address
+	EpochSize               uint8
+	SourceChainId           *big.Int
+	SourceChainBlockTime    *big.Int
+	UseBlockNumberAsEpochId bool
+	Enabled                 bool
+	DataMarketAddress       common.Address
+	CreatedAt               *big.Int
+}, error) {
+	return _Contract.Contract.DataMarkets(&_Contract.CallOpts, arg0)
+}
+
+// DataMarkets is a free data retrieval call binding the contract method 0x5f9abf70.
+//
+// Solidity: function dataMarkets(address ) view returns(address ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId, bool enabled, address dataMarketAddress, uint256 createdAt)
+func (_Contract *ContractCallerSession) DataMarkets(arg0 common.Address) (struct {
+	OwnerAddress            common.Address
+	EpochSize               uint8
+	SourceChainId           *big.Int
+	SourceChainBlockTime    *big.Int
+	UseBlockNumberAsEpochId bool
+	Enabled                 bool
+	DataMarketAddress       common.Address
+	CreatedAt               *big.Int
+}, error) {
+	return _Contract.Contract.DataMarkets(&_Contract.CallOpts, arg0)
+}
+
+// DayCounter is a free data retrieval call binding the contract method 0x02143405.
+//
+// Solidity: function dayCounter(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) DayCounter(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "dayCounter", dataMarket)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// DayCounter is a free data retrieval call binding the contract method 0x02143405.
+//
+// Solidity: function dayCounter(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) DayCounter(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.DayCounter(&_Contract.CallOpts, dataMarket)
+}
+
+// DayCounter is a free data retrieval call binding the contract method 0x02143405.
+//
+// Solidity: function dayCounter(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) DayCounter(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.DayCounter(&_Contract.CallOpts, dataMarket)
+}
+
+// DeploymentBlockNumber is a free data retrieval call binding the contract method 0x06b8d494.
+//
+// Solidity: function deploymentBlockNumber(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) DeploymentBlockNumber(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "deploymentBlockNumber", dataMarket)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// DeploymentBlockNumber is a free data retrieval call binding the contract method 0x06b8d494.
+//
+// Solidity: function deploymentBlockNumber(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) DeploymentBlockNumber(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.DeploymentBlockNumber(&_Contract.CallOpts, dataMarket)
+}
+
+// DeploymentBlockNumber is a free data retrieval call binding the contract method 0x06b8d494.
+//
+// Solidity: function deploymentBlockNumber(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) DeploymentBlockNumber(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.DeploymentBlockNumber(&_Contract.CallOpts, dataMarket)
+}
+
+// EpochIdToBatchIds is a free data retrieval call binding the contract method 0x07a23063.
+//
+// Solidity: function epochIdToBatchIds(address dataMarket, uint256 epochId, uint256 idx) view returns(uint256)
+func (_Contract *ContractCaller) EpochIdToBatchIds(opts *bind.CallOpts, dataMarket common.Address, epochId *big.Int, idx *big.Int) (*big.Int, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "epochIdToBatchIds", dataMarket, epochId, idx)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// EpochIdToBatchIds is a free data retrieval call binding the contract method 0x07a23063.
+//
+// Solidity: function epochIdToBatchIds(address dataMarket, uint256 epochId, uint256 idx) view returns(uint256)
+func (_Contract *ContractSession) EpochIdToBatchIds(dataMarket common.Address, epochId *big.Int, idx *big.Int) (*big.Int, error) {
+	return _Contract.Contract.EpochIdToBatchIds(&_Contract.CallOpts, dataMarket, epochId, idx)
+}
+
+// EpochIdToBatchIds is a free data retrieval call binding the contract method 0x07a23063.
+//
+// Solidity: function epochIdToBatchIds(address dataMarket, uint256 epochId, uint256 idx) view returns(uint256)
+func (_Contract *ContractCallerSession) EpochIdToBatchIds(dataMarket common.Address, epochId *big.Int, idx *big.Int) (*big.Int, error) {
+	return _Contract.Contract.EpochIdToBatchIds(&_Contract.CallOpts, dataMarket, epochId, idx)
+}
+
+// EpochInfo is a free data retrieval call binding the contract method 0xc9ab0c83.
+//
+// Solidity: function epochInfo(address dataMarket, uint256 epochId) view returns(uint256 timestamp, uint256 blocknumber, uint256 epochEnd)
+func (_Contract *ContractCaller) EpochInfo(opts *bind.CallOpts, dataMarket common.Address, epochId *big.Int) (struct {
 	Timestamp   *big.Int
 	Blocknumber *big.Int
 	EpochEnd    *big.Int
 }, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "epochInfo", arg0)
+	err := _Contract.contract.Call(opts, &out, "epochInfo", dataMarket, epochId)
 
 	outstruct := new(struct {
 		Timestamp   *big.Int
@@ -929,34 +1156,65 @@ func (_Contract *ContractCaller) EpochInfo(opts *bind.CallOpts, arg0 *big.Int) (
 
 }
 
-// EpochInfo is a free data retrieval call binding the contract method 0x3894228e.
+// EpochInfo is a free data retrieval call binding the contract method 0xc9ab0c83.
 //
-// Solidity: function epochInfo(uint256 ) view returns(uint256 timestamp, uint256 blocknumber, uint256 epochEnd)
-func (_Contract *ContractSession) EpochInfo(arg0 *big.Int) (struct {
+// Solidity: function epochInfo(address dataMarket, uint256 epochId) view returns(uint256 timestamp, uint256 blocknumber, uint256 epochEnd)
+func (_Contract *ContractSession) EpochInfo(dataMarket common.Address, epochId *big.Int) (struct {
 	Timestamp   *big.Int
 	Blocknumber *big.Int
 	EpochEnd    *big.Int
 }, error) {
-	return _Contract.Contract.EpochInfo(&_Contract.CallOpts, arg0)
+	return _Contract.Contract.EpochInfo(&_Contract.CallOpts, dataMarket, epochId)
 }
 
-// EpochInfo is a free data retrieval call binding the contract method 0x3894228e.
+// EpochInfo is a free data retrieval call binding the contract method 0xc9ab0c83.
 //
-// Solidity: function epochInfo(uint256 ) view returns(uint256 timestamp, uint256 blocknumber, uint256 epochEnd)
-func (_Contract *ContractCallerSession) EpochInfo(arg0 *big.Int) (struct {
+// Solidity: function epochInfo(address dataMarket, uint256 epochId) view returns(uint256 timestamp, uint256 blocknumber, uint256 epochEnd)
+func (_Contract *ContractCallerSession) EpochInfo(dataMarket common.Address, epochId *big.Int) (struct {
 	Timestamp   *big.Int
 	Blocknumber *big.Int
 	EpochEnd    *big.Int
 }, error) {
-	return _Contract.Contract.EpochInfo(&_Contract.CallOpts, arg0)
+	return _Contract.Contract.EpochInfo(&_Contract.CallOpts, dataMarket, epochId)
 }
 
-// EpochsInADay is a free data retrieval call binding the contract method 0xe3042b17.
+// EpochManager is a free data retrieval call binding the contract method 0x0d5a7a52.
 //
-// Solidity: function epochsInADay() view returns(uint256)
-func (_Contract *ContractCaller) EpochsInADay(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function epochManager(address dataMarket) view returns(address)
+func (_Contract *ContractCaller) EpochManager(opts *bind.CallOpts, dataMarket common.Address) (common.Address, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "epochsInADay")
+	err := _Contract.contract.Call(opts, &out, "epochManager", dataMarket)
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// EpochManager is a free data retrieval call binding the contract method 0x0d5a7a52.
+//
+// Solidity: function epochManager(address dataMarket) view returns(address)
+func (_Contract *ContractSession) EpochManager(dataMarket common.Address) (common.Address, error) {
+	return _Contract.Contract.EpochManager(&_Contract.CallOpts, dataMarket)
+}
+
+// EpochManager is a free data retrieval call binding the contract method 0x0d5a7a52.
+//
+// Solidity: function epochManager(address dataMarket) view returns(address)
+func (_Contract *ContractCallerSession) EpochManager(dataMarket common.Address) (common.Address, error) {
+	return _Contract.Contract.EpochManager(&_Contract.CallOpts, dataMarket)
+}
+
+// EpochsInADay is a free data retrieval call binding the contract method 0x0a1b7227.
+//
+// Solidity: function epochsInADay(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) EpochsInADay(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "epochsInADay", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -968,26 +1226,26 @@ func (_Contract *ContractCaller) EpochsInADay(opts *bind.CallOpts) (*big.Int, er
 
 }
 
-// EpochsInADay is a free data retrieval call binding the contract method 0xe3042b17.
+// EpochsInADay is a free data retrieval call binding the contract method 0x0a1b7227.
 //
-// Solidity: function epochsInADay() view returns(uint256)
-func (_Contract *ContractSession) EpochsInADay() (*big.Int, error) {
-	return _Contract.Contract.EpochsInADay(&_Contract.CallOpts)
+// Solidity: function epochsInADay(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) EpochsInADay(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.EpochsInADay(&_Contract.CallOpts, dataMarket)
 }
 
-// EpochsInADay is a free data retrieval call binding the contract method 0xe3042b17.
+// EpochsInADay is a free data retrieval call binding the contract method 0x0a1b7227.
 //
-// Solidity: function epochsInADay() view returns(uint256)
-func (_Contract *ContractCallerSession) EpochsInADay() (*big.Int, error) {
-	return _Contract.Contract.EpochsInADay(&_Contract.CallOpts)
+// Solidity: function epochsInADay(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) EpochsInADay(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.EpochsInADay(&_Contract.CallOpts, dataMarket)
 }
 
-// ExternalState is a free data retrieval call binding the contract method 0x1b9e4b56.
+// GetEpochManager is a free data retrieval call binding the contract method 0x6ce4f26c.
 //
-// Solidity: function externalState() view returns(address)
-func (_Contract *ContractCaller) ExternalState(opts *bind.CallOpts) (common.Address, error) {
+// Solidity: function getEpochManager(address dataMarket) view returns(address)
+func (_Contract *ContractCaller) GetEpochManager(opts *bind.CallOpts, dataMarket common.Address) (common.Address, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "externalState")
+	err := _Contract.contract.Call(opts, &out, "getEpochManager", dataMarket)
 
 	if err != nil {
 		return *new(common.Address), err
@@ -999,57 +1257,57 @@ func (_Contract *ContractCaller) ExternalState(opts *bind.CallOpts) (common.Addr
 
 }
 
-// ExternalState is a free data retrieval call binding the contract method 0x1b9e4b56.
+// GetEpochManager is a free data retrieval call binding the contract method 0x6ce4f26c.
 //
-// Solidity: function externalState() view returns(address)
-func (_Contract *ContractSession) ExternalState() (common.Address, error) {
-	return _Contract.Contract.ExternalState(&_Contract.CallOpts)
+// Solidity: function getEpochManager(address dataMarket) view returns(address)
+func (_Contract *ContractSession) GetEpochManager(dataMarket common.Address) (common.Address, error) {
+	return _Contract.Contract.GetEpochManager(&_Contract.CallOpts, dataMarket)
 }
 
-// ExternalState is a free data retrieval call binding the contract method 0x1b9e4b56.
+// GetEpochManager is a free data retrieval call binding the contract method 0x6ce4f26c.
 //
-// Solidity: function externalState() view returns(address)
-func (_Contract *ContractCallerSession) ExternalState() (common.Address, error) {
-	return _Contract.Contract.ExternalState(&_Contract.CallOpts)
+// Solidity: function getEpochManager(address dataMarket) view returns(address)
+func (_Contract *ContractCallerSession) GetEpochManager(dataMarket common.Address) (common.Address, error) {
+	return _Contract.Contract.GetEpochManager(&_Contract.CallOpts, dataMarket)
 }
 
-// GetEpochManager is a free data retrieval call binding the contract method 0xf3ac5e92.
+// GetSequencerId is a free data retrieval call binding the contract method 0x1c7d13a6.
 //
-// Solidity: function getEpochManager() view returns(address)
-func (_Contract *ContractCaller) GetEpochManager(opts *bind.CallOpts) (common.Address, error) {
+// Solidity: function getSequencerId(address dataMarket) view returns(string)
+func (_Contract *ContractCaller) GetSequencerId(opts *bind.CallOpts, dataMarket common.Address) (string, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "getEpochManager")
+	err := _Contract.contract.Call(opts, &out, "getSequencerId", dataMarket)
 
 	if err != nil {
-		return *new(common.Address), err
+		return *new(string), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
 
 	return out0, err
 
 }
 
-// GetEpochManager is a free data retrieval call binding the contract method 0xf3ac5e92.
+// GetSequencerId is a free data retrieval call binding the contract method 0x1c7d13a6.
 //
-// Solidity: function getEpochManager() view returns(address)
-func (_Contract *ContractSession) GetEpochManager() (common.Address, error) {
-	return _Contract.Contract.GetEpochManager(&_Contract.CallOpts)
+// Solidity: function getSequencerId(address dataMarket) view returns(string)
+func (_Contract *ContractSession) GetSequencerId(dataMarket common.Address) (string, error) {
+	return _Contract.Contract.GetSequencerId(&_Contract.CallOpts, dataMarket)
 }
 
-// GetEpochManager is a free data retrieval call binding the contract method 0xf3ac5e92.
+// GetSequencerId is a free data retrieval call binding the contract method 0x1c7d13a6.
 //
-// Solidity: function getEpochManager() view returns(address)
-func (_Contract *ContractCallerSession) GetEpochManager() (common.Address, error) {
-	return _Contract.Contract.GetEpochManager(&_Contract.CallOpts)
+// Solidity: function getSequencerId(address dataMarket) view returns(string)
+func (_Contract *ContractCallerSession) GetSequencerId(dataMarket common.Address) (string, error) {
+	return _Contract.Contract.GetSequencerId(&_Contract.CallOpts, dataMarket)
 }
 
-// GetSequencers is a free data retrieval call binding the contract method 0x125c5f16.
+// GetSequencers is a free data retrieval call binding the contract method 0x6b0ad9ac.
 //
-// Solidity: function getSequencers() view returns(address[])
-func (_Contract *ContractCaller) GetSequencers(opts *bind.CallOpts) ([]common.Address, error) {
+// Solidity: function getSequencers(address dataMarket) view returns(address[])
+func (_Contract *ContractCaller) GetSequencers(opts *bind.CallOpts, dataMarket common.Address) ([]common.Address, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "getSequencers")
+	err := _Contract.contract.Call(opts, &out, "getSequencers", dataMarket)
 
 	if err != nil {
 		return *new([]common.Address), err
@@ -1061,88 +1319,57 @@ func (_Contract *ContractCaller) GetSequencers(opts *bind.CallOpts) ([]common.Ad
 
 }
 
-// GetSequencers is a free data retrieval call binding the contract method 0x125c5f16.
+// GetSequencers is a free data retrieval call binding the contract method 0x6b0ad9ac.
 //
-// Solidity: function getSequencers() view returns(address[])
-func (_Contract *ContractSession) GetSequencers() ([]common.Address, error) {
-	return _Contract.Contract.GetSequencers(&_Contract.CallOpts)
+// Solidity: function getSequencers(address dataMarket) view returns(address[])
+func (_Contract *ContractSession) GetSequencers(dataMarket common.Address) ([]common.Address, error) {
+	return _Contract.Contract.GetSequencers(&_Contract.CallOpts, dataMarket)
 }
 
-// GetSequencers is a free data retrieval call binding the contract method 0x125c5f16.
+// GetSequencers is a free data retrieval call binding the contract method 0x6b0ad9ac.
 //
-// Solidity: function getSequencers() view returns(address[])
-func (_Contract *ContractCallerSession) GetSequencers() ([]common.Address, error) {
-	return _Contract.Contract.GetSequencers(&_Contract.CallOpts)
+// Solidity: function getSequencers(address dataMarket) view returns(address[])
+func (_Contract *ContractCallerSession) GetSequencers(dataMarket common.Address) ([]common.Address, error) {
+	return _Contract.Contract.GetSequencers(&_Contract.CallOpts, dataMarket)
 }
 
-// GetSlotInfo is a free data retrieval call binding the contract method 0xbe20f9ac.
+// GetSlotInfo is a free data retrieval call binding the contract method 0xc367e244.
 //
-// Solidity: function getSlotInfo(uint256 slotId) view returns((uint256,address,uint256,uint256,uint256,uint256,uint256))
-func (_Contract *ContractCaller) GetSlotInfo(opts *bind.CallOpts, slotId *big.Int) (PowerloomProtocolStateSlotInfo, error) {
+// Solidity: function getSlotInfo(address dataMarket, uint256 slotId) view returns((uint256,address,uint256,uint256))
+func (_Contract *ContractCaller) GetSlotInfo(opts *bind.CallOpts, dataMarket common.Address, slotId *big.Int) (PowerloomDataMarketSlotInfo, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "getSlotInfo", slotId)
+	err := _Contract.contract.Call(opts, &out, "getSlotInfo", dataMarket, slotId)
 
 	if err != nil {
-		return *new(PowerloomProtocolStateSlotInfo), err
+		return *new(PowerloomDataMarketSlotInfo), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(PowerloomProtocolStateSlotInfo)).(*PowerloomProtocolStateSlotInfo)
+	out0 := *abi.ConvertType(out[0], new(PowerloomDataMarketSlotInfo)).(*PowerloomDataMarketSlotInfo)
 
 	return out0, err
 
 }
 
-// GetSlotInfo is a free data retrieval call binding the contract method 0xbe20f9ac.
+// GetSlotInfo is a free data retrieval call binding the contract method 0xc367e244.
 //
-// Solidity: function getSlotInfo(uint256 slotId) view returns((uint256,address,uint256,uint256,uint256,uint256,uint256))
-func (_Contract *ContractSession) GetSlotInfo(slotId *big.Int) (PowerloomProtocolStateSlotInfo, error) {
-	return _Contract.Contract.GetSlotInfo(&_Contract.CallOpts, slotId)
+// Solidity: function getSlotInfo(address dataMarket, uint256 slotId) view returns((uint256,address,uint256,uint256))
+func (_Contract *ContractSession) GetSlotInfo(dataMarket common.Address, slotId *big.Int) (PowerloomDataMarketSlotInfo, error) {
+	return _Contract.Contract.GetSlotInfo(&_Contract.CallOpts, dataMarket, slotId)
 }
 
-// GetSlotInfo is a free data retrieval call binding the contract method 0xbe20f9ac.
+// GetSlotInfo is a free data retrieval call binding the contract method 0xc367e244.
 //
-// Solidity: function getSlotInfo(uint256 slotId) view returns((uint256,address,uint256,uint256,uint256,uint256,uint256))
-func (_Contract *ContractCallerSession) GetSlotInfo(slotId *big.Int) (PowerloomProtocolStateSlotInfo, error) {
-	return _Contract.Contract.GetSlotInfo(&_Contract.CallOpts, slotId)
+// Solidity: function getSlotInfo(address dataMarket, uint256 slotId) view returns((uint256,address,uint256,uint256))
+func (_Contract *ContractCallerSession) GetSlotInfo(dataMarket common.Address, slotId *big.Int) (PowerloomDataMarketSlotInfo, error) {
+	return _Contract.Contract.GetSlotInfo(&_Contract.CallOpts, dataMarket, slotId)
 }
 
-// GetSlotStreak is a free data retrieval call binding the contract method 0x2252c7b8.
+// GetSlotRewards is a free data retrieval call binding the contract method 0x9ab1013d.
 //
-// Solidity: function getSlotStreak(uint256 slotId) view returns(uint256)
-func (_Contract *ContractCaller) GetSlotStreak(opts *bind.CallOpts, slotId *big.Int) (*big.Int, error) {
+// Solidity: function getSlotRewards(uint256 slotId) view returns(uint256 rewards)
+func (_Contract *ContractCaller) GetSlotRewards(opts *bind.CallOpts, slotId *big.Int) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "getSlotStreak", slotId)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// GetSlotStreak is a free data retrieval call binding the contract method 0x2252c7b8.
-//
-// Solidity: function getSlotStreak(uint256 slotId) view returns(uint256)
-func (_Contract *ContractSession) GetSlotStreak(slotId *big.Int) (*big.Int, error) {
-	return _Contract.Contract.GetSlotStreak(&_Contract.CallOpts, slotId)
-}
-
-// GetSlotStreak is a free data retrieval call binding the contract method 0x2252c7b8.
-//
-// Solidity: function getSlotStreak(uint256 slotId) view returns(uint256)
-func (_Contract *ContractCallerSession) GetSlotStreak(slotId *big.Int) (*big.Int, error) {
-	return _Contract.Contract.GetSlotStreak(&_Contract.CallOpts, slotId)
-}
-
-// GetSnapshotterTimeSlot is a free data retrieval call binding the contract method 0x2db9ace2.
-//
-// Solidity: function getSnapshotterTimeSlot(uint256 _slotId) view returns(uint256)
-func (_Contract *ContractCaller) GetSnapshotterTimeSlot(opts *bind.CallOpts, _slotId *big.Int) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "getSnapshotterTimeSlot", _slotId)
+	err := _Contract.contract.Call(opts, &out, "getSlotRewards", slotId)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1154,26 +1381,26 @@ func (_Contract *ContractCaller) GetSnapshotterTimeSlot(opts *bind.CallOpts, _sl
 
 }
 
-// GetSnapshotterTimeSlot is a free data retrieval call binding the contract method 0x2db9ace2.
+// GetSlotRewards is a free data retrieval call binding the contract method 0x9ab1013d.
 //
-// Solidity: function getSnapshotterTimeSlot(uint256 _slotId) view returns(uint256)
-func (_Contract *ContractSession) GetSnapshotterTimeSlot(_slotId *big.Int) (*big.Int, error) {
-	return _Contract.Contract.GetSnapshotterTimeSlot(&_Contract.CallOpts, _slotId)
+// Solidity: function getSlotRewards(uint256 slotId) view returns(uint256 rewards)
+func (_Contract *ContractSession) GetSlotRewards(slotId *big.Int) (*big.Int, error) {
+	return _Contract.Contract.GetSlotRewards(&_Contract.CallOpts, slotId)
 }
 
-// GetSnapshotterTimeSlot is a free data retrieval call binding the contract method 0x2db9ace2.
+// GetSlotRewards is a free data retrieval call binding the contract method 0x9ab1013d.
 //
-// Solidity: function getSnapshotterTimeSlot(uint256 _slotId) view returns(uint256)
-func (_Contract *ContractCallerSession) GetSnapshotterTimeSlot(_slotId *big.Int) (*big.Int, error) {
-	return _Contract.Contract.GetSnapshotterTimeSlot(&_Contract.CallOpts, _slotId)
+// Solidity: function getSlotRewards(uint256 slotId) view returns(uint256 rewards)
+func (_Contract *ContractCallerSession) GetSlotRewards(slotId *big.Int) (*big.Int, error) {
+	return _Contract.Contract.GetSlotRewards(&_Contract.CallOpts, slotId)
 }
 
-// GetTotalSequencersCount is a free data retrieval call binding the contract method 0xab65a54c.
+// GetTotalSequencersCount is a free data retrieval call binding the contract method 0x665ebe8c.
 //
-// Solidity: function getTotalSequencersCount() view returns(uint256)
-func (_Contract *ContractCaller) GetTotalSequencersCount(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function getTotalSequencersCount(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) GetTotalSequencersCount(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "getTotalSequencersCount")
+	err := _Contract.contract.Call(opts, &out, "getTotalSequencersCount", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1185,18 +1412,18 @@ func (_Contract *ContractCaller) GetTotalSequencersCount(opts *bind.CallOpts) (*
 
 }
 
-// GetTotalSequencersCount is a free data retrieval call binding the contract method 0xab65a54c.
+// GetTotalSequencersCount is a free data retrieval call binding the contract method 0x665ebe8c.
 //
-// Solidity: function getTotalSequencersCount() view returns(uint256)
-func (_Contract *ContractSession) GetTotalSequencersCount() (*big.Int, error) {
-	return _Contract.Contract.GetTotalSequencersCount(&_Contract.CallOpts)
+// Solidity: function getTotalSequencersCount(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) GetTotalSequencersCount(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.GetTotalSequencersCount(&_Contract.CallOpts, dataMarket)
 }
 
-// GetTotalSequencersCount is a free data retrieval call binding the contract method 0xab65a54c.
+// GetTotalSequencersCount is a free data retrieval call binding the contract method 0x665ebe8c.
 //
-// Solidity: function getTotalSequencersCount() view returns(uint256)
-func (_Contract *ContractCallerSession) GetTotalSequencersCount() (*big.Int, error) {
-	return _Contract.Contract.GetTotalSequencersCount(&_Contract.CallOpts)
+// Solidity: function getTotalSequencersCount(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) GetTotalSequencersCount(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.GetTotalSequencersCount(&_Contract.CallOpts, dataMarket)
 }
 
 // GetTotalSnapshotterCount is a free data retrieval call binding the contract method 0x92ae6f66.
@@ -1230,12 +1457,12 @@ func (_Contract *ContractCallerSession) GetTotalSnapshotterCount() (*big.Int, er
 	return _Contract.Contract.GetTotalSnapshotterCount(&_Contract.CallOpts)
 }
 
-// GetTotalValidatorsCount is a free data retrieval call binding the contract method 0x983d52e7.
+// GetTotalValidatorsCount is a free data retrieval call binding the contract method 0xc2acc6a3.
 //
-// Solidity: function getTotalValidatorsCount() view returns(uint256)
-func (_Contract *ContractCaller) GetTotalValidatorsCount(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function getTotalValidatorsCount(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) GetTotalValidatorsCount(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "getTotalValidatorsCount")
+	err := _Contract.contract.Call(opts, &out, "getTotalValidatorsCount", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1247,26 +1474,26 @@ func (_Contract *ContractCaller) GetTotalValidatorsCount(opts *bind.CallOpts) (*
 
 }
 
-// GetTotalValidatorsCount is a free data retrieval call binding the contract method 0x983d52e7.
+// GetTotalValidatorsCount is a free data retrieval call binding the contract method 0xc2acc6a3.
 //
-// Solidity: function getTotalValidatorsCount() view returns(uint256)
-func (_Contract *ContractSession) GetTotalValidatorsCount() (*big.Int, error) {
-	return _Contract.Contract.GetTotalValidatorsCount(&_Contract.CallOpts)
+// Solidity: function getTotalValidatorsCount(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) GetTotalValidatorsCount(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.GetTotalValidatorsCount(&_Contract.CallOpts, dataMarket)
 }
 
-// GetTotalValidatorsCount is a free data retrieval call binding the contract method 0x983d52e7.
+// GetTotalValidatorsCount is a free data retrieval call binding the contract method 0xc2acc6a3.
 //
-// Solidity: function getTotalValidatorsCount() view returns(uint256)
-func (_Contract *ContractCallerSession) GetTotalValidatorsCount() (*big.Int, error) {
-	return _Contract.Contract.GetTotalValidatorsCount(&_Contract.CallOpts)
+// Solidity: function getTotalValidatorsCount(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) GetTotalValidatorsCount(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.GetTotalValidatorsCount(&_Contract.CallOpts, dataMarket)
 }
 
-// GetValidators is a free data retrieval call binding the contract method 0xb7ab4db5.
+// GetValidators is a free data retrieval call binding the contract method 0xff8744a6.
 //
-// Solidity: function getValidators() view returns(address[])
-func (_Contract *ContractCaller) GetValidators(opts *bind.CallOpts) ([]common.Address, error) {
+// Solidity: function getValidators(address dataMarket) view returns(address[])
+func (_Contract *ContractCaller) GetValidators(opts *bind.CallOpts, dataMarket common.Address) ([]common.Address, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "getValidators")
+	err := _Contract.contract.Call(opts, &out, "getValidators", dataMarket)
 
 	if err != nil {
 		return *new([]common.Address), err
@@ -1278,26 +1505,26 @@ func (_Contract *ContractCaller) GetValidators(opts *bind.CallOpts) ([]common.Ad
 
 }
 
-// GetValidators is a free data retrieval call binding the contract method 0xb7ab4db5.
+// GetValidators is a free data retrieval call binding the contract method 0xff8744a6.
 //
-// Solidity: function getValidators() view returns(address[])
-func (_Contract *ContractSession) GetValidators() ([]common.Address, error) {
-	return _Contract.Contract.GetValidators(&_Contract.CallOpts)
+// Solidity: function getValidators(address dataMarket) view returns(address[])
+func (_Contract *ContractSession) GetValidators(dataMarket common.Address) ([]common.Address, error) {
+	return _Contract.Contract.GetValidators(&_Contract.CallOpts, dataMarket)
 }
 
-// GetValidators is a free data retrieval call binding the contract method 0xb7ab4db5.
+// GetValidators is a free data retrieval call binding the contract method 0xff8744a6.
 //
-// Solidity: function getValidators() view returns(address[])
-func (_Contract *ContractCallerSession) GetValidators() ([]common.Address, error) {
-	return _Contract.Contract.GetValidators(&_Contract.CallOpts)
+// Solidity: function getValidators(address dataMarket) view returns(address[])
+func (_Contract *ContractCallerSession) GetValidators(dataMarket common.Address) ([]common.Address, error) {
+	return _Contract.Contract.GetValidators(&_Contract.CallOpts, dataMarket)
 }
 
-// LastFinalizedSnapshot is a free data retrieval call binding the contract method 0x4ea16b0a.
+// LastFinalizedSnapshot is a free data retrieval call binding the contract method 0xded2465b.
 //
-// Solidity: function lastFinalizedSnapshot(string projectId) view returns(uint256 epochId)
-func (_Contract *ContractCaller) LastFinalizedSnapshot(opts *bind.CallOpts, projectId string) (*big.Int, error) {
+// Solidity: function lastFinalizedSnapshot(address dataMarket, string projectId) view returns(uint256)
+func (_Contract *ContractCaller) LastFinalizedSnapshot(opts *bind.CallOpts, dataMarket common.Address, projectId string) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "lastFinalizedSnapshot", projectId)
+	err := _Contract.contract.Call(opts, &out, "lastFinalizedSnapshot", dataMarket, projectId)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1309,57 +1536,26 @@ func (_Contract *ContractCaller) LastFinalizedSnapshot(opts *bind.CallOpts, proj
 
 }
 
-// LastFinalizedSnapshot is a free data retrieval call binding the contract method 0x4ea16b0a.
+// LastFinalizedSnapshot is a free data retrieval call binding the contract method 0xded2465b.
 //
-// Solidity: function lastFinalizedSnapshot(string projectId) view returns(uint256 epochId)
-func (_Contract *ContractSession) LastFinalizedSnapshot(projectId string) (*big.Int, error) {
-	return _Contract.Contract.LastFinalizedSnapshot(&_Contract.CallOpts, projectId)
+// Solidity: function lastFinalizedSnapshot(address dataMarket, string projectId) view returns(uint256)
+func (_Contract *ContractSession) LastFinalizedSnapshot(dataMarket common.Address, projectId string) (*big.Int, error) {
+	return _Contract.Contract.LastFinalizedSnapshot(&_Contract.CallOpts, dataMarket, projectId)
 }
 
-// LastFinalizedSnapshot is a free data retrieval call binding the contract method 0x4ea16b0a.
+// LastFinalizedSnapshot is a free data retrieval call binding the contract method 0xded2465b.
 //
-// Solidity: function lastFinalizedSnapshot(string projectId) view returns(uint256 epochId)
-func (_Contract *ContractCallerSession) LastFinalizedSnapshot(projectId string) (*big.Int, error) {
-	return _Contract.Contract.LastFinalizedSnapshot(&_Contract.CallOpts, projectId)
+// Solidity: function lastFinalizedSnapshot(address dataMarket, string projectId) view returns(uint256)
+func (_Contract *ContractCallerSession) LastFinalizedSnapshot(dataMarket common.Address, projectId string) (*big.Int, error) {
+	return _Contract.Contract.LastFinalizedSnapshot(&_Contract.CallOpts, dataMarket, projectId)
 }
 
-// LastSnapshotterAddressUpdate is a free data retrieval call binding the contract method 0x25d6ad01.
+// MaxAttestationFinalizedRootHash is a free data retrieval call binding the contract method 0x320eeed2.
 //
-// Solidity: function lastSnapshotterAddressUpdate(uint256 ) view returns(uint256)
-func (_Contract *ContractCaller) LastSnapshotterAddressUpdate(opts *bind.CallOpts, arg0 *big.Int) (*big.Int, error) {
+// Solidity: function maxAttestationFinalizedRootHash(address dataMarket, uint256 batchId) view returns(bytes32)
+func (_Contract *ContractCaller) MaxAttestationFinalizedRootHash(opts *bind.CallOpts, dataMarket common.Address, batchId *big.Int) ([32]byte, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "lastSnapshotterAddressUpdate", arg0)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// LastSnapshotterAddressUpdate is a free data retrieval call binding the contract method 0x25d6ad01.
-//
-// Solidity: function lastSnapshotterAddressUpdate(uint256 ) view returns(uint256)
-func (_Contract *ContractSession) LastSnapshotterAddressUpdate(arg0 *big.Int) (*big.Int, error) {
-	return _Contract.Contract.LastSnapshotterAddressUpdate(&_Contract.CallOpts, arg0)
-}
-
-// LastSnapshotterAddressUpdate is a free data retrieval call binding the contract method 0x25d6ad01.
-//
-// Solidity: function lastSnapshotterAddressUpdate(uint256 ) view returns(uint256)
-func (_Contract *ContractCallerSession) LastSnapshotterAddressUpdate(arg0 *big.Int) (*big.Int, error) {
-	return _Contract.Contract.LastSnapshotterAddressUpdate(&_Contract.CallOpts, arg0)
-}
-
-// MaxAttestationFinalizedRootHash is a free data retrieval call binding the contract method 0xcc542228.
-//
-// Solidity: function maxAttestationFinalizedRootHash(uint256 batchId) view returns(bytes32 rootHash)
-func (_Contract *ContractCaller) MaxAttestationFinalizedRootHash(opts *bind.CallOpts, batchId *big.Int) ([32]byte, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "maxAttestationFinalizedRootHash", batchId)
+	err := _Contract.contract.Call(opts, &out, "maxAttestationFinalizedRootHash", dataMarket, batchId)
 
 	if err != nil {
 		return *new([32]byte), err
@@ -1371,26 +1567,26 @@ func (_Contract *ContractCaller) MaxAttestationFinalizedRootHash(opts *bind.Call
 
 }
 
-// MaxAttestationFinalizedRootHash is a free data retrieval call binding the contract method 0xcc542228.
+// MaxAttestationFinalizedRootHash is a free data retrieval call binding the contract method 0x320eeed2.
 //
-// Solidity: function maxAttestationFinalizedRootHash(uint256 batchId) view returns(bytes32 rootHash)
-func (_Contract *ContractSession) MaxAttestationFinalizedRootHash(batchId *big.Int) ([32]byte, error) {
-	return _Contract.Contract.MaxAttestationFinalizedRootHash(&_Contract.CallOpts, batchId)
+// Solidity: function maxAttestationFinalizedRootHash(address dataMarket, uint256 batchId) view returns(bytes32)
+func (_Contract *ContractSession) MaxAttestationFinalizedRootHash(dataMarket common.Address, batchId *big.Int) ([32]byte, error) {
+	return _Contract.Contract.MaxAttestationFinalizedRootHash(&_Contract.CallOpts, dataMarket, batchId)
 }
 
-// MaxAttestationFinalizedRootHash is a free data retrieval call binding the contract method 0xcc542228.
+// MaxAttestationFinalizedRootHash is a free data retrieval call binding the contract method 0x320eeed2.
 //
-// Solidity: function maxAttestationFinalizedRootHash(uint256 batchId) view returns(bytes32 rootHash)
-func (_Contract *ContractCallerSession) MaxAttestationFinalizedRootHash(batchId *big.Int) ([32]byte, error) {
-	return _Contract.Contract.MaxAttestationFinalizedRootHash(&_Contract.CallOpts, batchId)
+// Solidity: function maxAttestationFinalizedRootHash(address dataMarket, uint256 batchId) view returns(bytes32)
+func (_Contract *ContractCallerSession) MaxAttestationFinalizedRootHash(dataMarket common.Address, batchId *big.Int) ([32]byte, error) {
+	return _Contract.Contract.MaxAttestationFinalizedRootHash(&_Contract.CallOpts, dataMarket, batchId)
 }
 
-// MaxAttestationsCount is a free data retrieval call binding the contract method 0x30c8ecb2.
+// MaxAttestationsCount is a free data retrieval call binding the contract method 0x3230df83.
 //
-// Solidity: function maxAttestationsCount(uint256 batchId) view returns(uint256 count)
-func (_Contract *ContractCaller) MaxAttestationsCount(opts *bind.CallOpts, batchId *big.Int) (*big.Int, error) {
+// Solidity: function maxAttestationsCount(address dataMarket, uint256 batchId) view returns(uint256)
+func (_Contract *ContractCaller) MaxAttestationsCount(opts *bind.CallOpts, dataMarket common.Address, batchId *big.Int) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "maxAttestationsCount", batchId)
+	err := _Contract.contract.Call(opts, &out, "maxAttestationsCount", dataMarket, batchId)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1402,26 +1598,26 @@ func (_Contract *ContractCaller) MaxAttestationsCount(opts *bind.CallOpts, batch
 
 }
 
-// MaxAttestationsCount is a free data retrieval call binding the contract method 0x30c8ecb2.
+// MaxAttestationsCount is a free data retrieval call binding the contract method 0x3230df83.
 //
-// Solidity: function maxAttestationsCount(uint256 batchId) view returns(uint256 count)
-func (_Contract *ContractSession) MaxAttestationsCount(batchId *big.Int) (*big.Int, error) {
-	return _Contract.Contract.MaxAttestationsCount(&_Contract.CallOpts, batchId)
+// Solidity: function maxAttestationsCount(address dataMarket, uint256 batchId) view returns(uint256)
+func (_Contract *ContractSession) MaxAttestationsCount(dataMarket common.Address, batchId *big.Int) (*big.Int, error) {
+	return _Contract.Contract.MaxAttestationsCount(&_Contract.CallOpts, dataMarket, batchId)
 }
 
-// MaxAttestationsCount is a free data retrieval call binding the contract method 0x30c8ecb2.
+// MaxAttestationsCount is a free data retrieval call binding the contract method 0x3230df83.
 //
-// Solidity: function maxAttestationsCount(uint256 batchId) view returns(uint256 count)
-func (_Contract *ContractCallerSession) MaxAttestationsCount(batchId *big.Int) (*big.Int, error) {
-	return _Contract.Contract.MaxAttestationsCount(&_Contract.CallOpts, batchId)
+// Solidity: function maxAttestationsCount(address dataMarket, uint256 batchId) view returns(uint256)
+func (_Contract *ContractCallerSession) MaxAttestationsCount(dataMarket common.Address, batchId *big.Int) (*big.Int, error) {
+	return _Contract.Contract.MaxAttestationsCount(&_Contract.CallOpts, dataMarket, batchId)
 }
 
-// MaxSnapshotsCid is a free data retrieval call binding the contract method 0xc2b97d4c.
+// MaxSnapshotsCid is a free data retrieval call binding the contract method 0x7e9ce892.
 //
-// Solidity: function maxSnapshotsCid(string projectId, uint256 epochId) view returns(string)
-func (_Contract *ContractCaller) MaxSnapshotsCid(opts *bind.CallOpts, projectId string, epochId *big.Int) (string, error) {
+// Solidity: function maxSnapshotsCid(address dataMarket, string projectId, uint256 epochId) view returns(string)
+func (_Contract *ContractCaller) MaxSnapshotsCid(opts *bind.CallOpts, dataMarket common.Address, projectId string, epochId *big.Int) (string, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "maxSnapshotsCid", projectId, epochId)
+	err := _Contract.contract.Call(opts, &out, "maxSnapshotsCid", dataMarket, projectId, epochId)
 
 	if err != nil {
 		return *new(string), err
@@ -1433,57 +1629,26 @@ func (_Contract *ContractCaller) MaxSnapshotsCid(opts *bind.CallOpts, projectId 
 
 }
 
-// MaxSnapshotsCid is a free data retrieval call binding the contract method 0xc2b97d4c.
+// MaxSnapshotsCid is a free data retrieval call binding the contract method 0x7e9ce892.
 //
-// Solidity: function maxSnapshotsCid(string projectId, uint256 epochId) view returns(string)
-func (_Contract *ContractSession) MaxSnapshotsCid(projectId string, epochId *big.Int) (string, error) {
-	return _Contract.Contract.MaxSnapshotsCid(&_Contract.CallOpts, projectId, epochId)
+// Solidity: function maxSnapshotsCid(address dataMarket, string projectId, uint256 epochId) view returns(string)
+func (_Contract *ContractSession) MaxSnapshotsCid(dataMarket common.Address, projectId string, epochId *big.Int) (string, error) {
+	return _Contract.Contract.MaxSnapshotsCid(&_Contract.CallOpts, dataMarket, projectId, epochId)
 }
 
-// MaxSnapshotsCid is a free data retrieval call binding the contract method 0xc2b97d4c.
+// MaxSnapshotsCid is a free data retrieval call binding the contract method 0x7e9ce892.
 //
-// Solidity: function maxSnapshotsCid(string projectId, uint256 epochId) view returns(string)
-func (_Contract *ContractCallerSession) MaxSnapshotsCid(projectId string, epochId *big.Int) (string, error) {
-	return _Contract.Contract.MaxSnapshotsCid(&_Contract.CallOpts, projectId, epochId)
+// Solidity: function maxSnapshotsCid(address dataMarket, string projectId, uint256 epochId) view returns(string)
+func (_Contract *ContractCallerSession) MaxSnapshotsCid(dataMarket common.Address, projectId string, epochId *big.Int) (string, error) {
+	return _Contract.Contract.MaxSnapshotsCid(&_Contract.CallOpts, dataMarket, projectId, epochId)
 }
 
-// MaxSnapshotsCidMap is a free data retrieval call binding the contract method 0x80671835.
+// MinAttestationsForConsensus is a free data retrieval call binding the contract method 0xb3d95efa.
 //
-// Solidity: function maxSnapshotsCidMap(string projectId, uint256 epochId) view returns(string snapshotCid)
-func (_Contract *ContractCaller) MaxSnapshotsCidMap(opts *bind.CallOpts, projectId string, epochId *big.Int) (string, error) {
+// Solidity: function minAttestationsForConsensus(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) MinAttestationsForConsensus(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "maxSnapshotsCidMap", projectId, epochId)
-
-	if err != nil {
-		return *new(string), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(string)).(*string)
-
-	return out0, err
-
-}
-
-// MaxSnapshotsCidMap is a free data retrieval call binding the contract method 0x80671835.
-//
-// Solidity: function maxSnapshotsCidMap(string projectId, uint256 epochId) view returns(string snapshotCid)
-func (_Contract *ContractSession) MaxSnapshotsCidMap(projectId string, epochId *big.Int) (string, error) {
-	return _Contract.Contract.MaxSnapshotsCidMap(&_Contract.CallOpts, projectId, epochId)
-}
-
-// MaxSnapshotsCidMap is a free data retrieval call binding the contract method 0x80671835.
-//
-// Solidity: function maxSnapshotsCidMap(string projectId, uint256 epochId) view returns(string snapshotCid)
-func (_Contract *ContractCallerSession) MaxSnapshotsCidMap(projectId string, epochId *big.Int) (string, error) {
-	return _Contract.Contract.MaxSnapshotsCidMap(&_Contract.CallOpts, projectId, epochId)
-}
-
-// MaxSnapshotsCount is a free data retrieval call binding the contract method 0xdbb54182.
-//
-// Solidity: function maxSnapshotsCount(string , uint256 ) view returns(uint256)
-func (_Contract *ContractCaller) MaxSnapshotsCount(opts *bind.CallOpts, arg0 string, arg1 *big.Int) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "maxSnapshotsCount", arg0, arg1)
+	err := _Contract.contract.Call(opts, &out, "minAttestationsForConsensus", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1495,26 +1660,26 @@ func (_Contract *ContractCaller) MaxSnapshotsCount(opts *bind.CallOpts, arg0 str
 
 }
 
-// MaxSnapshotsCount is a free data retrieval call binding the contract method 0xdbb54182.
+// MinAttestationsForConsensus is a free data retrieval call binding the contract method 0xb3d95efa.
 //
-// Solidity: function maxSnapshotsCount(string , uint256 ) view returns(uint256)
-func (_Contract *ContractSession) MaxSnapshotsCount(arg0 string, arg1 *big.Int) (*big.Int, error) {
-	return _Contract.Contract.MaxSnapshotsCount(&_Contract.CallOpts, arg0, arg1)
+// Solidity: function minAttestationsForConsensus(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) MinAttestationsForConsensus(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.MinAttestationsForConsensus(&_Contract.CallOpts, dataMarket)
 }
 
-// MaxSnapshotsCount is a free data retrieval call binding the contract method 0xdbb54182.
+// MinAttestationsForConsensus is a free data retrieval call binding the contract method 0xb3d95efa.
 //
-// Solidity: function maxSnapshotsCount(string , uint256 ) view returns(uint256)
-func (_Contract *ContractCallerSession) MaxSnapshotsCount(arg0 string, arg1 *big.Int) (*big.Int, error) {
-	return _Contract.Contract.MaxSnapshotsCount(&_Contract.CallOpts, arg0, arg1)
+// Solidity: function minAttestationsForConsensus(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) MinAttestationsForConsensus(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.MinAttestationsForConsensus(&_Contract.CallOpts, dataMarket)
 }
 
-// MinAttestationsForConsensus is a free data retrieval call binding the contract method 0x0f827df9.
+// MinSubmissionsForConsensus is a free data retrieval call binding the contract method 0x0984dbd2.
 //
-// Solidity: function minAttestationsForConsensus() view returns(uint256)
-func (_Contract *ContractCaller) MinAttestationsForConsensus(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function minSubmissionsForConsensus(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) MinSubmissionsForConsensus(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "minAttestationsForConsensus")
+	err := _Contract.contract.Call(opts, &out, "minSubmissionsForConsensus", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1526,49 +1691,18 @@ func (_Contract *ContractCaller) MinAttestationsForConsensus(opts *bind.CallOpts
 
 }
 
-// MinAttestationsForConsensus is a free data retrieval call binding the contract method 0x0f827df9.
+// MinSubmissionsForConsensus is a free data retrieval call binding the contract method 0x0984dbd2.
 //
-// Solidity: function minAttestationsForConsensus() view returns(uint256)
-func (_Contract *ContractSession) MinAttestationsForConsensus() (*big.Int, error) {
-	return _Contract.Contract.MinAttestationsForConsensus(&_Contract.CallOpts)
+// Solidity: function minSubmissionsForConsensus(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) MinSubmissionsForConsensus(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.MinSubmissionsForConsensus(&_Contract.CallOpts, dataMarket)
 }
 
-// MinAttestationsForConsensus is a free data retrieval call binding the contract method 0x0f827df9.
+// MinSubmissionsForConsensus is a free data retrieval call binding the contract method 0x0984dbd2.
 //
-// Solidity: function minAttestationsForConsensus() view returns(uint256)
-func (_Contract *ContractCallerSession) MinAttestationsForConsensus() (*big.Int, error) {
-	return _Contract.Contract.MinAttestationsForConsensus(&_Contract.CallOpts)
-}
-
-// MinSubmissionsForConsensus is a free data retrieval call binding the contract method 0x66752e1e.
-//
-// Solidity: function minSubmissionsForConsensus() view returns(uint256)
-func (_Contract *ContractCaller) MinSubmissionsForConsensus(opts *bind.CallOpts) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "minSubmissionsForConsensus")
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// MinSubmissionsForConsensus is a free data retrieval call binding the contract method 0x66752e1e.
-//
-// Solidity: function minSubmissionsForConsensus() view returns(uint256)
-func (_Contract *ContractSession) MinSubmissionsForConsensus() (*big.Int, error) {
-	return _Contract.Contract.MinSubmissionsForConsensus(&_Contract.CallOpts)
-}
-
-// MinSubmissionsForConsensus is a free data retrieval call binding the contract method 0x66752e1e.
-//
-// Solidity: function minSubmissionsForConsensus() view returns(uint256)
-func (_Contract *ContractCallerSession) MinSubmissionsForConsensus() (*big.Int, error) {
-	return _Contract.Contract.MinSubmissionsForConsensus(&_Contract.CallOpts)
+// Solidity: function minSubmissionsForConsensus(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) MinSubmissionsForConsensus(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.MinSubmissionsForConsensus(&_Contract.CallOpts, dataMarket)
 }
 
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
@@ -1602,12 +1736,12 @@ func (_Contract *ContractCallerSession) Owner() (common.Address, error) {
 	return _Contract.Contract.Owner(&_Contract.CallOpts)
 }
 
-// ProjectFirstEpochId is a free data retrieval call binding the contract method 0xfa30dbe0.
+// ProjectFirstEpochId is a free data retrieval call binding the contract method 0x4242614c.
 //
-// Solidity: function projectFirstEpochId(string projectId) view returns(uint256 epochId)
-func (_Contract *ContractCaller) ProjectFirstEpochId(opts *bind.CallOpts, projectId string) (*big.Int, error) {
+// Solidity: function projectFirstEpochId(address dataMarket, string projectId) view returns(uint256)
+func (_Contract *ContractCaller) ProjectFirstEpochId(opts *bind.CallOpts, dataMarket common.Address, projectId string) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "projectFirstEpochId", projectId)
+	err := _Contract.contract.Call(opts, &out, "projectFirstEpochId", dataMarket, projectId)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1619,57 +1753,57 @@ func (_Contract *ContractCaller) ProjectFirstEpochId(opts *bind.CallOpts, projec
 
 }
 
-// ProjectFirstEpochId is a free data retrieval call binding the contract method 0xfa30dbe0.
+// ProjectFirstEpochId is a free data retrieval call binding the contract method 0x4242614c.
 //
-// Solidity: function projectFirstEpochId(string projectId) view returns(uint256 epochId)
-func (_Contract *ContractSession) ProjectFirstEpochId(projectId string) (*big.Int, error) {
-	return _Contract.Contract.ProjectFirstEpochId(&_Contract.CallOpts, projectId)
+// Solidity: function projectFirstEpochId(address dataMarket, string projectId) view returns(uint256)
+func (_Contract *ContractSession) ProjectFirstEpochId(dataMarket common.Address, projectId string) (*big.Int, error) {
+	return _Contract.Contract.ProjectFirstEpochId(&_Contract.CallOpts, dataMarket, projectId)
 }
 
-// ProjectFirstEpochId is a free data retrieval call binding the contract method 0xfa30dbe0.
+// ProjectFirstEpochId is a free data retrieval call binding the contract method 0x4242614c.
 //
-// Solidity: function projectFirstEpochId(string projectId) view returns(uint256 epochId)
-func (_Contract *ContractCallerSession) ProjectFirstEpochId(projectId string) (*big.Int, error) {
-	return _Contract.Contract.ProjectFirstEpochId(&_Contract.CallOpts, projectId)
+// Solidity: function projectFirstEpochId(address dataMarket, string projectId) view returns(uint256)
+func (_Contract *ContractCallerSession) ProjectFirstEpochId(dataMarket common.Address, projectId string) (*big.Int, error) {
+	return _Contract.Contract.ProjectFirstEpochId(&_Contract.CallOpts, dataMarket, projectId)
 }
 
-// RecoverAddress is a free data retrieval call binding the contract method 0xc655d7aa.
+// ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
 //
-// Solidity: function recoverAddress(bytes32 messageHash, bytes signature) pure returns(address)
-func (_Contract *ContractCaller) RecoverAddress(opts *bind.CallOpts, messageHash [32]byte, signature []byte) (common.Address, error) {
+// Solidity: function proxiableUUID() view returns(bytes32)
+func (_Contract *ContractCaller) ProxiableUUID(opts *bind.CallOpts) ([32]byte, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "recoverAddress", messageHash, signature)
+	err := _Contract.contract.Call(opts, &out, "proxiableUUID")
 
 	if err != nil {
-		return *new(common.Address), err
+		return *new([32]byte), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
 
 	return out0, err
 
 }
 
-// RecoverAddress is a free data retrieval call binding the contract method 0xc655d7aa.
+// ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
 //
-// Solidity: function recoverAddress(bytes32 messageHash, bytes signature) pure returns(address)
-func (_Contract *ContractSession) RecoverAddress(messageHash [32]byte, signature []byte) (common.Address, error) {
-	return _Contract.Contract.RecoverAddress(&_Contract.CallOpts, messageHash, signature)
+// Solidity: function proxiableUUID() view returns(bytes32)
+func (_Contract *ContractSession) ProxiableUUID() ([32]byte, error) {
+	return _Contract.Contract.ProxiableUUID(&_Contract.CallOpts)
 }
 
-// RecoverAddress is a free data retrieval call binding the contract method 0xc655d7aa.
+// ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
 //
-// Solidity: function recoverAddress(bytes32 messageHash, bytes signature) pure returns(address)
-func (_Contract *ContractCallerSession) RecoverAddress(messageHash [32]byte, signature []byte) (common.Address, error) {
-	return _Contract.Contract.RecoverAddress(&_Contract.CallOpts, messageHash, signature)
+// Solidity: function proxiableUUID() view returns(bytes32)
+func (_Contract *ContractCallerSession) ProxiableUUID() ([32]byte, error) {
+	return _Contract.Contract.ProxiableUUID(&_Contract.CallOpts)
 }
 
-// RewardBasePoints is a free data retrieval call binding the contract method 0x7e9834d7.
+// RewardBasePoints is a free data retrieval call binding the contract method 0x7f59285a.
 //
-// Solidity: function rewardBasePoints() view returns(uint256)
-func (_Contract *ContractCaller) RewardBasePoints(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function rewardBasePoints(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) RewardBasePoints(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "rewardBasePoints")
+	err := _Contract.contract.Call(opts, &out, "rewardBasePoints", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1681,26 +1815,26 @@ func (_Contract *ContractCaller) RewardBasePoints(opts *bind.CallOpts) (*big.Int
 
 }
 
-// RewardBasePoints is a free data retrieval call binding the contract method 0x7e9834d7.
+// RewardBasePoints is a free data retrieval call binding the contract method 0x7f59285a.
 //
-// Solidity: function rewardBasePoints() view returns(uint256)
-func (_Contract *ContractSession) RewardBasePoints() (*big.Int, error) {
-	return _Contract.Contract.RewardBasePoints(&_Contract.CallOpts)
+// Solidity: function rewardBasePoints(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) RewardBasePoints(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.RewardBasePoints(&_Contract.CallOpts, dataMarket)
 }
 
-// RewardBasePoints is a free data retrieval call binding the contract method 0x7e9834d7.
+// RewardBasePoints is a free data retrieval call binding the contract method 0x7f59285a.
 //
-// Solidity: function rewardBasePoints() view returns(uint256)
-func (_Contract *ContractCallerSession) RewardBasePoints() (*big.Int, error) {
-	return _Contract.Contract.RewardBasePoints(&_Contract.CallOpts)
+// Solidity: function rewardBasePoints(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) RewardBasePoints(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.RewardBasePoints(&_Contract.CallOpts, dataMarket)
 }
 
-// RewardsEnabled is a free data retrieval call binding the contract method 0x1dafe16b.
+// RewardsEnabled is a free data retrieval call binding the contract method 0x83450d26.
 //
-// Solidity: function rewardsEnabled() view returns(bool)
-func (_Contract *ContractCaller) RewardsEnabled(opts *bind.CallOpts) (bool, error) {
+// Solidity: function rewardsEnabled(address dataMarket) view returns(bool)
+func (_Contract *ContractCaller) RewardsEnabled(opts *bind.CallOpts, dataMarket common.Address) (bool, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "rewardsEnabled")
+	err := _Contract.contract.Call(opts, &out, "rewardsEnabled", dataMarket)
 
 	if err != nil {
 		return *new(bool), err
@@ -1712,18 +1846,18 @@ func (_Contract *ContractCaller) RewardsEnabled(opts *bind.CallOpts) (bool, erro
 
 }
 
-// RewardsEnabled is a free data retrieval call binding the contract method 0x1dafe16b.
+// RewardsEnabled is a free data retrieval call binding the contract method 0x83450d26.
 //
-// Solidity: function rewardsEnabled() view returns(bool)
-func (_Contract *ContractSession) RewardsEnabled() (bool, error) {
-	return _Contract.Contract.RewardsEnabled(&_Contract.CallOpts)
+// Solidity: function rewardsEnabled(address dataMarket) view returns(bool)
+func (_Contract *ContractSession) RewardsEnabled(dataMarket common.Address) (bool, error) {
+	return _Contract.Contract.RewardsEnabled(&_Contract.CallOpts, dataMarket)
 }
 
-// RewardsEnabled is a free data retrieval call binding the contract method 0x1dafe16b.
+// RewardsEnabled is a free data retrieval call binding the contract method 0x83450d26.
 //
-// Solidity: function rewardsEnabled() view returns(bool)
-func (_Contract *ContractCallerSession) RewardsEnabled() (bool, error) {
-	return _Contract.Contract.RewardsEnabled(&_Contract.CallOpts)
+// Solidity: function rewardsEnabled(address dataMarket) view returns(bool)
+func (_Contract *ContractCallerSession) RewardsEnabled(dataMarket common.Address) (bool, error) {
+	return _Contract.Contract.RewardsEnabled(&_Contract.CallOpts, dataMarket)
 }
 
 // SlotCounter is a free data retrieval call binding the contract method 0xe59a4105.
@@ -1757,12 +1891,12 @@ func (_Contract *ContractCallerSession) SlotCounter() (*big.Int, error) {
 	return _Contract.Contract.SlotCounter(&_Contract.CallOpts)
 }
 
-// SlotRewardPoints is a free data retrieval call binding the contract method 0x486429e7.
+// SlotRewardPoints is a free data retrieval call binding the contract method 0x9a2458a6.
 //
-// Solidity: function slotRewardPoints(uint256 ) view returns(uint256)
-func (_Contract *ContractCaller) SlotRewardPoints(opts *bind.CallOpts, arg0 *big.Int) (*big.Int, error) {
+// Solidity: function slotRewardPoints(address dataMarket, uint256 slotId) view returns(uint256)
+func (_Contract *ContractCaller) SlotRewardPoints(opts *bind.CallOpts, dataMarket common.Address, slotId *big.Int) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "slotRewardPoints", arg0)
+	err := _Contract.contract.Call(opts, &out, "slotRewardPoints", dataMarket, slotId)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1774,18 +1908,49 @@ func (_Contract *ContractCaller) SlotRewardPoints(opts *bind.CallOpts, arg0 *big
 
 }
 
-// SlotRewardPoints is a free data retrieval call binding the contract method 0x486429e7.
+// SlotRewardPoints is a free data retrieval call binding the contract method 0x9a2458a6.
 //
-// Solidity: function slotRewardPoints(uint256 ) view returns(uint256)
-func (_Contract *ContractSession) SlotRewardPoints(arg0 *big.Int) (*big.Int, error) {
-	return _Contract.Contract.SlotRewardPoints(&_Contract.CallOpts, arg0)
+// Solidity: function slotRewardPoints(address dataMarket, uint256 slotId) view returns(uint256)
+func (_Contract *ContractSession) SlotRewardPoints(dataMarket common.Address, slotId *big.Int) (*big.Int, error) {
+	return _Contract.Contract.SlotRewardPoints(&_Contract.CallOpts, dataMarket, slotId)
 }
 
-// SlotRewardPoints is a free data retrieval call binding the contract method 0x486429e7.
+// SlotRewardPoints is a free data retrieval call binding the contract method 0x9a2458a6.
 //
-// Solidity: function slotRewardPoints(uint256 ) view returns(uint256)
-func (_Contract *ContractCallerSession) SlotRewardPoints(arg0 *big.Int) (*big.Int, error) {
-	return _Contract.Contract.SlotRewardPoints(&_Contract.CallOpts, arg0)
+// Solidity: function slotRewardPoints(address dataMarket, uint256 slotId) view returns(uint256)
+func (_Contract *ContractCallerSession) SlotRewardPoints(dataMarket common.Address, slotId *big.Int) (*big.Int, error) {
+	return _Contract.Contract.SlotRewardPoints(&_Contract.CallOpts, dataMarket, slotId)
+}
+
+// SlotRewards is a free data retrieval call binding the contract method 0x53e28269.
+//
+// Solidity: function slotRewards(uint256 ) view returns(uint256)
+func (_Contract *ContractCaller) SlotRewards(opts *bind.CallOpts, arg0 *big.Int) (*big.Int, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "slotRewards", arg0)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// SlotRewards is a free data retrieval call binding the contract method 0x53e28269.
+//
+// Solidity: function slotRewards(uint256 ) view returns(uint256)
+func (_Contract *ContractSession) SlotRewards(arg0 *big.Int) (*big.Int, error) {
+	return _Contract.Contract.SlotRewards(&_Contract.CallOpts, arg0)
+}
+
+// SlotRewards is a free data retrieval call binding the contract method 0x53e28269.
+//
+// Solidity: function slotRewards(uint256 ) view returns(uint256)
+func (_Contract *ContractCallerSession) SlotRewards(arg0 *big.Int) (*big.Int, error) {
+	return _Contract.Contract.SlotRewards(&_Contract.CallOpts, arg0)
 }
 
 // SlotSnapshotterMapping is a free data retrieval call binding the contract method 0x948a463e.
@@ -1819,12 +1984,12 @@ func (_Contract *ContractCallerSession) SlotSnapshotterMapping(slotId *big.Int) 
 	return _Contract.Contract.SlotSnapshotterMapping(&_Contract.CallOpts, slotId)
 }
 
-// SlotStreakCounter is a free data retrieval call binding the contract method 0x7c5f1557.
+// SlotSubmissionCount is a free data retrieval call binding the contract method 0x7f9ee950.
 //
-// Solidity: function slotStreakCounter(uint256 slotId) view returns(uint256 streak)
-func (_Contract *ContractCaller) SlotStreakCounter(opts *bind.CallOpts, slotId *big.Int) (*big.Int, error) {
+// Solidity: function slotSubmissionCount(address dataMarket, uint256 slotId, uint256 dayId) view returns(uint256)
+func (_Contract *ContractCaller) SlotSubmissionCount(opts *bind.CallOpts, dataMarket common.Address, slotId *big.Int, dayId *big.Int) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "slotStreakCounter", slotId)
+	err := _Contract.contract.Call(opts, &out, "slotSubmissionCount", dataMarket, slotId, dayId)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1836,61 +2001,30 @@ func (_Contract *ContractCaller) SlotStreakCounter(opts *bind.CallOpts, slotId *
 
 }
 
-// SlotStreakCounter is a free data retrieval call binding the contract method 0x7c5f1557.
+// SlotSubmissionCount is a free data retrieval call binding the contract method 0x7f9ee950.
 //
-// Solidity: function slotStreakCounter(uint256 slotId) view returns(uint256 streak)
-func (_Contract *ContractSession) SlotStreakCounter(slotId *big.Int) (*big.Int, error) {
-	return _Contract.Contract.SlotStreakCounter(&_Contract.CallOpts, slotId)
+// Solidity: function slotSubmissionCount(address dataMarket, uint256 slotId, uint256 dayId) view returns(uint256)
+func (_Contract *ContractSession) SlotSubmissionCount(dataMarket common.Address, slotId *big.Int, dayId *big.Int) (*big.Int, error) {
+	return _Contract.Contract.SlotSubmissionCount(&_Contract.CallOpts, dataMarket, slotId, dayId)
 }
 
-// SlotStreakCounter is a free data retrieval call binding the contract method 0x7c5f1557.
+// SlotSubmissionCount is a free data retrieval call binding the contract method 0x7f9ee950.
 //
-// Solidity: function slotStreakCounter(uint256 slotId) view returns(uint256 streak)
-func (_Contract *ContractCallerSession) SlotStreakCounter(slotId *big.Int) (*big.Int, error) {
-	return _Contract.Contract.SlotStreakCounter(&_Contract.CallOpts, slotId)
+// Solidity: function slotSubmissionCount(address dataMarket, uint256 slotId, uint256 dayId) view returns(uint256)
+func (_Contract *ContractCallerSession) SlotSubmissionCount(dataMarket common.Address, slotId *big.Int, dayId *big.Int) (*big.Int, error) {
+	return _Contract.Contract.SlotSubmissionCount(&_Contract.CallOpts, dataMarket, slotId, dayId)
 }
 
-// SlotSubmissionCount is a free data retrieval call binding the contract method 0x9dbc5064.
+// SnapshotStatus is a free data retrieval call binding the contract method 0x1f588588.
 //
-// Solidity: function slotSubmissionCount(uint256 slotId, uint256 day) view returns(uint256 count)
-func (_Contract *ContractCaller) SlotSubmissionCount(opts *bind.CallOpts, slotId *big.Int, day *big.Int) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "slotSubmissionCount", slotId, day)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// SlotSubmissionCount is a free data retrieval call binding the contract method 0x9dbc5064.
-//
-// Solidity: function slotSubmissionCount(uint256 slotId, uint256 day) view returns(uint256 count)
-func (_Contract *ContractSession) SlotSubmissionCount(slotId *big.Int, day *big.Int) (*big.Int, error) {
-	return _Contract.Contract.SlotSubmissionCount(&_Contract.CallOpts, slotId, day)
-}
-
-// SlotSubmissionCount is a free data retrieval call binding the contract method 0x9dbc5064.
-//
-// Solidity: function slotSubmissionCount(uint256 slotId, uint256 day) view returns(uint256 count)
-func (_Contract *ContractCallerSession) SlotSubmissionCount(slotId *big.Int, day *big.Int) (*big.Int, error) {
-	return _Contract.Contract.SlotSubmissionCount(&_Contract.CallOpts, slotId, day)
-}
-
-// SnapshotStatus is a free data retrieval call binding the contract method 0x3aaf384d.
-//
-// Solidity: function snapshotStatus(string projectId, uint256 epochId) view returns(uint8 status, string snapshotCid, uint256 timestamp)
-func (_Contract *ContractCaller) SnapshotStatus(opts *bind.CallOpts, projectId string, epochId *big.Int) (struct {
+// Solidity: function snapshotStatus(address dataMarket, string projectId, uint256 epochId) view returns(uint8 status, string snapshotCid, uint256 timestamp)
+func (_Contract *ContractCaller) SnapshotStatus(opts *bind.CallOpts, dataMarket common.Address, projectId string, epochId *big.Int) (struct {
 	Status      uint8
 	SnapshotCid string
 	Timestamp   *big.Int
 }, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "snapshotStatus", projectId, epochId)
+	err := _Contract.contract.Call(opts, &out, "snapshotStatus", dataMarket, projectId, epochId)
 
 	outstruct := new(struct {
 		Status      uint8
@@ -1909,34 +2043,34 @@ func (_Contract *ContractCaller) SnapshotStatus(opts *bind.CallOpts, projectId s
 
 }
 
-// SnapshotStatus is a free data retrieval call binding the contract method 0x3aaf384d.
+// SnapshotStatus is a free data retrieval call binding the contract method 0x1f588588.
 //
-// Solidity: function snapshotStatus(string projectId, uint256 epochId) view returns(uint8 status, string snapshotCid, uint256 timestamp)
-func (_Contract *ContractSession) SnapshotStatus(projectId string, epochId *big.Int) (struct {
+// Solidity: function snapshotStatus(address dataMarket, string projectId, uint256 epochId) view returns(uint8 status, string snapshotCid, uint256 timestamp)
+func (_Contract *ContractSession) SnapshotStatus(dataMarket common.Address, projectId string, epochId *big.Int) (struct {
 	Status      uint8
 	SnapshotCid string
 	Timestamp   *big.Int
 }, error) {
-	return _Contract.Contract.SnapshotStatus(&_Contract.CallOpts, projectId, epochId)
+	return _Contract.Contract.SnapshotStatus(&_Contract.CallOpts, dataMarket, projectId, epochId)
 }
 
-// SnapshotStatus is a free data retrieval call binding the contract method 0x3aaf384d.
+// SnapshotStatus is a free data retrieval call binding the contract method 0x1f588588.
 //
-// Solidity: function snapshotStatus(string projectId, uint256 epochId) view returns(uint8 status, string snapshotCid, uint256 timestamp)
-func (_Contract *ContractCallerSession) SnapshotStatus(projectId string, epochId *big.Int) (struct {
+// Solidity: function snapshotStatus(address dataMarket, string projectId, uint256 epochId) view returns(uint8 status, string snapshotCid, uint256 timestamp)
+func (_Contract *ContractCallerSession) SnapshotStatus(dataMarket common.Address, projectId string, epochId *big.Int) (struct {
 	Status      uint8
 	SnapshotCid string
 	Timestamp   *big.Int
 }, error) {
-	return _Contract.Contract.SnapshotStatus(&_Contract.CallOpts, projectId, epochId)
+	return _Contract.Contract.SnapshotStatus(&_Contract.CallOpts, dataMarket, projectId, epochId)
 }
 
-// SnapshotSubmissionWindow is a free data retrieval call binding the contract method 0x059080f6.
+// SnapshotSubmissionWindow is a free data retrieval call binding the contract method 0xf3354db0.
 //
-// Solidity: function snapshotSubmissionWindow() view returns(uint256)
-func (_Contract *ContractCaller) SnapshotSubmissionWindow(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function snapshotSubmissionWindow(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) SnapshotSubmissionWindow(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "snapshotSubmissionWindow")
+	err := _Contract.contract.Call(opts, &out, "snapshotSubmissionWindow", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1948,392 +2082,238 @@ func (_Contract *ContractCaller) SnapshotSubmissionWindow(opts *bind.CallOpts) (
 
 }
 
-// SnapshotSubmissionWindow is a free data retrieval call binding the contract method 0x059080f6.
+// SnapshotSubmissionWindow is a free data retrieval call binding the contract method 0xf3354db0.
 //
-// Solidity: function snapshotSubmissionWindow() view returns(uint256)
-func (_Contract *ContractSession) SnapshotSubmissionWindow() (*big.Int, error) {
-	return _Contract.Contract.SnapshotSubmissionWindow(&_Contract.CallOpts)
+// Solidity: function snapshotSubmissionWindow(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) SnapshotSubmissionWindow(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.SnapshotSubmissionWindow(&_Contract.CallOpts, dataMarket)
 }
 
-// SnapshotSubmissionWindow is a free data retrieval call binding the contract method 0x059080f6.
+// SnapshotSubmissionWindow is a free data retrieval call binding the contract method 0xf3354db0.
 //
-// Solidity: function snapshotSubmissionWindow() view returns(uint256)
-func (_Contract *ContractCallerSession) SnapshotSubmissionWindow() (*big.Int, error) {
-	return _Contract.Contract.SnapshotSubmissionWindow(&_Contract.CallOpts)
+// Solidity: function snapshotSubmissionWindow(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) SnapshotSubmissionWindow(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.SnapshotSubmissionWindow(&_Contract.CallOpts, dataMarket)
 }
 
-// SnapshotsReceived is a free data retrieval call binding the contract method 0x04dbb717.
+// SnapshotterState is a free data retrieval call binding the contract method 0x342050cc.
 //
-// Solidity: function snapshotsReceived(string , uint256 , address ) view returns(bool)
-func (_Contract *ContractCaller) SnapshotsReceived(opts *bind.CallOpts, arg0 string, arg1 *big.Int, arg2 common.Address) (bool, error) {
+// Solidity: function snapshotterState() view returns(address)
+func (_Contract *ContractCaller) SnapshotterState(opts *bind.CallOpts) (common.Address, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "snapshotsReceived", arg0, arg1, arg2)
+	err := _Contract.contract.Call(opts, &out, "snapshotterState")
 
 	if err != nil {
-		return *new(bool), err
+		return *new(common.Address), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
 
 	return out0, err
 
 }
 
-// SnapshotsReceived is a free data retrieval call binding the contract method 0x04dbb717.
+// SnapshotterState is a free data retrieval call binding the contract method 0x342050cc.
 //
-// Solidity: function snapshotsReceived(string , uint256 , address ) view returns(bool)
-func (_Contract *ContractSession) SnapshotsReceived(arg0 string, arg1 *big.Int, arg2 common.Address) (bool, error) {
-	return _Contract.Contract.SnapshotsReceived(&_Contract.CallOpts, arg0, arg1, arg2)
+// Solidity: function snapshotterState() view returns(address)
+func (_Contract *ContractSession) SnapshotterState() (common.Address, error) {
+	return _Contract.Contract.SnapshotterState(&_Contract.CallOpts)
 }
 
-// SnapshotsReceived is a free data retrieval call binding the contract method 0x04dbb717.
+// SnapshotterState is a free data retrieval call binding the contract method 0x342050cc.
 //
-// Solidity: function snapshotsReceived(string , uint256 , address ) view returns(bool)
-func (_Contract *ContractCallerSession) SnapshotsReceived(arg0 string, arg1 *big.Int, arg2 common.Address) (bool, error) {
-	return _Contract.Contract.SnapshotsReceived(&_Contract.CallOpts, arg0, arg1, arg2)
+// Solidity: function snapshotterState() view returns(address)
+func (_Contract *ContractCallerSession) SnapshotterState() (common.Address, error) {
+	return _Contract.Contract.SnapshotterState(&_Contract.CallOpts)
 }
 
-// SnapshotsReceivedCount is a free data retrieval call binding the contract method 0x8e07ba42.
+// AssignSnapshotterToSlots is a paid mutator transaction binding the contract method 0xe2cb8d99.
 //
-// Solidity: function snapshotsReceivedCount(string , uint256 , string ) view returns(uint256)
-func (_Contract *ContractCaller) SnapshotsReceivedCount(opts *bind.CallOpts, arg0 string, arg1 *big.Int, arg2 string) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "snapshotsReceivedCount", arg0, arg1, arg2)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
+// Solidity: function assignSnapshotterToSlots(uint256[] _slotIds, address[] _snapshotterAddresses) returns()
+func (_Contract *ContractTransactor) AssignSnapshotterToSlots(opts *bind.TransactOpts, _slotIds []*big.Int, _snapshotterAddresses []common.Address) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "assignSnapshotterToSlots", _slotIds, _snapshotterAddresses)
 }
 
-// SnapshotsReceivedCount is a free data retrieval call binding the contract method 0x8e07ba42.
+// AssignSnapshotterToSlots is a paid mutator transaction binding the contract method 0xe2cb8d99.
 //
-// Solidity: function snapshotsReceivedCount(string , uint256 , string ) view returns(uint256)
-func (_Contract *ContractSession) SnapshotsReceivedCount(arg0 string, arg1 *big.Int, arg2 string) (*big.Int, error) {
-	return _Contract.Contract.SnapshotsReceivedCount(&_Contract.CallOpts, arg0, arg1, arg2)
+// Solidity: function assignSnapshotterToSlots(uint256[] _slotIds, address[] _snapshotterAddresses) returns()
+func (_Contract *ContractSession) AssignSnapshotterToSlots(_slotIds []*big.Int, _snapshotterAddresses []common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.AssignSnapshotterToSlots(&_Contract.TransactOpts, _slotIds, _snapshotterAddresses)
 }
 
-// SnapshotsReceivedCount is a free data retrieval call binding the contract method 0x8e07ba42.
+// AssignSnapshotterToSlots is a paid mutator transaction binding the contract method 0xe2cb8d99.
 //
-// Solidity: function snapshotsReceivedCount(string , uint256 , string ) view returns(uint256)
-func (_Contract *ContractCallerSession) SnapshotsReceivedCount(arg0 string, arg1 *big.Int, arg2 string) (*big.Int, error) {
-	return _Contract.Contract.SnapshotsReceivedCount(&_Contract.CallOpts, arg0, arg1, arg2)
+// Solidity: function assignSnapshotterToSlots(uint256[] _slotIds, address[] _snapshotterAddresses) returns()
+func (_Contract *ContractTransactorSession) AssignSnapshotterToSlots(_slotIds []*big.Int, _snapshotterAddresses []common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.AssignSnapshotterToSlots(&_Contract.TransactOpts, _slotIds, _snapshotterAddresses)
 }
 
-// SnapshotsReceivedSlot is a free data retrieval call binding the contract method 0x37d080f0.
+// CreateDataMarket is a paid mutator transaction binding the contract method 0x1dbc586b.
 //
-// Solidity: function snapshotsReceivedSlot(string , uint256 , uint256 ) view returns(bool)
-func (_Contract *ContractCaller) SnapshotsReceivedSlot(opts *bind.CallOpts, arg0 string, arg1 *big.Int, arg2 *big.Int) (bool, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "snapshotsReceivedSlot", arg0, arg1, arg2)
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
+// Solidity: function createDataMarket(address ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId) returns(address)
+func (_Contract *ContractTransactor) CreateDataMarket(opts *bind.TransactOpts, ownerAddress common.Address, epochSize uint8, sourceChainId *big.Int, sourceChainBlockTime *big.Int, useBlockNumberAsEpochId bool) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "createDataMarket", ownerAddress, epochSize, sourceChainId, sourceChainBlockTime, useBlockNumberAsEpochId)
 }
 
-// SnapshotsReceivedSlot is a free data retrieval call binding the contract method 0x37d080f0.
+// CreateDataMarket is a paid mutator transaction binding the contract method 0x1dbc586b.
 //
-// Solidity: function snapshotsReceivedSlot(string , uint256 , uint256 ) view returns(bool)
-func (_Contract *ContractSession) SnapshotsReceivedSlot(arg0 string, arg1 *big.Int, arg2 *big.Int) (bool, error) {
-	return _Contract.Contract.SnapshotsReceivedSlot(&_Contract.CallOpts, arg0, arg1, arg2)
+// Solidity: function createDataMarket(address ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId) returns(address)
+func (_Contract *ContractSession) CreateDataMarket(ownerAddress common.Address, epochSize uint8, sourceChainId *big.Int, sourceChainBlockTime *big.Int, useBlockNumberAsEpochId bool) (*types.Transaction, error) {
+	return _Contract.Contract.CreateDataMarket(&_Contract.TransactOpts, ownerAddress, epochSize, sourceChainId, sourceChainBlockTime, useBlockNumberAsEpochId)
 }
 
-// SnapshotsReceivedSlot is a free data retrieval call binding the contract method 0x37d080f0.
+// CreateDataMarket is a paid mutator transaction binding the contract method 0x1dbc586b.
 //
-// Solidity: function snapshotsReceivedSlot(string , uint256 , uint256 ) view returns(bool)
-func (_Contract *ContractCallerSession) SnapshotsReceivedSlot(arg0 string, arg1 *big.Int, arg2 *big.Int) (bool, error) {
-	return _Contract.Contract.SnapshotsReceivedSlot(&_Contract.CallOpts, arg0, arg1, arg2)
+// Solidity: function createDataMarket(address ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId) returns(address)
+func (_Contract *ContractTransactorSession) CreateDataMarket(ownerAddress common.Address, epochSize uint8, sourceChainId *big.Int, sourceChainBlockTime *big.Int, useBlockNumberAsEpochId bool) (*types.Transaction, error) {
+	return _Contract.Contract.CreateDataMarket(&_Contract.TransactOpts, ownerAddress, epochSize, sourceChainId, sourceChainBlockTime, useBlockNumberAsEpochId)
 }
 
-// StreakBonusPoints is a free data retrieval call binding the contract method 0x36f71682.
+// EndBatchSubmissions is a paid mutator transaction binding the contract method 0x6ee55d73.
 //
-// Solidity: function streakBonusPoints() view returns(uint256)
-func (_Contract *ContractCaller) StreakBonusPoints(opts *bind.CallOpts) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "streakBonusPoints")
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
+// Solidity: function endBatchSubmissions(address dataMarket, uint256 epochId) returns()
+func (_Contract *ContractTransactor) EndBatchSubmissions(opts *bind.TransactOpts, dataMarket common.Address, epochId *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "endBatchSubmissions", dataMarket, epochId)
 }
 
-// StreakBonusPoints is a free data retrieval call binding the contract method 0x36f71682.
+// EndBatchSubmissions is a paid mutator transaction binding the contract method 0x6ee55d73.
 //
-// Solidity: function streakBonusPoints() view returns(uint256)
-func (_Contract *ContractSession) StreakBonusPoints() (*big.Int, error) {
-	return _Contract.Contract.StreakBonusPoints(&_Contract.CallOpts)
+// Solidity: function endBatchSubmissions(address dataMarket, uint256 epochId) returns()
+func (_Contract *ContractSession) EndBatchSubmissions(dataMarket common.Address, epochId *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.EndBatchSubmissions(&_Contract.TransactOpts, dataMarket, epochId)
 }
 
-// StreakBonusPoints is a free data retrieval call binding the contract method 0x36f71682.
+// EndBatchSubmissions is a paid mutator transaction binding the contract method 0x6ee55d73.
 //
-// Solidity: function streakBonusPoints() view returns(uint256)
-func (_Contract *ContractCallerSession) StreakBonusPoints() (*big.Int, error) {
-	return _Contract.Contract.StreakBonusPoints(&_Contract.CallOpts)
+// Solidity: function endBatchSubmissions(address dataMarket, uint256 epochId) returns()
+func (_Contract *ContractTransactorSession) EndBatchSubmissions(dataMarket common.Address, epochId *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.EndBatchSubmissions(&_Contract.TransactOpts, dataMarket, epochId)
 }
 
-// TimeSlotCheck is a free data retrieval call binding the contract method 0x1a0adc24.
+// ForceCompleteConsensusAttestations is a paid mutator transaction binding the contract method 0x05237c1b.
 //
-// Solidity: function timeSlotCheck() view returns(bool)
-func (_Contract *ContractCaller) TimeSlotCheck(opts *bind.CallOpts) (bool, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "timeSlotCheck")
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
+// Solidity: function forceCompleteConsensusAttestations(address dataMarket, uint256 batchId, uint256 epochId) returns()
+func (_Contract *ContractTransactor) ForceCompleteConsensusAttestations(opts *bind.TransactOpts, dataMarket common.Address, batchId *big.Int, epochId *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "forceCompleteConsensusAttestations", dataMarket, batchId, epochId)
 }
 
-// TimeSlotCheck is a free data retrieval call binding the contract method 0x1a0adc24.
+// ForceCompleteConsensusAttestations is a paid mutator transaction binding the contract method 0x05237c1b.
 //
-// Solidity: function timeSlotCheck() view returns(bool)
-func (_Contract *ContractSession) TimeSlotCheck() (bool, error) {
-	return _Contract.Contract.TimeSlotCheck(&_Contract.CallOpts)
+// Solidity: function forceCompleteConsensusAttestations(address dataMarket, uint256 batchId, uint256 epochId) returns()
+func (_Contract *ContractSession) ForceCompleteConsensusAttestations(dataMarket common.Address, batchId *big.Int, epochId *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.ForceCompleteConsensusAttestations(&_Contract.TransactOpts, dataMarket, batchId, epochId)
 }
 
-// TimeSlotCheck is a free data retrieval call binding the contract method 0x1a0adc24.
+// ForceCompleteConsensusAttestations is a paid mutator transaction binding the contract method 0x05237c1b.
 //
-// Solidity: function timeSlotCheck() view returns(bool)
-func (_Contract *ContractCallerSession) TimeSlotCheck() (bool, error) {
-	return _Contract.Contract.TimeSlotCheck(&_Contract.CallOpts)
+// Solidity: function forceCompleteConsensusAttestations(address dataMarket, uint256 batchId, uint256 epochId) returns()
+func (_Contract *ContractTransactorSession) ForceCompleteConsensusAttestations(dataMarket common.Address, batchId *big.Int, epochId *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.ForceCompleteConsensusAttestations(&_Contract.TransactOpts, dataMarket, batchId, epochId)
 }
 
-// TimeSlotPreference is a free data retrieval call binding the contract method 0x1cdd886b.
+// ForceSkipEpoch is a paid mutator transaction binding the contract method 0x27856ff3.
 //
-// Solidity: function timeSlotPreference(uint256 slot) view returns(uint256)
-func (_Contract *ContractCaller) TimeSlotPreference(opts *bind.CallOpts, slot *big.Int) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "timeSlotPreference", slot)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
+// Solidity: function forceSkipEpoch(address dataMarket, uint256 begin, uint256 end) returns()
+func (_Contract *ContractTransactor) ForceSkipEpoch(opts *bind.TransactOpts, dataMarket common.Address, begin *big.Int, end *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "forceSkipEpoch", dataMarket, begin, end)
 }
 
-// TimeSlotPreference is a free data retrieval call binding the contract method 0x1cdd886b.
+// ForceSkipEpoch is a paid mutator transaction binding the contract method 0x27856ff3.
 //
-// Solidity: function timeSlotPreference(uint256 slot) view returns(uint256)
-func (_Contract *ContractSession) TimeSlotPreference(slot *big.Int) (*big.Int, error) {
-	return _Contract.Contract.TimeSlotPreference(&_Contract.CallOpts, slot)
+// Solidity: function forceSkipEpoch(address dataMarket, uint256 begin, uint256 end) returns()
+func (_Contract *ContractSession) ForceSkipEpoch(dataMarket common.Address, begin *big.Int, end *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.ForceSkipEpoch(&_Contract.TransactOpts, dataMarket, begin, end)
 }
 
-// TimeSlotPreference is a free data retrieval call binding the contract method 0x1cdd886b.
+// ForceSkipEpoch is a paid mutator transaction binding the contract method 0x27856ff3.
 //
-// Solidity: function timeSlotPreference(uint256 slot) view returns(uint256)
-func (_Contract *ContractCallerSession) TimeSlotPreference(slot *big.Int) (*big.Int, error) {
-	return _Contract.Contract.TimeSlotPreference(&_Contract.CallOpts, slot)
+// Solidity: function forceSkipEpoch(address dataMarket, uint256 begin, uint256 end) returns()
+func (_Contract *ContractTransactorSession) ForceSkipEpoch(dataMarket common.Address, begin *big.Int, end *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.ForceSkipEpoch(&_Contract.TransactOpts, dataMarket, begin, end)
 }
 
-// TotalSnapshotsReceived is a free data retrieval call binding the contract method 0x797bbd58.
+// Initialize is a paid mutator transaction binding the contract method 0xc4d66de8.
 //
-// Solidity: function totalSnapshotsReceived(string , uint256 ) view returns(uint256)
-func (_Contract *ContractCaller) TotalSnapshotsReceived(opts *bind.CallOpts, arg0 string, arg1 *big.Int) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "totalSnapshotsReceived", arg0, arg1)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
+// Solidity: function initialize(address initialOwner) returns()
+func (_Contract *ContractTransactor) Initialize(opts *bind.TransactOpts, initialOwner common.Address) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "initialize", initialOwner)
 }
 
-// TotalSnapshotsReceived is a free data retrieval call binding the contract method 0x797bbd58.
+// Initialize is a paid mutator transaction binding the contract method 0xc4d66de8.
 //
-// Solidity: function totalSnapshotsReceived(string , uint256 ) view returns(uint256)
-func (_Contract *ContractSession) TotalSnapshotsReceived(arg0 string, arg1 *big.Int) (*big.Int, error) {
-	return _Contract.Contract.TotalSnapshotsReceived(&_Contract.CallOpts, arg0, arg1)
+// Solidity: function initialize(address initialOwner) returns()
+func (_Contract *ContractSession) Initialize(initialOwner common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.Initialize(&_Contract.TransactOpts, initialOwner)
 }
 
-// TotalSnapshotsReceived is a free data retrieval call binding the contract method 0x797bbd58.
+// Initialize is a paid mutator transaction binding the contract method 0xc4d66de8.
 //
-// Solidity: function totalSnapshotsReceived(string , uint256 ) view returns(uint256)
-func (_Contract *ContractCallerSession) TotalSnapshotsReceived(arg0 string, arg1 *big.Int) (*big.Int, error) {
-	return _Contract.Contract.TotalSnapshotsReceived(&_Contract.CallOpts, arg0, arg1)
+// Solidity: function initialize(address initialOwner) returns()
+func (_Contract *ContractTransactorSession) Initialize(initialOwner common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.Initialize(&_Contract.TransactOpts, initialOwner)
 }
 
-// Verify is a free data retrieval call binding the contract method 0x58939f83.
+// LoadCurrentDay is a paid mutator transaction binding the contract method 0x59c60b30.
 //
-// Solidity: function verify(uint256 slotId, string snapshotCid, uint256 epochId, string projectId, (uint256,uint256,string,uint256,string) request, bytes signature, address signer) view returns(bool)
-func (_Contract *ContractCaller) Verify(opts *bind.CallOpts, slotId *big.Int, snapshotCid string, epochId *big.Int, projectId string, request PowerloomProtocolStateRequest, signature []byte, signer common.Address) (bool, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "verify", slotId, snapshotCid, epochId, projectId, request, signature, signer)
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
+// Solidity: function loadCurrentDay(address dataMarket, uint256 _dayCounter) returns()
+func (_Contract *ContractTransactor) LoadCurrentDay(opts *bind.TransactOpts, dataMarket common.Address, _dayCounter *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "loadCurrentDay", dataMarket, _dayCounter)
 }
 
-// Verify is a free data retrieval call binding the contract method 0x58939f83.
+// LoadCurrentDay is a paid mutator transaction binding the contract method 0x59c60b30.
 //
-// Solidity: function verify(uint256 slotId, string snapshotCid, uint256 epochId, string projectId, (uint256,uint256,string,uint256,string) request, bytes signature, address signer) view returns(bool)
-func (_Contract *ContractSession) Verify(slotId *big.Int, snapshotCid string, epochId *big.Int, projectId string, request PowerloomProtocolStateRequest, signature []byte, signer common.Address) (bool, error) {
-	return _Contract.Contract.Verify(&_Contract.CallOpts, slotId, snapshotCid, epochId, projectId, request, signature, signer)
+// Solidity: function loadCurrentDay(address dataMarket, uint256 _dayCounter) returns()
+func (_Contract *ContractSession) LoadCurrentDay(dataMarket common.Address, _dayCounter *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.LoadCurrentDay(&_Contract.TransactOpts, dataMarket, _dayCounter)
 }
 
-// Verify is a free data retrieval call binding the contract method 0x58939f83.
+// LoadCurrentDay is a paid mutator transaction binding the contract method 0x59c60b30.
 //
-// Solidity: function verify(uint256 slotId, string snapshotCid, uint256 epochId, string projectId, (uint256,uint256,string,uint256,string) request, bytes signature, address signer) view returns(bool)
-func (_Contract *ContractCallerSession) Verify(slotId *big.Int, snapshotCid string, epochId *big.Int, projectId string, request PowerloomProtocolStateRequest, signature []byte, signer common.Address) (bool, error) {
-	return _Contract.Contract.Verify(&_Contract.CallOpts, slotId, snapshotCid, epochId, projectId, request, signature, signer)
+// Solidity: function loadCurrentDay(address dataMarket, uint256 _dayCounter) returns()
+func (_Contract *ContractTransactorSession) LoadCurrentDay(dataMarket common.Address, _dayCounter *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.LoadCurrentDay(&_Contract.TransactOpts, dataMarket, _dayCounter)
 }
 
-// ForceCompleteConsensusAttestations is a paid mutator transaction binding the contract method 0x21a9b3f9.
+// LoadSlotSubmissions is a paid mutator transaction binding the contract method 0xa1ac8af0.
 //
-// Solidity: function forceCompleteConsensusAttestations(uint256 batchId, uint256 epochId) returns()
-func (_Contract *ContractTransactor) ForceCompleteConsensusAttestations(opts *bind.TransactOpts, batchId *big.Int, epochId *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "forceCompleteConsensusAttestations", batchId, epochId)
+// Solidity: function loadSlotSubmissions(address dataMarket, uint256 slotId, uint256 dayId, uint256 snapshotCount) returns()
+func (_Contract *ContractTransactor) LoadSlotSubmissions(opts *bind.TransactOpts, dataMarket common.Address, slotId *big.Int, dayId *big.Int, snapshotCount *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "loadSlotSubmissions", dataMarket, slotId, dayId, snapshotCount)
 }
 
-// ForceCompleteConsensusAttestations is a paid mutator transaction binding the contract method 0x21a9b3f9.
+// LoadSlotSubmissions is a paid mutator transaction binding the contract method 0xa1ac8af0.
 //
-// Solidity: function forceCompleteConsensusAttestations(uint256 batchId, uint256 epochId) returns()
-func (_Contract *ContractSession) ForceCompleteConsensusAttestations(batchId *big.Int, epochId *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.ForceCompleteConsensusAttestations(&_Contract.TransactOpts, batchId, epochId)
+// Solidity: function loadSlotSubmissions(address dataMarket, uint256 slotId, uint256 dayId, uint256 snapshotCount) returns()
+func (_Contract *ContractSession) LoadSlotSubmissions(dataMarket common.Address, slotId *big.Int, dayId *big.Int, snapshotCount *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.LoadSlotSubmissions(&_Contract.TransactOpts, dataMarket, slotId, dayId, snapshotCount)
 }
 
-// ForceCompleteConsensusAttestations is a paid mutator transaction binding the contract method 0x21a9b3f9.
+// LoadSlotSubmissions is a paid mutator transaction binding the contract method 0xa1ac8af0.
 //
-// Solidity: function forceCompleteConsensusAttestations(uint256 batchId, uint256 epochId) returns()
-func (_Contract *ContractTransactorSession) ForceCompleteConsensusAttestations(batchId *big.Int, epochId *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.ForceCompleteConsensusAttestations(&_Contract.TransactOpts, batchId, epochId)
+// Solidity: function loadSlotSubmissions(address dataMarket, uint256 slotId, uint256 dayId, uint256 snapshotCount) returns()
+func (_Contract *ContractTransactorSession) LoadSlotSubmissions(dataMarket common.Address, slotId *big.Int, dayId *big.Int, snapshotCount *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.LoadSlotSubmissions(&_Contract.TransactOpts, dataMarket, slotId, dayId, snapshotCount)
 }
 
-// ForceSkipEpoch is a paid mutator transaction binding the contract method 0xf537a3e2.
+// ReleaseEpoch is a paid mutator transaction binding the contract method 0x09517cb6.
 //
-// Solidity: function forceSkipEpoch(uint256 begin, uint256 end) returns()
-func (_Contract *ContractTransactor) ForceSkipEpoch(opts *bind.TransactOpts, begin *big.Int, end *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "forceSkipEpoch", begin, end)
+// Solidity: function releaseEpoch(address dataMarket, uint256 begin, uint256 end) returns()
+func (_Contract *ContractTransactor) ReleaseEpoch(opts *bind.TransactOpts, dataMarket common.Address, begin *big.Int, end *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "releaseEpoch", dataMarket, begin, end)
 }
 
-// ForceSkipEpoch is a paid mutator transaction binding the contract method 0xf537a3e2.
+// ReleaseEpoch is a paid mutator transaction binding the contract method 0x09517cb6.
 //
-// Solidity: function forceSkipEpoch(uint256 begin, uint256 end) returns()
-func (_Contract *ContractSession) ForceSkipEpoch(begin *big.Int, end *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.ForceSkipEpoch(&_Contract.TransactOpts, begin, end)
+// Solidity: function releaseEpoch(address dataMarket, uint256 begin, uint256 end) returns()
+func (_Contract *ContractSession) ReleaseEpoch(dataMarket common.Address, begin *big.Int, end *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.ReleaseEpoch(&_Contract.TransactOpts, dataMarket, begin, end)
 }
 
-// ForceSkipEpoch is a paid mutator transaction binding the contract method 0xf537a3e2.
+// ReleaseEpoch is a paid mutator transaction binding the contract method 0x09517cb6.
 //
-// Solidity: function forceSkipEpoch(uint256 begin, uint256 end) returns()
-func (_Contract *ContractTransactorSession) ForceSkipEpoch(begin *big.Int, end *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.ForceSkipEpoch(&_Contract.TransactOpts, begin, end)
-}
-
-// ForceStartDay is a paid mutator transaction binding the contract method 0xcd529926.
-//
-// Solidity: function forceStartDay() returns()
-func (_Contract *ContractTransactor) ForceStartDay(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "forceStartDay")
-}
-
-// ForceStartDay is a paid mutator transaction binding the contract method 0xcd529926.
-//
-// Solidity: function forceStartDay() returns()
-func (_Contract *ContractSession) ForceStartDay() (*types.Transaction, error) {
-	return _Contract.Contract.ForceStartDay(&_Contract.TransactOpts)
-}
-
-// ForceStartDay is a paid mutator transaction binding the contract method 0xcd529926.
-//
-// Solidity: function forceStartDay() returns()
-func (_Contract *ContractTransactorSession) ForceStartDay() (*types.Transaction, error) {
-	return _Contract.Contract.ForceStartDay(&_Contract.TransactOpts)
-}
-
-// LoadCurrentDay is a paid mutator transaction binding the contract method 0x82cdfd43.
-//
-// Solidity: function loadCurrentDay(uint256 _dayCounter) returns()
-func (_Contract *ContractTransactor) LoadCurrentDay(opts *bind.TransactOpts, _dayCounter *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "loadCurrentDay", _dayCounter)
-}
-
-// LoadCurrentDay is a paid mutator transaction binding the contract method 0x82cdfd43.
-//
-// Solidity: function loadCurrentDay(uint256 _dayCounter) returns()
-func (_Contract *ContractSession) LoadCurrentDay(_dayCounter *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.LoadCurrentDay(&_Contract.TransactOpts, _dayCounter)
-}
-
-// LoadCurrentDay is a paid mutator transaction binding the contract method 0x82cdfd43.
-//
-// Solidity: function loadCurrentDay(uint256 _dayCounter) returns()
-func (_Contract *ContractTransactorSession) LoadCurrentDay(_dayCounter *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.LoadCurrentDay(&_Contract.TransactOpts, _dayCounter)
-}
-
-// LoadSlotSubmissions is a paid mutator transaction binding the contract method 0xbb8ab44b.
-//
-// Solidity: function loadSlotSubmissions(uint256 slotId, uint256 dayId, uint256 snapshotCount) returns()
-func (_Contract *ContractTransactor) LoadSlotSubmissions(opts *bind.TransactOpts, slotId *big.Int, dayId *big.Int, snapshotCount *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "loadSlotSubmissions", slotId, dayId, snapshotCount)
-}
-
-// LoadSlotSubmissions is a paid mutator transaction binding the contract method 0xbb8ab44b.
-//
-// Solidity: function loadSlotSubmissions(uint256 slotId, uint256 dayId, uint256 snapshotCount) returns()
-func (_Contract *ContractSession) LoadSlotSubmissions(slotId *big.Int, dayId *big.Int, snapshotCount *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.LoadSlotSubmissions(&_Contract.TransactOpts, slotId, dayId, snapshotCount)
-}
-
-// LoadSlotSubmissions is a paid mutator transaction binding the contract method 0xbb8ab44b.
-//
-// Solidity: function loadSlotSubmissions(uint256 slotId, uint256 dayId, uint256 snapshotCount) returns()
-func (_Contract *ContractTransactorSession) LoadSlotSubmissions(slotId *big.Int, dayId *big.Int, snapshotCount *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.LoadSlotSubmissions(&_Contract.TransactOpts, slotId, dayId, snapshotCount)
-}
-
-// ReleaseEpoch is a paid mutator transaction binding the contract method 0x132c290f.
-//
-// Solidity: function releaseEpoch(uint256 begin, uint256 end) returns()
-func (_Contract *ContractTransactor) ReleaseEpoch(opts *bind.TransactOpts, begin *big.Int, end *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "releaseEpoch", begin, end)
-}
-
-// ReleaseEpoch is a paid mutator transaction binding the contract method 0x132c290f.
-//
-// Solidity: function releaseEpoch(uint256 begin, uint256 end) returns()
-func (_Contract *ContractSession) ReleaseEpoch(begin *big.Int, end *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.ReleaseEpoch(&_Contract.TransactOpts, begin, end)
-}
-
-// ReleaseEpoch is a paid mutator transaction binding the contract method 0x132c290f.
-//
-// Solidity: function releaseEpoch(uint256 begin, uint256 end) returns()
-func (_Contract *ContractTransactorSession) ReleaseEpoch(begin *big.Int, end *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.ReleaseEpoch(&_Contract.TransactOpts, begin, end)
+// Solidity: function releaseEpoch(address dataMarket, uint256 begin, uint256 end) returns()
+func (_Contract *ContractTransactorSession) ReleaseEpoch(dataMarket common.Address, begin *big.Int, end *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.ReleaseEpoch(&_Contract.TransactOpts, dataMarket, begin, end)
 }
 
 // RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
@@ -2357,88 +2337,151 @@ func (_Contract *ContractTransactorSession) RenounceOwnership() (*types.Transact
 	return _Contract.Contract.RenounceOwnership(&_Contract.TransactOpts)
 }
 
-// SubmitBatchAttestation is a paid mutator transaction binding the contract method 0x70dfe736.
+// SetSequencerId is a paid mutator transaction binding the contract method 0x79d01175.
 //
-// Solidity: function submitBatchAttestation(uint256 batchId, uint256 epochId, bytes32 finalizedCidsRootHash) returns()
-func (_Contract *ContractTransactor) SubmitBatchAttestation(opts *bind.TransactOpts, batchId *big.Int, epochId *big.Int, finalizedCidsRootHash [32]byte) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "submitBatchAttestation", batchId, epochId, finalizedCidsRootHash)
+// Solidity: function setSequencerId(address dataMarket, string _sequencerId) returns()
+func (_Contract *ContractTransactor) SetSequencerId(opts *bind.TransactOpts, dataMarket common.Address, _sequencerId string) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "setSequencerId", dataMarket, _sequencerId)
 }
 
-// SubmitBatchAttestation is a paid mutator transaction binding the contract method 0x70dfe736.
+// SetSequencerId is a paid mutator transaction binding the contract method 0x79d01175.
 //
-// Solidity: function submitBatchAttestation(uint256 batchId, uint256 epochId, bytes32 finalizedCidsRootHash) returns()
-func (_Contract *ContractSession) SubmitBatchAttestation(batchId *big.Int, epochId *big.Int, finalizedCidsRootHash [32]byte) (*types.Transaction, error) {
-	return _Contract.Contract.SubmitBatchAttestation(&_Contract.TransactOpts, batchId, epochId, finalizedCidsRootHash)
+// Solidity: function setSequencerId(address dataMarket, string _sequencerId) returns()
+func (_Contract *ContractSession) SetSequencerId(dataMarket common.Address, _sequencerId string) (*types.Transaction, error) {
+	return _Contract.Contract.SetSequencerId(&_Contract.TransactOpts, dataMarket, _sequencerId)
 }
 
-// SubmitBatchAttestation is a paid mutator transaction binding the contract method 0x70dfe736.
+// SetSequencerId is a paid mutator transaction binding the contract method 0x79d01175.
 //
-// Solidity: function submitBatchAttestation(uint256 batchId, uint256 epochId, bytes32 finalizedCidsRootHash) returns()
-func (_Contract *ContractTransactorSession) SubmitBatchAttestation(batchId *big.Int, epochId *big.Int, finalizedCidsRootHash [32]byte) (*types.Transaction, error) {
-	return _Contract.Contract.SubmitBatchAttestation(&_Contract.TransactOpts, batchId, epochId, finalizedCidsRootHash)
+// Solidity: function setSequencerId(address dataMarket, string _sequencerId) returns()
+func (_Contract *ContractTransactorSession) SetSequencerId(dataMarket common.Address, _sequencerId string) (*types.Transaction, error) {
+	return _Contract.Contract.SetSequencerId(&_Contract.TransactOpts, dataMarket, _sequencerId)
 }
 
-// SubmitSubmissionBatch is a paid mutator transaction binding the contract method 0xca467e62.
+// SubmitBatchAttestation is a paid mutator transaction binding the contract method 0x31632255.
 //
-// Solidity: function submitSubmissionBatch(string batchCid, uint256 batchId, uint256 epochId, string[] projectIds, string[] snapshotCids) returns()
-func (_Contract *ContractTransactor) SubmitSubmissionBatch(opts *bind.TransactOpts, batchCid string, batchId *big.Int, epochId *big.Int, projectIds []string, snapshotCids []string) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "submitSubmissionBatch", batchCid, batchId, epochId, projectIds, snapshotCids)
+// Solidity: function submitBatchAttestation(address dataMarket, uint256 batchId, uint256 epochId, bytes32 finalizedCidsRootHash) returns()
+func (_Contract *ContractTransactor) SubmitBatchAttestation(opts *bind.TransactOpts, dataMarket common.Address, batchId *big.Int, epochId *big.Int, finalizedCidsRootHash [32]byte) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "submitBatchAttestation", dataMarket, batchId, epochId, finalizedCidsRootHash)
 }
 
-// SubmitSubmissionBatch is a paid mutator transaction binding the contract method 0xca467e62.
+// SubmitBatchAttestation is a paid mutator transaction binding the contract method 0x31632255.
 //
-// Solidity: function submitSubmissionBatch(string batchCid, uint256 batchId, uint256 epochId, string[] projectIds, string[] snapshotCids) returns()
-func (_Contract *ContractSession) SubmitSubmissionBatch(batchCid string, batchId *big.Int, epochId *big.Int, projectIds []string, snapshotCids []string) (*types.Transaction, error) {
-	return _Contract.Contract.SubmitSubmissionBatch(&_Contract.TransactOpts, batchCid, batchId, epochId, projectIds, snapshotCids)
+// Solidity: function submitBatchAttestation(address dataMarket, uint256 batchId, uint256 epochId, bytes32 finalizedCidsRootHash) returns()
+func (_Contract *ContractSession) SubmitBatchAttestation(dataMarket common.Address, batchId *big.Int, epochId *big.Int, finalizedCidsRootHash [32]byte) (*types.Transaction, error) {
+	return _Contract.Contract.SubmitBatchAttestation(&_Contract.TransactOpts, dataMarket, batchId, epochId, finalizedCidsRootHash)
 }
 
-// SubmitSubmissionBatch is a paid mutator transaction binding the contract method 0xca467e62.
+// SubmitBatchAttestation is a paid mutator transaction binding the contract method 0x31632255.
 //
-// Solidity: function submitSubmissionBatch(string batchCid, uint256 batchId, uint256 epochId, string[] projectIds, string[] snapshotCids) returns()
-func (_Contract *ContractTransactorSession) SubmitSubmissionBatch(batchCid string, batchId *big.Int, epochId *big.Int, projectIds []string, snapshotCids []string) (*types.Transaction, error) {
-	return _Contract.Contract.SubmitSubmissionBatch(&_Contract.TransactOpts, batchCid, batchId, epochId, projectIds, snapshotCids)
+// Solidity: function submitBatchAttestation(address dataMarket, uint256 batchId, uint256 epochId, bytes32 finalizedCidsRootHash) returns()
+func (_Contract *ContractTransactorSession) SubmitBatchAttestation(dataMarket common.Address, batchId *big.Int, epochId *big.Int, finalizedCidsRootHash [32]byte) (*types.Transaction, error) {
+	return _Contract.Contract.SubmitBatchAttestation(&_Contract.TransactOpts, dataMarket, batchId, epochId, finalizedCidsRootHash)
 }
 
-// ToggleRewards is a paid mutator transaction binding the contract method 0x95268408.
+// SubmitSnapshot is a paid mutator transaction binding the contract method 0x5678a9d5.
 //
-// Solidity: function toggleRewards() returns()
-func (_Contract *ContractTransactor) ToggleRewards(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "toggleRewards")
+// Solidity: function submitSnapshot(address dataMarket, uint256 slotId, string snapshotCid, uint256 epochId, string projectId, (uint256,uint256,string,uint256,string) request, bytes signature) returns()
+func (_Contract *ContractTransactor) SubmitSnapshot(opts *bind.TransactOpts, dataMarket common.Address, slotId *big.Int, snapshotCid string, epochId *big.Int, projectId string, request PowerloomDataMarketRequest, signature []byte) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "submitSnapshot", dataMarket, slotId, snapshotCid, epochId, projectId, request, signature)
 }
 
-// ToggleRewards is a paid mutator transaction binding the contract method 0x95268408.
+// SubmitSnapshot is a paid mutator transaction binding the contract method 0x5678a9d5.
 //
-// Solidity: function toggleRewards() returns()
-func (_Contract *ContractSession) ToggleRewards() (*types.Transaction, error) {
-	return _Contract.Contract.ToggleRewards(&_Contract.TransactOpts)
+// Solidity: function submitSnapshot(address dataMarket, uint256 slotId, string snapshotCid, uint256 epochId, string projectId, (uint256,uint256,string,uint256,string) request, bytes signature) returns()
+func (_Contract *ContractSession) SubmitSnapshot(dataMarket common.Address, slotId *big.Int, snapshotCid string, epochId *big.Int, projectId string, request PowerloomDataMarketRequest, signature []byte) (*types.Transaction, error) {
+	return _Contract.Contract.SubmitSnapshot(&_Contract.TransactOpts, dataMarket, slotId, snapshotCid, epochId, projectId, request, signature)
 }
 
-// ToggleRewards is a paid mutator transaction binding the contract method 0x95268408.
+// SubmitSnapshot is a paid mutator transaction binding the contract method 0x5678a9d5.
 //
-// Solidity: function toggleRewards() returns()
-func (_Contract *ContractTransactorSession) ToggleRewards() (*types.Transaction, error) {
-	return _Contract.Contract.ToggleRewards(&_Contract.TransactOpts)
+// Solidity: function submitSnapshot(address dataMarket, uint256 slotId, string snapshotCid, uint256 epochId, string projectId, (uint256,uint256,string,uint256,string) request, bytes signature) returns()
+func (_Contract *ContractTransactorSession) SubmitSnapshot(dataMarket common.Address, slotId *big.Int, snapshotCid string, epochId *big.Int, projectId string, request PowerloomDataMarketRequest, signature []byte) (*types.Transaction, error) {
+	return _Contract.Contract.SubmitSnapshot(&_Contract.TransactOpts, dataMarket, slotId, snapshotCid, epochId, projectId, request, signature)
 }
 
-// ToggleTimeSlotCheck is a paid mutator transaction binding the contract method 0x75f2d951.
+// SubmitSubmissionBatch is a paid mutator transaction binding the contract method 0xc19e74d9.
 //
-// Solidity: function toggleTimeSlotCheck() returns()
-func (_Contract *ContractTransactor) ToggleTimeSlotCheck(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "toggleTimeSlotCheck")
+// Solidity: function submitSubmissionBatch(address dataMarket, string batchCid, uint256 batchId, uint256 epochId, string[] projectIds, string[] snapshotCids, bytes32 finalizedCidsRootHash) returns()
+func (_Contract *ContractTransactor) SubmitSubmissionBatch(opts *bind.TransactOpts, dataMarket common.Address, batchCid string, batchId *big.Int, epochId *big.Int, projectIds []string, snapshotCids []string, finalizedCidsRootHash [32]byte) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "submitSubmissionBatch", dataMarket, batchCid, batchId, epochId, projectIds, snapshotCids, finalizedCidsRootHash)
 }
 
-// ToggleTimeSlotCheck is a paid mutator transaction binding the contract method 0x75f2d951.
+// SubmitSubmissionBatch is a paid mutator transaction binding the contract method 0xc19e74d9.
 //
-// Solidity: function toggleTimeSlotCheck() returns()
-func (_Contract *ContractSession) ToggleTimeSlotCheck() (*types.Transaction, error) {
-	return _Contract.Contract.ToggleTimeSlotCheck(&_Contract.TransactOpts)
+// Solidity: function submitSubmissionBatch(address dataMarket, string batchCid, uint256 batchId, uint256 epochId, string[] projectIds, string[] snapshotCids, bytes32 finalizedCidsRootHash) returns()
+func (_Contract *ContractSession) SubmitSubmissionBatch(dataMarket common.Address, batchCid string, batchId *big.Int, epochId *big.Int, projectIds []string, snapshotCids []string, finalizedCidsRootHash [32]byte) (*types.Transaction, error) {
+	return _Contract.Contract.SubmitSubmissionBatch(&_Contract.TransactOpts, dataMarket, batchCid, batchId, epochId, projectIds, snapshotCids, finalizedCidsRootHash)
 }
 
-// ToggleTimeSlotCheck is a paid mutator transaction binding the contract method 0x75f2d951.
+// SubmitSubmissionBatch is a paid mutator transaction binding the contract method 0xc19e74d9.
 //
-// Solidity: function toggleTimeSlotCheck() returns()
-func (_Contract *ContractTransactorSession) ToggleTimeSlotCheck() (*types.Transaction, error) {
-	return _Contract.Contract.ToggleTimeSlotCheck(&_Contract.TransactOpts)
+// Solidity: function submitSubmissionBatch(address dataMarket, string batchCid, uint256 batchId, uint256 epochId, string[] projectIds, string[] snapshotCids, bytes32 finalizedCidsRootHash) returns()
+func (_Contract *ContractTransactorSession) SubmitSubmissionBatch(dataMarket common.Address, batchCid string, batchId *big.Int, epochId *big.Int, projectIds []string, snapshotCids []string, finalizedCidsRootHash [32]byte) (*types.Transaction, error) {
+	return _Contract.Contract.SubmitSubmissionBatch(&_Contract.TransactOpts, dataMarket, batchCid, batchId, epochId, projectIds, snapshotCids, finalizedCidsRootHash)
+}
+
+// ToggleDataMarket is a paid mutator transaction binding the contract method 0xb34aebca.
+//
+// Solidity: function toggleDataMarket(address dataMarketAddress, bool enabled) returns()
+func (_Contract *ContractTransactor) ToggleDataMarket(opts *bind.TransactOpts, dataMarketAddress common.Address, enabled bool) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "toggleDataMarket", dataMarketAddress, enabled)
+}
+
+// ToggleDataMarket is a paid mutator transaction binding the contract method 0xb34aebca.
+//
+// Solidity: function toggleDataMarket(address dataMarketAddress, bool enabled) returns()
+func (_Contract *ContractSession) ToggleDataMarket(dataMarketAddress common.Address, enabled bool) (*types.Transaction, error) {
+	return _Contract.Contract.ToggleDataMarket(&_Contract.TransactOpts, dataMarketAddress, enabled)
+}
+
+// ToggleDataMarket is a paid mutator transaction binding the contract method 0xb34aebca.
+//
+// Solidity: function toggleDataMarket(address dataMarketAddress, bool enabled) returns()
+func (_Contract *ContractTransactorSession) ToggleDataMarket(dataMarketAddress common.Address, enabled bool) (*types.Transaction, error) {
+	return _Contract.Contract.ToggleDataMarket(&_Contract.TransactOpts, dataMarketAddress, enabled)
+}
+
+// ToggleFallback is a paid mutator transaction binding the contract method 0x32f6f519.
+//
+// Solidity: function toggleFallback(address dataMarket) returns()
+func (_Contract *ContractTransactor) ToggleFallback(opts *bind.TransactOpts, dataMarket common.Address) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "toggleFallback", dataMarket)
+}
+
+// ToggleFallback is a paid mutator transaction binding the contract method 0x32f6f519.
+//
+// Solidity: function toggleFallback(address dataMarket) returns()
+func (_Contract *ContractSession) ToggleFallback(dataMarket common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.ToggleFallback(&_Contract.TransactOpts, dataMarket)
+}
+
+// ToggleFallback is a paid mutator transaction binding the contract method 0x32f6f519.
+//
+// Solidity: function toggleFallback(address dataMarket) returns()
+func (_Contract *ContractTransactorSession) ToggleFallback(dataMarket common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.ToggleFallback(&_Contract.TransactOpts, dataMarket)
+}
+
+// ToggleRewards is a paid mutator transaction binding the contract method 0x71746644.
+//
+// Solidity: function toggleRewards(address dataMarket) returns()
+func (_Contract *ContractTransactor) ToggleRewards(opts *bind.TransactOpts, dataMarket common.Address) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "toggleRewards", dataMarket)
+}
+
+// ToggleRewards is a paid mutator transaction binding the contract method 0x71746644.
+//
+// Solidity: function toggleRewards(address dataMarket) returns()
+func (_Contract *ContractSession) ToggleRewards(dataMarket common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.ToggleRewards(&_Contract.TransactOpts, dataMarket)
+}
+
+// ToggleRewards is a paid mutator transaction binding the contract method 0x71746644.
+//
+// Solidity: function toggleRewards(address dataMarket) returns()
+func (_Contract *ContractTransactorSession) ToggleRewards(dataMarket common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.ToggleRewards(&_Contract.TransactOpts, dataMarket)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
@@ -2462,277 +2505,640 @@ func (_Contract *ContractTransactorSession) TransferOwnership(newOwner common.Ad
 	return _Contract.Contract.TransferOwnership(&_Contract.TransactOpts, newOwner)
 }
 
-// UpdateAddresses is a paid mutator transaction binding the contract method 0xa5240d23.
+// UpdateAddresses is a paid mutator transaction binding the contract method 0x8d3bcb5a.
 //
-// Solidity: function updateAddresses(uint8 role, address[] _addresses, bool[] _status) returns()
-func (_Contract *ContractTransactor) UpdateAddresses(opts *bind.TransactOpts, role uint8, _addresses []common.Address, _status []bool) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateAddresses", role, _addresses, _status)
+// Solidity: function updateAddresses(address dataMarket, uint8 role, address[] _addresses, bool[] _status) returns()
+func (_Contract *ContractTransactor) UpdateAddresses(opts *bind.TransactOpts, dataMarket common.Address, role uint8, _addresses []common.Address, _status []bool) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateAddresses", dataMarket, role, _addresses, _status)
 }
 
-// UpdateAddresses is a paid mutator transaction binding the contract method 0xa5240d23.
+// UpdateAddresses is a paid mutator transaction binding the contract method 0x8d3bcb5a.
 //
-// Solidity: function updateAddresses(uint8 role, address[] _addresses, bool[] _status) returns()
-func (_Contract *ContractSession) UpdateAddresses(role uint8, _addresses []common.Address, _status []bool) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateAddresses(&_Contract.TransactOpts, role, _addresses, _status)
+// Solidity: function updateAddresses(address dataMarket, uint8 role, address[] _addresses, bool[] _status) returns()
+func (_Contract *ContractSession) UpdateAddresses(dataMarket common.Address, role uint8, _addresses []common.Address, _status []bool) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateAddresses(&_Contract.TransactOpts, dataMarket, role, _addresses, _status)
 }
 
-// UpdateAddresses is a paid mutator transaction binding the contract method 0xa5240d23.
+// UpdateAddresses is a paid mutator transaction binding the contract method 0x8d3bcb5a.
 //
-// Solidity: function updateAddresses(uint8 role, address[] _addresses, bool[] _status) returns()
-func (_Contract *ContractTransactorSession) UpdateAddresses(role uint8, _addresses []common.Address, _status []bool) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateAddresses(&_Contract.TransactOpts, role, _addresses, _status)
+// Solidity: function updateAddresses(address dataMarket, uint8 role, address[] _addresses, bool[] _status) returns()
+func (_Contract *ContractTransactorSession) UpdateAddresses(dataMarket common.Address, role uint8, _addresses []common.Address, _status []bool) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateAddresses(&_Contract.TransactOpts, dataMarket, role, _addresses, _status)
 }
 
-// UpdateAllowedProjectType is a paid mutator transaction binding the contract method 0x562209f3.
+// UpdateAllowedProjectType is a paid mutator transaction binding the contract method 0xb1a3f28d.
 //
-// Solidity: function updateAllowedProjectType(string _projectType, bool _status) returns()
-func (_Contract *ContractTransactor) UpdateAllowedProjectType(opts *bind.TransactOpts, _projectType string, _status bool) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateAllowedProjectType", _projectType, _status)
+// Solidity: function updateAllowedProjectType(address dataMarket, string _projectType, bool _status) returns()
+func (_Contract *ContractTransactor) UpdateAllowedProjectType(opts *bind.TransactOpts, dataMarket common.Address, _projectType string, _status bool) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateAllowedProjectType", dataMarket, _projectType, _status)
 }
 
-// UpdateAllowedProjectType is a paid mutator transaction binding the contract method 0x562209f3.
+// UpdateAllowedProjectType is a paid mutator transaction binding the contract method 0xb1a3f28d.
 //
-// Solidity: function updateAllowedProjectType(string _projectType, bool _status) returns()
-func (_Contract *ContractSession) UpdateAllowedProjectType(_projectType string, _status bool) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateAllowedProjectType(&_Contract.TransactOpts, _projectType, _status)
+// Solidity: function updateAllowedProjectType(address dataMarket, string _projectType, bool _status) returns()
+func (_Contract *ContractSession) UpdateAllowedProjectType(dataMarket common.Address, _projectType string, _status bool) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateAllowedProjectType(&_Contract.TransactOpts, dataMarket, _projectType, _status)
 }
 
-// UpdateAllowedProjectType is a paid mutator transaction binding the contract method 0x562209f3.
+// UpdateAllowedProjectType is a paid mutator transaction binding the contract method 0xb1a3f28d.
 //
-// Solidity: function updateAllowedProjectType(string _projectType, bool _status) returns()
-func (_Contract *ContractTransactorSession) UpdateAllowedProjectType(_projectType string, _status bool) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateAllowedProjectType(&_Contract.TransactOpts, _projectType, _status)
+// Solidity: function updateAllowedProjectType(address dataMarket, string _projectType, bool _status) returns()
+func (_Contract *ContractTransactorSession) UpdateAllowedProjectType(dataMarket common.Address, _projectType string, _status bool) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateAllowedProjectType(&_Contract.TransactOpts, dataMarket, _projectType, _status)
 }
 
-// UpdateAttestationSubmissionWindow is a paid mutator transaction binding the contract method 0x82265a87.
+// UpdateAttestationSubmissionWindow is a paid mutator transaction binding the contract method 0x89afe86a.
 //
-// Solidity: function updateAttestationSubmissionWindow(uint256 newattestationSubmissionWindow) returns()
-func (_Contract *ContractTransactor) UpdateAttestationSubmissionWindow(opts *bind.TransactOpts, newattestationSubmissionWindow *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateAttestationSubmissionWindow", newattestationSubmissionWindow)
+// Solidity: function updateAttestationSubmissionWindow(address dataMarket, uint256 newattestationSubmissionWindow) returns()
+func (_Contract *ContractTransactor) UpdateAttestationSubmissionWindow(opts *bind.TransactOpts, dataMarket common.Address, newattestationSubmissionWindow *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateAttestationSubmissionWindow", dataMarket, newattestationSubmissionWindow)
 }
 
-// UpdateAttestationSubmissionWindow is a paid mutator transaction binding the contract method 0x82265a87.
+// UpdateAttestationSubmissionWindow is a paid mutator transaction binding the contract method 0x89afe86a.
 //
-// Solidity: function updateAttestationSubmissionWindow(uint256 newattestationSubmissionWindow) returns()
-func (_Contract *ContractSession) UpdateAttestationSubmissionWindow(newattestationSubmissionWindow *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateAttestationSubmissionWindow(&_Contract.TransactOpts, newattestationSubmissionWindow)
+// Solidity: function updateAttestationSubmissionWindow(address dataMarket, uint256 newattestationSubmissionWindow) returns()
+func (_Contract *ContractSession) UpdateAttestationSubmissionWindow(dataMarket common.Address, newattestationSubmissionWindow *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateAttestationSubmissionWindow(&_Contract.TransactOpts, dataMarket, newattestationSubmissionWindow)
 }
 
-// UpdateAttestationSubmissionWindow is a paid mutator transaction binding the contract method 0x82265a87.
+// UpdateAttestationSubmissionWindow is a paid mutator transaction binding the contract method 0x89afe86a.
 //
-// Solidity: function updateAttestationSubmissionWindow(uint256 newattestationSubmissionWindow) returns()
-func (_Contract *ContractTransactorSession) UpdateAttestationSubmissionWindow(newattestationSubmissionWindow *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateAttestationSubmissionWindow(&_Contract.TransactOpts, newattestationSubmissionWindow)
+// Solidity: function updateAttestationSubmissionWindow(address dataMarket, uint256 newattestationSubmissionWindow) returns()
+func (_Contract *ContractTransactorSession) UpdateAttestationSubmissionWindow(dataMarket common.Address, newattestationSubmissionWindow *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateAttestationSubmissionWindow(&_Contract.TransactOpts, dataMarket, newattestationSubmissionWindow)
 }
 
-// UpdateBatchSubmissionWindow is a paid mutator transaction binding the contract method 0x31d44744.
+// UpdateBatchSubmissionWindow is a paid mutator transaction binding the contract method 0xd72e07fd.
 //
-// Solidity: function updateBatchSubmissionWindow(uint256 newbatchSubmissionWindow) returns()
-func (_Contract *ContractTransactor) UpdateBatchSubmissionWindow(opts *bind.TransactOpts, newbatchSubmissionWindow *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateBatchSubmissionWindow", newbatchSubmissionWindow)
+// Solidity: function updateBatchSubmissionWindow(address dataMarket, uint256 newbatchSubmissionWindow) returns()
+func (_Contract *ContractTransactor) UpdateBatchSubmissionWindow(opts *bind.TransactOpts, dataMarket common.Address, newbatchSubmissionWindow *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateBatchSubmissionWindow", dataMarket, newbatchSubmissionWindow)
 }
 
-// UpdateBatchSubmissionWindow is a paid mutator transaction binding the contract method 0x31d44744.
+// UpdateBatchSubmissionWindow is a paid mutator transaction binding the contract method 0xd72e07fd.
 //
-// Solidity: function updateBatchSubmissionWindow(uint256 newbatchSubmissionWindow) returns()
-func (_Contract *ContractSession) UpdateBatchSubmissionWindow(newbatchSubmissionWindow *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateBatchSubmissionWindow(&_Contract.TransactOpts, newbatchSubmissionWindow)
+// Solidity: function updateBatchSubmissionWindow(address dataMarket, uint256 newbatchSubmissionWindow) returns()
+func (_Contract *ContractSession) UpdateBatchSubmissionWindow(dataMarket common.Address, newbatchSubmissionWindow *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateBatchSubmissionWindow(&_Contract.TransactOpts, dataMarket, newbatchSubmissionWindow)
 }
 
-// UpdateBatchSubmissionWindow is a paid mutator transaction binding the contract method 0x31d44744.
+// UpdateBatchSubmissionWindow is a paid mutator transaction binding the contract method 0xd72e07fd.
 //
-// Solidity: function updateBatchSubmissionWindow(uint256 newbatchSubmissionWindow) returns()
-func (_Contract *ContractTransactorSession) UpdateBatchSubmissionWindow(newbatchSubmissionWindow *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateBatchSubmissionWindow(&_Contract.TransactOpts, newbatchSubmissionWindow)
+// Solidity: function updateBatchSubmissionWindow(address dataMarket, uint256 newbatchSubmissionWindow) returns()
+func (_Contract *ContractTransactorSession) UpdateBatchSubmissionWindow(dataMarket common.Address, newbatchSubmissionWindow *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateBatchSubmissionWindow(&_Contract.TransactOpts, dataMarket, newbatchSubmissionWindow)
 }
 
-// UpdateDailySnapshotQuota is a paid mutator transaction binding the contract method 0x6d26e630.
+// UpdateDailySnapshotQuota is a paid mutator transaction binding the contract method 0xeb4c8b89.
 //
-// Solidity: function updateDailySnapshotQuota(uint256 dailySnapshotQuota) returns()
-func (_Contract *ContractTransactor) UpdateDailySnapshotQuota(opts *bind.TransactOpts, dailySnapshotQuota *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateDailySnapshotQuota", dailySnapshotQuota)
+// Solidity: function updateDailySnapshotQuota(address dataMarket, uint256 dailySnapshotQuota) returns()
+func (_Contract *ContractTransactor) UpdateDailySnapshotQuota(opts *bind.TransactOpts, dataMarket common.Address, dailySnapshotQuota *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateDailySnapshotQuota", dataMarket, dailySnapshotQuota)
 }
 
-// UpdateDailySnapshotQuota is a paid mutator transaction binding the contract method 0x6d26e630.
+// UpdateDailySnapshotQuota is a paid mutator transaction binding the contract method 0xeb4c8b89.
 //
-// Solidity: function updateDailySnapshotQuota(uint256 dailySnapshotQuota) returns()
-func (_Contract *ContractSession) UpdateDailySnapshotQuota(dailySnapshotQuota *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateDailySnapshotQuota(&_Contract.TransactOpts, dailySnapshotQuota)
+// Solidity: function updateDailySnapshotQuota(address dataMarket, uint256 dailySnapshotQuota) returns()
+func (_Contract *ContractSession) UpdateDailySnapshotQuota(dataMarket common.Address, dailySnapshotQuota *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateDailySnapshotQuota(&_Contract.TransactOpts, dataMarket, dailySnapshotQuota)
 }
 
-// UpdateDailySnapshotQuota is a paid mutator transaction binding the contract method 0x6d26e630.
+// UpdateDailySnapshotQuota is a paid mutator transaction binding the contract method 0xeb4c8b89.
 //
-// Solidity: function updateDailySnapshotQuota(uint256 dailySnapshotQuota) returns()
-func (_Contract *ContractTransactorSession) UpdateDailySnapshotQuota(dailySnapshotQuota *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateDailySnapshotQuota(&_Contract.TransactOpts, dailySnapshotQuota)
+// Solidity: function updateDailySnapshotQuota(address dataMarket, uint256 dailySnapshotQuota) returns()
+func (_Contract *ContractTransactorSession) UpdateDailySnapshotQuota(dataMarket common.Address, dailySnapshotQuota *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateDailySnapshotQuota(&_Contract.TransactOpts, dataMarket, dailySnapshotQuota)
 }
 
-// UpdateEpochManager is a paid mutator transaction binding the contract method 0x04afb4d2.
+// UpdateDataMarketFactory is a paid mutator transaction binding the contract method 0xb48753eb.
 //
-// Solidity: function updateEpochManager(address _address) returns()
-func (_Contract *ContractTransactor) UpdateEpochManager(opts *bind.TransactOpts, _address common.Address) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateEpochManager", _address)
+// Solidity: function updateDataMarketFactory(address _address) returns()
+func (_Contract *ContractTransactor) UpdateDataMarketFactory(opts *bind.TransactOpts, _address common.Address) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateDataMarketFactory", _address)
 }
 
-// UpdateEpochManager is a paid mutator transaction binding the contract method 0x04afb4d2.
+// UpdateDataMarketFactory is a paid mutator transaction binding the contract method 0xb48753eb.
 //
-// Solidity: function updateEpochManager(address _address) returns()
-func (_Contract *ContractSession) UpdateEpochManager(_address common.Address) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateEpochManager(&_Contract.TransactOpts, _address)
+// Solidity: function updateDataMarketFactory(address _address) returns()
+func (_Contract *ContractSession) UpdateDataMarketFactory(_address common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateDataMarketFactory(&_Contract.TransactOpts, _address)
 }
 
-// UpdateEpochManager is a paid mutator transaction binding the contract method 0x04afb4d2.
+// UpdateDataMarketFactory is a paid mutator transaction binding the contract method 0xb48753eb.
 //
-// Solidity: function updateEpochManager(address _address) returns()
-func (_Contract *ContractTransactorSession) UpdateEpochManager(_address common.Address) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateEpochManager(&_Contract.TransactOpts, _address)
+// Solidity: function updateDataMarketFactory(address _address) returns()
+func (_Contract *ContractTransactorSession) UpdateDataMarketFactory(_address common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateDataMarketFactory(&_Contract.TransactOpts, _address)
 }
 
-// UpdateExternalStateAddress is a paid mutator transaction binding the contract method 0x8bf08485.
+// UpdateEpochManager is a paid mutator transaction binding the contract method 0x6e81f234.
 //
-// Solidity: function updateExternalStateAddress(address externalStateAddress) returns()
-func (_Contract *ContractTransactor) UpdateExternalStateAddress(opts *bind.TransactOpts, externalStateAddress common.Address) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateExternalStateAddress", externalStateAddress)
+// Solidity: function updateEpochManager(address dataMarket, address _address) returns()
+func (_Contract *ContractTransactor) UpdateEpochManager(opts *bind.TransactOpts, dataMarket common.Address, _address common.Address) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateEpochManager", dataMarket, _address)
 }
 
-// UpdateExternalStateAddress is a paid mutator transaction binding the contract method 0x8bf08485.
+// UpdateEpochManager is a paid mutator transaction binding the contract method 0x6e81f234.
 //
-// Solidity: function updateExternalStateAddress(address externalStateAddress) returns()
-func (_Contract *ContractSession) UpdateExternalStateAddress(externalStateAddress common.Address) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateExternalStateAddress(&_Contract.TransactOpts, externalStateAddress)
+// Solidity: function updateEpochManager(address dataMarket, address _address) returns()
+func (_Contract *ContractSession) UpdateEpochManager(dataMarket common.Address, _address common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateEpochManager(&_Contract.TransactOpts, dataMarket, _address)
 }
 
-// UpdateExternalStateAddress is a paid mutator transaction binding the contract method 0x8bf08485.
+// UpdateEpochManager is a paid mutator transaction binding the contract method 0x6e81f234.
 //
-// Solidity: function updateExternalStateAddress(address externalStateAddress) returns()
-func (_Contract *ContractTransactorSession) UpdateExternalStateAddress(externalStateAddress common.Address) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateExternalStateAddress(&_Contract.TransactOpts, externalStateAddress)
+// Solidity: function updateEpochManager(address dataMarket, address _address) returns()
+func (_Contract *ContractTransactorSession) UpdateEpochManager(dataMarket common.Address, _address common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateEpochManager(&_Contract.TransactOpts, dataMarket, _address)
 }
 
-// UpdateMinAttestationsForConsensus is a paid mutator transaction binding the contract method 0x882cd698.
+// UpdateFallbackNodes is a paid mutator transaction binding the contract method 0x50304b62.
 //
-// Solidity: function updateMinAttestationsForConsensus(uint256 _minAttestationsForConsensus) returns()
-func (_Contract *ContractTransactor) UpdateMinAttestationsForConsensus(opts *bind.TransactOpts, _minAttestationsForConsensus *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateMinAttestationsForConsensus", _minAttestationsForConsensus)
+// Solidity: function updateFallbackNodes(address dataMarket, address[] _fallbackNodes, bool[] _status) returns()
+func (_Contract *ContractTransactor) UpdateFallbackNodes(opts *bind.TransactOpts, dataMarket common.Address, _fallbackNodes []common.Address, _status []bool) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateFallbackNodes", dataMarket, _fallbackNodes, _status)
 }
 
-// UpdateMinAttestationsForConsensus is a paid mutator transaction binding the contract method 0x882cd698.
+// UpdateFallbackNodes is a paid mutator transaction binding the contract method 0x50304b62.
 //
-// Solidity: function updateMinAttestationsForConsensus(uint256 _minAttestationsForConsensus) returns()
-func (_Contract *ContractSession) UpdateMinAttestationsForConsensus(_minAttestationsForConsensus *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateMinAttestationsForConsensus(&_Contract.TransactOpts, _minAttestationsForConsensus)
+// Solidity: function updateFallbackNodes(address dataMarket, address[] _fallbackNodes, bool[] _status) returns()
+func (_Contract *ContractSession) UpdateFallbackNodes(dataMarket common.Address, _fallbackNodes []common.Address, _status []bool) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateFallbackNodes(&_Contract.TransactOpts, dataMarket, _fallbackNodes, _status)
 }
 
-// UpdateMinAttestationsForConsensus is a paid mutator transaction binding the contract method 0x882cd698.
+// UpdateFallbackNodes is a paid mutator transaction binding the contract method 0x50304b62.
 //
-// Solidity: function updateMinAttestationsForConsensus(uint256 _minAttestationsForConsensus) returns()
-func (_Contract *ContractTransactorSession) UpdateMinAttestationsForConsensus(_minAttestationsForConsensus *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateMinAttestationsForConsensus(&_Contract.TransactOpts, _minAttestationsForConsensus)
+// Solidity: function updateFallbackNodes(address dataMarket, address[] _fallbackNodes, bool[] _status) returns()
+func (_Contract *ContractTransactorSession) UpdateFallbackNodes(dataMarket common.Address, _fallbackNodes []common.Address, _status []bool) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateFallbackNodes(&_Contract.TransactOpts, dataMarket, _fallbackNodes, _status)
 }
 
-// UpdateMinSnapshottersForConsensus is a paid mutator transaction binding the contract method 0x38deacd3.
+// UpdateMinAttestationsForConsensus is a paid mutator transaction binding the contract method 0xe4578d51.
 //
-// Solidity: function updateMinSnapshottersForConsensus(uint256 _minSubmissionsForConsensus) returns()
-func (_Contract *ContractTransactor) UpdateMinSnapshottersForConsensus(opts *bind.TransactOpts, _minSubmissionsForConsensus *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateMinSnapshottersForConsensus", _minSubmissionsForConsensus)
+// Solidity: function updateMinAttestationsForConsensus(address dataMarket, uint256 _minAttestationsForConsensus) returns()
+func (_Contract *ContractTransactor) UpdateMinAttestationsForConsensus(opts *bind.TransactOpts, dataMarket common.Address, _minAttestationsForConsensus *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateMinAttestationsForConsensus", dataMarket, _minAttestationsForConsensus)
 }
 
-// UpdateMinSnapshottersForConsensus is a paid mutator transaction binding the contract method 0x38deacd3.
+// UpdateMinAttestationsForConsensus is a paid mutator transaction binding the contract method 0xe4578d51.
 //
-// Solidity: function updateMinSnapshottersForConsensus(uint256 _minSubmissionsForConsensus) returns()
-func (_Contract *ContractSession) UpdateMinSnapshottersForConsensus(_minSubmissionsForConsensus *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateMinSnapshottersForConsensus(&_Contract.TransactOpts, _minSubmissionsForConsensus)
+// Solidity: function updateMinAttestationsForConsensus(address dataMarket, uint256 _minAttestationsForConsensus) returns()
+func (_Contract *ContractSession) UpdateMinAttestationsForConsensus(dataMarket common.Address, _minAttestationsForConsensus *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateMinAttestationsForConsensus(&_Contract.TransactOpts, dataMarket, _minAttestationsForConsensus)
 }
 
-// UpdateMinSnapshottersForConsensus is a paid mutator transaction binding the contract method 0x38deacd3.
+// UpdateMinAttestationsForConsensus is a paid mutator transaction binding the contract method 0xe4578d51.
 //
-// Solidity: function updateMinSnapshottersForConsensus(uint256 _minSubmissionsForConsensus) returns()
-func (_Contract *ContractTransactorSession) UpdateMinSnapshottersForConsensus(_minSubmissionsForConsensus *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateMinSnapshottersForConsensus(&_Contract.TransactOpts, _minSubmissionsForConsensus)
+// Solidity: function updateMinAttestationsForConsensus(address dataMarket, uint256 _minAttestationsForConsensus) returns()
+func (_Contract *ContractTransactorSession) UpdateMinAttestationsForConsensus(dataMarket common.Address, _minAttestationsForConsensus *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateMinAttestationsForConsensus(&_Contract.TransactOpts, dataMarket, _minAttestationsForConsensus)
 }
 
-// UpdateRewards is a paid mutator transaction binding the contract method 0x153b56c2.
+// UpdateMinSnapshottersForConsensus is a paid mutator transaction binding the contract method 0x3cb782cd.
 //
-// Solidity: function updateRewards(uint256[] slotIds, uint256[] submissionsList, uint256 day) returns()
-func (_Contract *ContractTransactor) UpdateRewards(opts *bind.TransactOpts, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateRewards", slotIds, submissionsList, day)
+// Solidity: function updateMinSnapshottersForConsensus(address dataMarket, uint256 _minSubmissionsForConsensus) returns()
+func (_Contract *ContractTransactor) UpdateMinSnapshottersForConsensus(opts *bind.TransactOpts, dataMarket common.Address, _minSubmissionsForConsensus *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateMinSnapshottersForConsensus", dataMarket, _minSubmissionsForConsensus)
 }
 
-// UpdateRewards is a paid mutator transaction binding the contract method 0x153b56c2.
+// UpdateMinSnapshottersForConsensus is a paid mutator transaction binding the contract method 0x3cb782cd.
 //
-// Solidity: function updateRewards(uint256[] slotIds, uint256[] submissionsList, uint256 day) returns()
-func (_Contract *ContractSession) UpdateRewards(slotIds []*big.Int, submissionsList []*big.Int, day *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateRewards(&_Contract.TransactOpts, slotIds, submissionsList, day)
+// Solidity: function updateMinSnapshottersForConsensus(address dataMarket, uint256 _minSubmissionsForConsensus) returns()
+func (_Contract *ContractSession) UpdateMinSnapshottersForConsensus(dataMarket common.Address, _minSubmissionsForConsensus *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateMinSnapshottersForConsensus(&_Contract.TransactOpts, dataMarket, _minSubmissionsForConsensus)
 }
 
-// UpdateRewards is a paid mutator transaction binding the contract method 0x153b56c2.
+// UpdateMinSnapshottersForConsensus is a paid mutator transaction binding the contract method 0x3cb782cd.
 //
-// Solidity: function updateRewards(uint256[] slotIds, uint256[] submissionsList, uint256 day) returns()
-func (_Contract *ContractTransactorSession) UpdateRewards(slotIds []*big.Int, submissionsList []*big.Int, day *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateRewards(&_Contract.TransactOpts, slotIds, submissionsList, day)
+// Solidity: function updateMinSnapshottersForConsensus(address dataMarket, uint256 _minSubmissionsForConsensus) returns()
+func (_Contract *ContractTransactorSession) UpdateMinSnapshottersForConsensus(dataMarket common.Address, _minSubmissionsForConsensus *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateMinSnapshottersForConsensus(&_Contract.TransactOpts, dataMarket, _minSubmissionsForConsensus)
 }
 
-// UpdateSnapshotSubmissionWindow is a paid mutator transaction binding the contract method 0x9b2f89ce.
+// UpdateProjects is a paid mutator transaction binding the contract method 0x0589852d.
 //
-// Solidity: function updateSnapshotSubmissionWindow(uint256 newsnapshotSubmissionWindow) returns()
-func (_Contract *ContractTransactor) UpdateSnapshotSubmissionWindow(opts *bind.TransactOpts, newsnapshotSubmissionWindow *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateSnapshotSubmissionWindow", newsnapshotSubmissionWindow)
+// Solidity: function updateProjects(address dataMarket, string[] _projects, bool[] _status) returns()
+func (_Contract *ContractTransactor) UpdateProjects(opts *bind.TransactOpts, dataMarket common.Address, _projects []string, _status []bool) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateProjects", dataMarket, _projects, _status)
 }
 
-// UpdateSnapshotSubmissionWindow is a paid mutator transaction binding the contract method 0x9b2f89ce.
+// UpdateProjects is a paid mutator transaction binding the contract method 0x0589852d.
 //
-// Solidity: function updateSnapshotSubmissionWindow(uint256 newsnapshotSubmissionWindow) returns()
-func (_Contract *ContractSession) UpdateSnapshotSubmissionWindow(newsnapshotSubmissionWindow *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateSnapshotSubmissionWindow(&_Contract.TransactOpts, newsnapshotSubmissionWindow)
+// Solidity: function updateProjects(address dataMarket, string[] _projects, bool[] _status) returns()
+func (_Contract *ContractSession) UpdateProjects(dataMarket common.Address, _projects []string, _status []bool) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateProjects(&_Contract.TransactOpts, dataMarket, _projects, _status)
 }
 
-// UpdateSnapshotSubmissionWindow is a paid mutator transaction binding the contract method 0x9b2f89ce.
+// UpdateProjects is a paid mutator transaction binding the contract method 0x0589852d.
 //
-// Solidity: function updateSnapshotSubmissionWindow(uint256 newsnapshotSubmissionWindow) returns()
-func (_Contract *ContractTransactorSession) UpdateSnapshotSubmissionWindow(newsnapshotSubmissionWindow *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateSnapshotSubmissionWindow(&_Contract.TransactOpts, newsnapshotSubmissionWindow)
+// Solidity: function updateProjects(address dataMarket, string[] _projects, bool[] _status) returns()
+func (_Contract *ContractTransactorSession) UpdateProjects(dataMarket common.Address, _projects []string, _status []bool) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateProjects(&_Contract.TransactOpts, dataMarket, _projects, _status)
 }
 
-// UpdaterewardBasePoints is a paid mutator transaction binding the contract method 0x801939d7.
+// UpdateRewardBasePoints is a paid mutator transaction binding the contract method 0x7195df15.
 //
-// Solidity: function updaterewardBasePoints(uint256 newrewardBasePoints) returns()
-func (_Contract *ContractTransactor) UpdaterewardBasePoints(opts *bind.TransactOpts, newrewardBasePoints *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updaterewardBasePoints", newrewardBasePoints)
+// Solidity: function updateRewardBasePoints(address dataMarket, uint256 newRewardBasePoints) returns()
+func (_Contract *ContractTransactor) UpdateRewardBasePoints(opts *bind.TransactOpts, dataMarket common.Address, newRewardBasePoints *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateRewardBasePoints", dataMarket, newRewardBasePoints)
 }
 
-// UpdaterewardBasePoints is a paid mutator transaction binding the contract method 0x801939d7.
+// UpdateRewardBasePoints is a paid mutator transaction binding the contract method 0x7195df15.
 //
-// Solidity: function updaterewardBasePoints(uint256 newrewardBasePoints) returns()
-func (_Contract *ContractSession) UpdaterewardBasePoints(newrewardBasePoints *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdaterewardBasePoints(&_Contract.TransactOpts, newrewardBasePoints)
+// Solidity: function updateRewardBasePoints(address dataMarket, uint256 newRewardBasePoints) returns()
+func (_Contract *ContractSession) UpdateRewardBasePoints(dataMarket common.Address, newRewardBasePoints *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateRewardBasePoints(&_Contract.TransactOpts, dataMarket, newRewardBasePoints)
 }
 
-// UpdaterewardBasePoints is a paid mutator transaction binding the contract method 0x801939d7.
+// UpdateRewardBasePoints is a paid mutator transaction binding the contract method 0x7195df15.
 //
-// Solidity: function updaterewardBasePoints(uint256 newrewardBasePoints) returns()
-func (_Contract *ContractTransactorSession) UpdaterewardBasePoints(newrewardBasePoints *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdaterewardBasePoints(&_Contract.TransactOpts, newrewardBasePoints)
+// Solidity: function updateRewardBasePoints(address dataMarket, uint256 newRewardBasePoints) returns()
+func (_Contract *ContractTransactorSession) UpdateRewardBasePoints(dataMarket common.Address, newRewardBasePoints *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateRewardBasePoints(&_Contract.TransactOpts, dataMarket, newRewardBasePoints)
 }
 
-// UpdatestreakBonusPoints is a paid mutator transaction binding the contract method 0xa8939fa5.
+// UpdateRewards is a paid mutator transaction binding the contract method 0x7d2bd53d.
 //
-// Solidity: function updatestreakBonusPoints(uint256 newstreakBonusPoints) returns()
-func (_Contract *ContractTransactor) UpdatestreakBonusPoints(opts *bind.TransactOpts, newstreakBonusPoints *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updatestreakBonusPoints", newstreakBonusPoints)
+// Solidity: function updateRewards(address dataMarket, uint256[] slotIds, uint256[] submissionsList, uint256 day) returns()
+func (_Contract *ContractTransactor) UpdateRewards(opts *bind.TransactOpts, dataMarket common.Address, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateRewards", dataMarket, slotIds, submissionsList, day)
 }
 
-// UpdatestreakBonusPoints is a paid mutator transaction binding the contract method 0xa8939fa5.
+// UpdateRewards is a paid mutator transaction binding the contract method 0x7d2bd53d.
 //
-// Solidity: function updatestreakBonusPoints(uint256 newstreakBonusPoints) returns()
-func (_Contract *ContractSession) UpdatestreakBonusPoints(newstreakBonusPoints *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdatestreakBonusPoints(&_Contract.TransactOpts, newstreakBonusPoints)
+// Solidity: function updateRewards(address dataMarket, uint256[] slotIds, uint256[] submissionsList, uint256 day) returns()
+func (_Contract *ContractSession) UpdateRewards(dataMarket common.Address, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateRewards(&_Contract.TransactOpts, dataMarket, slotIds, submissionsList, day)
 }
 
-// UpdatestreakBonusPoints is a paid mutator transaction binding the contract method 0xa8939fa5.
+// UpdateRewards is a paid mutator transaction binding the contract method 0x7d2bd53d.
 //
-// Solidity: function updatestreakBonusPoints(uint256 newstreakBonusPoints) returns()
-func (_Contract *ContractTransactorSession) UpdatestreakBonusPoints(newstreakBonusPoints *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdatestreakBonusPoints(&_Contract.TransactOpts, newstreakBonusPoints)
+// Solidity: function updateRewards(address dataMarket, uint256[] slotIds, uint256[] submissionsList, uint256 day) returns()
+func (_Contract *ContractTransactorSession) UpdateRewards(dataMarket common.Address, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateRewards(&_Contract.TransactOpts, dataMarket, slotIds, submissionsList, day)
+}
+
+// UpdateSnapshotSubmissionWindow is a paid mutator transaction binding the contract method 0xa02c3e9b.
+//
+// Solidity: function updateSnapshotSubmissionWindow(address dataMarket, uint256 newsnapshotSubmissionWindow) returns()
+func (_Contract *ContractTransactor) UpdateSnapshotSubmissionWindow(opts *bind.TransactOpts, dataMarket common.Address, newsnapshotSubmissionWindow *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateSnapshotSubmissionWindow", dataMarket, newsnapshotSubmissionWindow)
+}
+
+// UpdateSnapshotSubmissionWindow is a paid mutator transaction binding the contract method 0xa02c3e9b.
+//
+// Solidity: function updateSnapshotSubmissionWindow(address dataMarket, uint256 newsnapshotSubmissionWindow) returns()
+func (_Contract *ContractSession) UpdateSnapshotSubmissionWindow(dataMarket common.Address, newsnapshotSubmissionWindow *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateSnapshotSubmissionWindow(&_Contract.TransactOpts, dataMarket, newsnapshotSubmissionWindow)
+}
+
+// UpdateSnapshotSubmissionWindow is a paid mutator transaction binding the contract method 0xa02c3e9b.
+//
+// Solidity: function updateSnapshotSubmissionWindow(address dataMarket, uint256 newsnapshotSubmissionWindow) returns()
+func (_Contract *ContractTransactorSession) UpdateSnapshotSubmissionWindow(dataMarket common.Address, newsnapshotSubmissionWindow *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateSnapshotSubmissionWindow(&_Contract.TransactOpts, dataMarket, newsnapshotSubmissionWindow)
+}
+
+// UpdateSnapshotterState is a paid mutator transaction binding the contract method 0xc9742dc1.
+//
+// Solidity: function updateSnapshotterState(address _address) returns()
+func (_Contract *ContractTransactor) UpdateSnapshotterState(opts *bind.TransactOpts, _address common.Address) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateSnapshotterState", _address)
+}
+
+// UpdateSnapshotterState is a paid mutator transaction binding the contract method 0xc9742dc1.
+//
+// Solidity: function updateSnapshotterState(address _address) returns()
+func (_Contract *ContractSession) UpdateSnapshotterState(_address common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateSnapshotterState(&_Contract.TransactOpts, _address)
+}
+
+// UpdateSnapshotterState is a paid mutator transaction binding the contract method 0xc9742dc1.
+//
+// Solidity: function updateSnapshotterState(address _address) returns()
+func (_Contract *ContractTransactorSession) UpdateSnapshotterState(_address common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateSnapshotterState(&_Contract.TransactOpts, _address)
+}
+
+// UpgradeToAndCall is a paid mutator transaction binding the contract method 0x4f1ef286.
+//
+// Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
+func (_Contract *ContractTransactor) UpgradeToAndCall(opts *bind.TransactOpts, newImplementation common.Address, data []byte) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "upgradeToAndCall", newImplementation, data)
+}
+
+// UpgradeToAndCall is a paid mutator transaction binding the contract method 0x4f1ef286.
+//
+// Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
+func (_Contract *ContractSession) UpgradeToAndCall(newImplementation common.Address, data []byte) (*types.Transaction, error) {
+	return _Contract.Contract.UpgradeToAndCall(&_Contract.TransactOpts, newImplementation, data)
+}
+
+// UpgradeToAndCall is a paid mutator transaction binding the contract method 0x4f1ef286.
+//
+// Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
+func (_Contract *ContractTransactorSession) UpgradeToAndCall(newImplementation common.Address, data []byte) (*types.Transaction, error) {
+	return _Contract.Contract.UpgradeToAndCall(&_Contract.TransactOpts, newImplementation, data)
+}
+
+// ContractAdminsUpdatedIterator is returned from FilterAdminsUpdated and is used to iterate over the raw logs and unpacked data for AdminsUpdated events raised by the Contract contract.
+type ContractAdminsUpdatedIterator struct {
+	Event *ContractAdminsUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractAdminsUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractAdminsUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractAdminsUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractAdminsUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractAdminsUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractAdminsUpdated represents a AdminsUpdated event raised by the Contract contract.
+type ContractAdminsUpdated struct {
+	DataMarketAddress common.Address
+	AdminAddress      common.Address
+	Allowed           bool
+	Raw               types.Log // Blockchain specific contextual infos
+}
+
+// FilterAdminsUpdated is a free log retrieval operation binding the contract event 0xcde1efc8de533d8d3476a1e5f7423ea506a579776fc27e7d5f963f6c6018ca39.
+//
+// Solidity: event AdminsUpdated(address indexed dataMarketAddress, address adminAddress, bool allowed)
+func (_Contract *ContractFilterer) FilterAdminsUpdated(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractAdminsUpdatedIterator, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "AdminsUpdated", dataMarketAddressRule)
+	if err != nil {
+		return nil, err
+	}
+	return &ContractAdminsUpdatedIterator{contract: _Contract.contract, event: "AdminsUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchAdminsUpdated is a free log subscription operation binding the contract event 0xcde1efc8de533d8d3476a1e5f7423ea506a579776fc27e7d5f963f6c6018ca39.
+//
+// Solidity: event AdminsUpdated(address indexed dataMarketAddress, address adminAddress, bool allowed)
+func (_Contract *ContractFilterer) WatchAdminsUpdated(opts *bind.WatchOpts, sink chan<- *ContractAdminsUpdated, dataMarketAddress []common.Address) (event.Subscription, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "AdminsUpdated", dataMarketAddressRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractAdminsUpdated)
+				if err := _Contract.contract.UnpackLog(event, "AdminsUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseAdminsUpdated is a log parse operation binding the contract event 0xcde1efc8de533d8d3476a1e5f7423ea506a579776fc27e7d5f963f6c6018ca39.
+//
+// Solidity: event AdminsUpdated(address indexed dataMarketAddress, address adminAddress, bool allowed)
+func (_Contract *ContractFilterer) ParseAdminsUpdated(log types.Log) (*ContractAdminsUpdated, error) {
+	event := new(ContractAdminsUpdated)
+	if err := _Contract.contract.UnpackLog(event, "AdminsUpdated", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// ContractBatchSubmissionsCompletedIterator is returned from FilterBatchSubmissionsCompleted and is used to iterate over the raw logs and unpacked data for BatchSubmissionsCompleted events raised by the Contract contract.
+type ContractBatchSubmissionsCompletedIterator struct {
+	Event *ContractBatchSubmissionsCompleted // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractBatchSubmissionsCompletedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractBatchSubmissionsCompleted)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractBatchSubmissionsCompleted)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractBatchSubmissionsCompletedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractBatchSubmissionsCompletedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractBatchSubmissionsCompleted represents a BatchSubmissionsCompleted event raised by the Contract contract.
+type ContractBatchSubmissionsCompleted struct {
+	DataMarketAddress common.Address
+	EpochId           *big.Int
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
+}
+
+// FilterBatchSubmissionsCompleted is a free log retrieval operation binding the contract event 0x5ed90e6a0e12831302fecf13a2cc6f7e9439fed821340d0bddc4ae305dbf9c30.
+//
+// Solidity: event BatchSubmissionsCompleted(address indexed dataMarketAddress, uint256 indexed epochId, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterBatchSubmissionsCompleted(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int) (*ContractBatchSubmissionsCompletedIterator, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+	var epochIdRule []interface{}
+	for _, epochIdItem := range epochId {
+		epochIdRule = append(epochIdRule, epochIdItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "BatchSubmissionsCompleted", dataMarketAddressRule, epochIdRule)
+	if err != nil {
+		return nil, err
+	}
+	return &ContractBatchSubmissionsCompletedIterator{contract: _Contract.contract, event: "BatchSubmissionsCompleted", logs: logs, sub: sub}, nil
+}
+
+// WatchBatchSubmissionsCompleted is a free log subscription operation binding the contract event 0x5ed90e6a0e12831302fecf13a2cc6f7e9439fed821340d0bddc4ae305dbf9c30.
+//
+// Solidity: event BatchSubmissionsCompleted(address indexed dataMarketAddress, uint256 indexed epochId, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchBatchSubmissionsCompleted(opts *bind.WatchOpts, sink chan<- *ContractBatchSubmissionsCompleted, dataMarketAddress []common.Address, epochId []*big.Int) (event.Subscription, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+	var epochIdRule []interface{}
+	for _, epochIdItem := range epochId {
+		epochIdRule = append(epochIdRule, epochIdItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "BatchSubmissionsCompleted", dataMarketAddressRule, epochIdRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractBatchSubmissionsCompleted)
+				if err := _Contract.contract.UnpackLog(event, "BatchSubmissionsCompleted", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseBatchSubmissionsCompleted is a log parse operation binding the contract event 0x5ed90e6a0e12831302fecf13a2cc6f7e9439fed821340d0bddc4ae305dbf9c30.
+//
+// Solidity: event BatchSubmissionsCompleted(address indexed dataMarketAddress, uint256 indexed epochId, uint256 timestamp)
+func (_Contract *ContractFilterer) ParseBatchSubmissionsCompleted(log types.Log) (*ContractBatchSubmissionsCompleted, error) {
+	event := new(ContractBatchSubmissionsCompleted)
+	if err := _Contract.contract.UnpackLog(event, "BatchSubmissionsCompleted", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
 }
 
 // ContractDailyTaskCompletedEventIterator is returned from FilterDailyTaskCompletedEvent and is used to iterate over the raw logs and unpacked data for DailyTaskCompletedEvent events raised by the Contract contract.
@@ -2804,6 +3210,7 @@ func (it *ContractDailyTaskCompletedEventIterator) Close() error {
 
 // ContractDailyTaskCompletedEvent represents a DailyTaskCompletedEvent event raised by the Contract contract.
 type ContractDailyTaskCompletedEvent struct {
+	DataMarketAddress  common.Address
 	SnapshotterAddress common.Address
 	SlotId             *big.Int
 	DayId              *big.Int
@@ -2811,24 +3218,34 @@ type ContractDailyTaskCompletedEvent struct {
 	Raw                types.Log // Blockchain specific contextual infos
 }
 
-// FilterDailyTaskCompletedEvent is a free log retrieval operation binding the contract event 0x34c900c4105cef3bd58c4b7d2b6fe54f1f64845d5bd5ed2e2e92b52aed2d58ae.
+// FilterDailyTaskCompletedEvent is a free log retrieval operation binding the contract event 0x7da483c8dd175f1c370a23b17545e19c0584cf3960d991202e216e6cf95b7a3d.
 //
-// Solidity: event DailyTaskCompletedEvent(address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 timestamp)
-func (_Contract *ContractFilterer) FilterDailyTaskCompletedEvent(opts *bind.FilterOpts) (*ContractDailyTaskCompletedEventIterator, error) {
+// Solidity: event DailyTaskCompletedEvent(address indexed dataMarketAddress, address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterDailyTaskCompletedEvent(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractDailyTaskCompletedEventIterator, error) {
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "DailyTaskCompletedEvent")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "DailyTaskCompletedEvent", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractDailyTaskCompletedEventIterator{contract: _Contract.contract, event: "DailyTaskCompletedEvent", logs: logs, sub: sub}, nil
 }
 
-// WatchDailyTaskCompletedEvent is a free log subscription operation binding the contract event 0x34c900c4105cef3bd58c4b7d2b6fe54f1f64845d5bd5ed2e2e92b52aed2d58ae.
+// WatchDailyTaskCompletedEvent is a free log subscription operation binding the contract event 0x7da483c8dd175f1c370a23b17545e19c0584cf3960d991202e216e6cf95b7a3d.
 //
-// Solidity: event DailyTaskCompletedEvent(address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 timestamp)
-func (_Contract *ContractFilterer) WatchDailyTaskCompletedEvent(opts *bind.WatchOpts, sink chan<- *ContractDailyTaskCompletedEvent) (event.Subscription, error) {
+// Solidity: event DailyTaskCompletedEvent(address indexed dataMarketAddress, address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchDailyTaskCompletedEvent(opts *bind.WatchOpts, sink chan<- *ContractDailyTaskCompletedEvent, dataMarketAddress []common.Address) (event.Subscription, error) {
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "DailyTaskCompletedEvent")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "DailyTaskCompletedEvent", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
@@ -2860,12 +3277,162 @@ func (_Contract *ContractFilterer) WatchDailyTaskCompletedEvent(opts *bind.Watch
 	}), nil
 }
 
-// ParseDailyTaskCompletedEvent is a log parse operation binding the contract event 0x34c900c4105cef3bd58c4b7d2b6fe54f1f64845d5bd5ed2e2e92b52aed2d58ae.
+// ParseDailyTaskCompletedEvent is a log parse operation binding the contract event 0x7da483c8dd175f1c370a23b17545e19c0584cf3960d991202e216e6cf95b7a3d.
 //
-// Solidity: event DailyTaskCompletedEvent(address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 timestamp)
+// Solidity: event DailyTaskCompletedEvent(address indexed dataMarketAddress, address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 timestamp)
 func (_Contract *ContractFilterer) ParseDailyTaskCompletedEvent(log types.Log) (*ContractDailyTaskCompletedEvent, error) {
 	event := new(ContractDailyTaskCompletedEvent)
 	if err := _Contract.contract.UnpackLog(event, "DailyTaskCompletedEvent", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// ContractDataMarketCreatedIterator is returned from FilterDataMarketCreated and is used to iterate over the raw logs and unpacked data for DataMarketCreated events raised by the Contract contract.
+type ContractDataMarketCreatedIterator struct {
+	Event *ContractDataMarketCreated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractDataMarketCreatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractDataMarketCreated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractDataMarketCreated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractDataMarketCreatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractDataMarketCreatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractDataMarketCreated represents a DataMarketCreated event raised by the Contract contract.
+type ContractDataMarketCreated struct {
+	OwnerAddress            common.Address
+	EpochSize               uint8
+	SourceChainId           *big.Int
+	SourceChainBlockTime    *big.Int
+	UseBlockNumberAsEpochId bool
+	ProtocolState           common.Address
+	DataMarketAddress       common.Address
+	Raw                     types.Log // Blockchain specific contextual infos
+}
+
+// FilterDataMarketCreated is a free log retrieval operation binding the contract event 0x4ac24bfdd2a01328b05db8f3587611f1d37fd01718e1edaa23a75ec91d71f517.
+//
+// Solidity: event DataMarketCreated(address indexed ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId, address protocolState, address dataMarketAddress)
+func (_Contract *ContractFilterer) FilterDataMarketCreated(opts *bind.FilterOpts, ownerAddress []common.Address) (*ContractDataMarketCreatedIterator, error) {
+
+	var ownerAddressRule []interface{}
+	for _, ownerAddressItem := range ownerAddress {
+		ownerAddressRule = append(ownerAddressRule, ownerAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "DataMarketCreated", ownerAddressRule)
+	if err != nil {
+		return nil, err
+	}
+	return &ContractDataMarketCreatedIterator{contract: _Contract.contract, event: "DataMarketCreated", logs: logs, sub: sub}, nil
+}
+
+// WatchDataMarketCreated is a free log subscription operation binding the contract event 0x4ac24bfdd2a01328b05db8f3587611f1d37fd01718e1edaa23a75ec91d71f517.
+//
+// Solidity: event DataMarketCreated(address indexed ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId, address protocolState, address dataMarketAddress)
+func (_Contract *ContractFilterer) WatchDataMarketCreated(opts *bind.WatchOpts, sink chan<- *ContractDataMarketCreated, ownerAddress []common.Address) (event.Subscription, error) {
+
+	var ownerAddressRule []interface{}
+	for _, ownerAddressItem := range ownerAddress {
+		ownerAddressRule = append(ownerAddressRule, ownerAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "DataMarketCreated", ownerAddressRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractDataMarketCreated)
+				if err := _Contract.contract.UnpackLog(event, "DataMarketCreated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseDataMarketCreated is a log parse operation binding the contract event 0x4ac24bfdd2a01328b05db8f3587611f1d37fd01718e1edaa23a75ec91d71f517.
+//
+// Solidity: event DataMarketCreated(address indexed ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId, address protocolState, address dataMarketAddress)
+func (_Contract *ContractFilterer) ParseDataMarketCreated(log types.Log) (*ContractDataMarketCreated, error) {
+	event := new(ContractDataMarketCreated)
+	if err := _Contract.contract.UnpackLog(event, "DataMarketCreated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
@@ -2941,29 +3508,40 @@ func (it *ContractDayStartedEventIterator) Close() error {
 
 // ContractDayStartedEvent represents a DayStartedEvent event raised by the Contract contract.
 type ContractDayStartedEvent struct {
-	DayId     *big.Int
-	Timestamp *big.Int
-	Raw       types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	DayId             *big.Int
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterDayStartedEvent is a free log retrieval operation binding the contract event 0xf391963fbbcec4cbb1f4a6c915c531364db26c103d31434223c3bddb703c94fe.
+// FilterDayStartedEvent is a free log retrieval operation binding the contract event 0x9bf380fe36617cd5d995968abb4ae6d3657a763c126535d590b4503ff2542426.
 //
-// Solidity: event DayStartedEvent(uint256 dayId, uint256 timestamp)
-func (_Contract *ContractFilterer) FilterDayStartedEvent(opts *bind.FilterOpts) (*ContractDayStartedEventIterator, error) {
+// Solidity: event DayStartedEvent(address indexed dataMarketAddress, uint256 dayId, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterDayStartedEvent(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractDayStartedEventIterator, error) {
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "DayStartedEvent")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "DayStartedEvent", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractDayStartedEventIterator{contract: _Contract.contract, event: "DayStartedEvent", logs: logs, sub: sub}, nil
 }
 
-// WatchDayStartedEvent is a free log subscription operation binding the contract event 0xf391963fbbcec4cbb1f4a6c915c531364db26c103d31434223c3bddb703c94fe.
+// WatchDayStartedEvent is a free log subscription operation binding the contract event 0x9bf380fe36617cd5d995968abb4ae6d3657a763c126535d590b4503ff2542426.
 //
-// Solidity: event DayStartedEvent(uint256 dayId, uint256 timestamp)
-func (_Contract *ContractFilterer) WatchDayStartedEvent(opts *bind.WatchOpts, sink chan<- *ContractDayStartedEvent) (event.Subscription, error) {
+// Solidity: event DayStartedEvent(address indexed dataMarketAddress, uint256 dayId, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchDayStartedEvent(opts *bind.WatchOpts, sink chan<- *ContractDayStartedEvent, dataMarketAddress []common.Address) (event.Subscription, error) {
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "DayStartedEvent")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "DayStartedEvent", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
@@ -2995,9 +3573,9 @@ func (_Contract *ContractFilterer) WatchDayStartedEvent(opts *bind.WatchOpts, si
 	}), nil
 }
 
-// ParseDayStartedEvent is a log parse operation binding the contract event 0xf391963fbbcec4cbb1f4a6c915c531364db26c103d31434223c3bddb703c94fe.
+// ParseDayStartedEvent is a log parse operation binding the contract event 0x9bf380fe36617cd5d995968abb4ae6d3657a763c126535d590b4503ff2542426.
 //
-// Solidity: event DayStartedEvent(uint256 dayId, uint256 timestamp)
+// Solidity: event DayStartedEvent(address indexed dataMarketAddress, uint256 dayId, uint256 timestamp)
 func (_Contract *ContractFilterer) ParseDayStartedEvent(log types.Log) (*ContractDayStartedEvent, error) {
 	event := new(ContractDayStartedEvent)
 	if err := _Contract.contract.UnpackLog(event, "DayStartedEvent", log); err != nil {
@@ -3076,17 +3654,23 @@ func (it *ContractDelayedAttestationSubmittedIterator) Close() error {
 
 // ContractDelayedAttestationSubmitted represents a DelayedAttestationSubmitted event raised by the Contract contract.
 type ContractDelayedAttestationSubmitted struct {
-	BatchId       *big.Int
-	EpochId       *big.Int
-	Timestamp     *big.Int
-	ValidatorAddr common.Address
-	Raw           types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	BatchId           *big.Int
+	EpochId           *big.Int
+	Timestamp         *big.Int
+	ValidatorAddr     common.Address
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterDelayedAttestationSubmitted is a free log retrieval operation binding the contract event 0xc8ab56999aec6b2fb5794b180b189d9d51ffdaa8b6041cd424c9e941f6832dc7.
+// FilterDelayedAttestationSubmitted is a free log retrieval operation binding the contract event 0x4fd04f28641379ddef7bacd546c5e698814831a1c0772236c460aa42b029aa31.
 //
-// Solidity: event DelayedAttestationSubmitted(uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
-func (_Contract *ContractFilterer) FilterDelayedAttestationSubmitted(opts *bind.FilterOpts, epochId []*big.Int, validatorAddr []common.Address) (*ContractDelayedAttestationSubmittedIterator, error) {
+// Solidity: event DelayedAttestationSubmitted(address indexed dataMarketAddress, uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
+func (_Contract *ContractFilterer) FilterDelayedAttestationSubmitted(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int, validatorAddr []common.Address) (*ContractDelayedAttestationSubmittedIterator, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
@@ -3098,17 +3682,22 @@ func (_Contract *ContractFilterer) FilterDelayedAttestationSubmitted(opts *bind.
 		validatorAddrRule = append(validatorAddrRule, validatorAddrItem)
 	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "DelayedAttestationSubmitted", epochIdRule, validatorAddrRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "DelayedAttestationSubmitted", dataMarketAddressRule, epochIdRule, validatorAddrRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractDelayedAttestationSubmittedIterator{contract: _Contract.contract, event: "DelayedAttestationSubmitted", logs: logs, sub: sub}, nil
 }
 
-// WatchDelayedAttestationSubmitted is a free log subscription operation binding the contract event 0xc8ab56999aec6b2fb5794b180b189d9d51ffdaa8b6041cd424c9e941f6832dc7.
+// WatchDelayedAttestationSubmitted is a free log subscription operation binding the contract event 0x4fd04f28641379ddef7bacd546c5e698814831a1c0772236c460aa42b029aa31.
 //
-// Solidity: event DelayedAttestationSubmitted(uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
-func (_Contract *ContractFilterer) WatchDelayedAttestationSubmitted(opts *bind.WatchOpts, sink chan<- *ContractDelayedAttestationSubmitted, epochId []*big.Int, validatorAddr []common.Address) (event.Subscription, error) {
+// Solidity: event DelayedAttestationSubmitted(address indexed dataMarketAddress, uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
+func (_Contract *ContractFilterer) WatchDelayedAttestationSubmitted(opts *bind.WatchOpts, sink chan<- *ContractDelayedAttestationSubmitted, dataMarketAddress []common.Address, epochId []*big.Int, validatorAddr []common.Address) (event.Subscription, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
@@ -3120,7 +3709,7 @@ func (_Contract *ContractFilterer) WatchDelayedAttestationSubmitted(opts *bind.W
 		validatorAddrRule = append(validatorAddrRule, validatorAddrItem)
 	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "DelayedAttestationSubmitted", epochIdRule, validatorAddrRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "DelayedAttestationSubmitted", dataMarketAddressRule, epochIdRule, validatorAddrRule)
 	if err != nil {
 		return nil, err
 	}
@@ -3152,9 +3741,9 @@ func (_Contract *ContractFilterer) WatchDelayedAttestationSubmitted(opts *bind.W
 	}), nil
 }
 
-// ParseDelayedAttestationSubmitted is a log parse operation binding the contract event 0xc8ab56999aec6b2fb5794b180b189d9d51ffdaa8b6041cd424c9e941f6832dc7.
+// ParseDelayedAttestationSubmitted is a log parse operation binding the contract event 0x4fd04f28641379ddef7bacd546c5e698814831a1c0772236c460aa42b029aa31.
 //
-// Solidity: event DelayedAttestationSubmitted(uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
+// Solidity: event DelayedAttestationSubmitted(address indexed dataMarketAddress, uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
 func (_Contract *ContractFilterer) ParseDelayedAttestationSubmitted(log types.Log) (*ContractDelayedAttestationSubmitted, error) {
 	event := new(ContractDelayedAttestationSubmitted)
 	if err := _Contract.contract.UnpackLog(event, "DelayedAttestationSubmitted", log); err != nil {
@@ -3233,41 +3822,52 @@ func (it *ContractDelayedBatchSubmittedIterator) Close() error {
 
 // ContractDelayedBatchSubmitted represents a DelayedBatchSubmitted event raised by the Contract contract.
 type ContractDelayedBatchSubmitted struct {
-	BatchId   *big.Int
-	BatchCid  string
-	EpochId   *big.Int
-	Timestamp *big.Int
-	Raw       types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	BatchId           *big.Int
+	BatchCid          string
+	EpochId           *big.Int
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterDelayedBatchSubmitted is a free log retrieval operation binding the contract event 0xb11947be3643fd6e9120edf6f6f24c12f6b7a383503d1143fac6908f0cd1df07.
+// FilterDelayedBatchSubmitted is a free log retrieval operation binding the contract event 0xf2de85dca20817401360fd386051732f208a7508ed4ffa7c15686979da276ec6.
 //
-// Solidity: event DelayedBatchSubmitted(uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
-func (_Contract *ContractFilterer) FilterDelayedBatchSubmitted(opts *bind.FilterOpts, epochId []*big.Int) (*ContractDelayedBatchSubmittedIterator, error) {
+// Solidity: event DelayedBatchSubmitted(address indexed dataMarketAddress, uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterDelayedBatchSubmitted(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int) (*ContractDelayedBatchSubmittedIterator, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "DelayedBatchSubmitted", epochIdRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "DelayedBatchSubmitted", dataMarketAddressRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractDelayedBatchSubmittedIterator{contract: _Contract.contract, event: "DelayedBatchSubmitted", logs: logs, sub: sub}, nil
 }
 
-// WatchDelayedBatchSubmitted is a free log subscription operation binding the contract event 0xb11947be3643fd6e9120edf6f6f24c12f6b7a383503d1143fac6908f0cd1df07.
+// WatchDelayedBatchSubmitted is a free log subscription operation binding the contract event 0xf2de85dca20817401360fd386051732f208a7508ed4ffa7c15686979da276ec6.
 //
-// Solidity: event DelayedBatchSubmitted(uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
-func (_Contract *ContractFilterer) WatchDelayedBatchSubmitted(opts *bind.WatchOpts, sink chan<- *ContractDelayedBatchSubmitted, epochId []*big.Int) (event.Subscription, error) {
+// Solidity: event DelayedBatchSubmitted(address indexed dataMarketAddress, uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchDelayedBatchSubmitted(opts *bind.WatchOpts, sink chan<- *ContractDelayedBatchSubmitted, dataMarketAddress []common.Address, epochId []*big.Int) (event.Subscription, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "DelayedBatchSubmitted", epochIdRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "DelayedBatchSubmitted", dataMarketAddressRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -3299,9 +3899,9 @@ func (_Contract *ContractFilterer) WatchDelayedBatchSubmitted(opts *bind.WatchOp
 	}), nil
 }
 
-// ParseDelayedBatchSubmitted is a log parse operation binding the contract event 0xb11947be3643fd6e9120edf6f6f24c12f6b7a383503d1143fac6908f0cd1df07.
+// ParseDelayedBatchSubmitted is a log parse operation binding the contract event 0xf2de85dca20817401360fd386051732f208a7508ed4ffa7c15686979da276ec6.
 //
-// Solidity: event DelayedBatchSubmitted(uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
+// Solidity: event DelayedBatchSubmitted(address indexed dataMarketAddress, uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
 func (_Contract *ContractFilterer) ParseDelayedBatchSubmitted(log types.Log) (*ContractDelayedBatchSubmitted, error) {
 	event := new(ContractDelayedBatchSubmitted)
 	if err := _Contract.contract.UnpackLog(event, "DelayedBatchSubmitted", log); err != nil {
@@ -3380,20 +3980,25 @@ func (it *ContractDelayedSnapshotSubmittedIterator) Close() error {
 
 // ContractDelayedSnapshotSubmitted represents a DelayedSnapshotSubmitted event raised by the Contract contract.
 type ContractDelayedSnapshotSubmitted struct {
-	SnapshotterAddr common.Address
-	SlotId          *big.Int
-	SnapshotCid     string
-	EpochId         *big.Int
-	ProjectId       string
-	Timestamp       *big.Int
-	Raw             types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	SnapshotterAddr   common.Address
+	SlotId            *big.Int
+	SnapshotCid       string
+	EpochId           *big.Int
+	ProjectId         string
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterDelayedSnapshotSubmitted is a free log retrieval operation binding the contract event 0x8eb09d3de43d012d958db78fcc692d37e9f9c0cc2af1cdd8c58617832af17d31.
+// FilterDelayedSnapshotSubmitted is a free log retrieval operation binding the contract event 0x3857c02d90218ce4e6decef6b24babba8e0d8331c159392de06c1ce2c7a2d3be.
 //
-// Solidity: event DelayedSnapshotSubmitted(address indexed snapshotterAddr, uint256 slotId, string snapshotCid, uint256 indexed epochId, string projectId, uint256 timestamp)
-func (_Contract *ContractFilterer) FilterDelayedSnapshotSubmitted(opts *bind.FilterOpts, snapshotterAddr []common.Address, epochId []*big.Int) (*ContractDelayedSnapshotSubmittedIterator, error) {
+// Solidity: event DelayedSnapshotSubmitted(address indexed dataMarketAddress, address indexed snapshotterAddr, uint256 slotId, string snapshotCid, uint256 indexed epochId, string projectId, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterDelayedSnapshotSubmitted(opts *bind.FilterOpts, dataMarketAddress []common.Address, snapshotterAddr []common.Address, epochId []*big.Int) (*ContractDelayedSnapshotSubmittedIterator, error) {
 
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 	var snapshotterAddrRule []interface{}
 	for _, snapshotterAddrItem := range snapshotterAddr {
 		snapshotterAddrRule = append(snapshotterAddrRule, snapshotterAddrItem)
@@ -3404,18 +4009,22 @@ func (_Contract *ContractFilterer) FilterDelayedSnapshotSubmitted(opts *bind.Fil
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "DelayedSnapshotSubmitted", snapshotterAddrRule, epochIdRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "DelayedSnapshotSubmitted", dataMarketAddressRule, snapshotterAddrRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractDelayedSnapshotSubmittedIterator{contract: _Contract.contract, event: "DelayedSnapshotSubmitted", logs: logs, sub: sub}, nil
 }
 
-// WatchDelayedSnapshotSubmitted is a free log subscription operation binding the contract event 0x8eb09d3de43d012d958db78fcc692d37e9f9c0cc2af1cdd8c58617832af17d31.
+// WatchDelayedSnapshotSubmitted is a free log subscription operation binding the contract event 0x3857c02d90218ce4e6decef6b24babba8e0d8331c159392de06c1ce2c7a2d3be.
 //
-// Solidity: event DelayedSnapshotSubmitted(address indexed snapshotterAddr, uint256 slotId, string snapshotCid, uint256 indexed epochId, string projectId, uint256 timestamp)
-func (_Contract *ContractFilterer) WatchDelayedSnapshotSubmitted(opts *bind.WatchOpts, sink chan<- *ContractDelayedSnapshotSubmitted, snapshotterAddr []common.Address, epochId []*big.Int) (event.Subscription, error) {
+// Solidity: event DelayedSnapshotSubmitted(address indexed dataMarketAddress, address indexed snapshotterAddr, uint256 slotId, string snapshotCid, uint256 indexed epochId, string projectId, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchDelayedSnapshotSubmitted(opts *bind.WatchOpts, sink chan<- *ContractDelayedSnapshotSubmitted, dataMarketAddress []common.Address, snapshotterAddr []common.Address, epochId []*big.Int) (event.Subscription, error) {
 
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 	var snapshotterAddrRule []interface{}
 	for _, snapshotterAddrItem := range snapshotterAddr {
 		snapshotterAddrRule = append(snapshotterAddrRule, snapshotterAddrItem)
@@ -3426,7 +4035,7 @@ func (_Contract *ContractFilterer) WatchDelayedSnapshotSubmitted(opts *bind.Watc
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "DelayedSnapshotSubmitted", snapshotterAddrRule, epochIdRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "DelayedSnapshotSubmitted", dataMarketAddressRule, snapshotterAddrRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -3458,9 +4067,9 @@ func (_Contract *ContractFilterer) WatchDelayedSnapshotSubmitted(opts *bind.Watc
 	}), nil
 }
 
-// ParseDelayedSnapshotSubmitted is a log parse operation binding the contract event 0x8eb09d3de43d012d958db78fcc692d37e9f9c0cc2af1cdd8c58617832af17d31.
+// ParseDelayedSnapshotSubmitted is a log parse operation binding the contract event 0x3857c02d90218ce4e6decef6b24babba8e0d8331c159392de06c1ce2c7a2d3be.
 //
-// Solidity: event DelayedSnapshotSubmitted(address indexed snapshotterAddr, uint256 slotId, string snapshotCid, uint256 indexed epochId, string projectId, uint256 timestamp)
+// Solidity: event DelayedSnapshotSubmitted(address indexed dataMarketAddress, address indexed snapshotterAddr, uint256 slotId, string snapshotCid, uint256 indexed epochId, string projectId, uint256 timestamp)
 func (_Contract *ContractFilterer) ParseDelayedSnapshotSubmitted(log types.Log) (*ContractDelayedSnapshotSubmitted, error) {
 	event := new(ContractDelayedSnapshotSubmitted)
 	if err := _Contract.contract.UnpackLog(event, "DelayedSnapshotSubmitted", log); err != nil {
@@ -3539,41 +4148,50 @@ func (it *ContractEpochReleasedIterator) Close() error {
 
 // ContractEpochReleased represents a EpochReleased event raised by the Contract contract.
 type ContractEpochReleased struct {
-	EpochId   *big.Int
-	Begin     *big.Int
-	End       *big.Int
-	Timestamp *big.Int
-	Raw       types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	EpochId           *big.Int
+	Begin             *big.Int
+	End               *big.Int
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterEpochReleased is a free log retrieval operation binding the contract event 0x108f87075a74f81fa2271fdf9fc0883a1811431182601fc65d24513970336640.
+// FilterEpochReleased is a free log retrieval operation binding the contract event 0xf7d2257d4a1c445138ab52bd3c22425bfed29da81d0173961c697dc14fcba60c.
 //
-// Solidity: event EpochReleased(uint256 indexed epochId, uint256 begin, uint256 end, uint256 timestamp)
-func (_Contract *ContractFilterer) FilterEpochReleased(opts *bind.FilterOpts, epochId []*big.Int) (*ContractEpochReleasedIterator, error) {
+// Solidity: event EpochReleased(address indexed dataMarketAddress, uint256 indexed epochId, uint256 begin, uint256 end, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterEpochReleased(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int) (*ContractEpochReleasedIterator, error) {
 
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "EpochReleased", epochIdRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "EpochReleased", dataMarketAddressRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractEpochReleasedIterator{contract: _Contract.contract, event: "EpochReleased", logs: logs, sub: sub}, nil
 }
 
-// WatchEpochReleased is a free log subscription operation binding the contract event 0x108f87075a74f81fa2271fdf9fc0883a1811431182601fc65d24513970336640.
+// WatchEpochReleased is a free log subscription operation binding the contract event 0xf7d2257d4a1c445138ab52bd3c22425bfed29da81d0173961c697dc14fcba60c.
 //
-// Solidity: event EpochReleased(uint256 indexed epochId, uint256 begin, uint256 end, uint256 timestamp)
-func (_Contract *ContractFilterer) WatchEpochReleased(opts *bind.WatchOpts, sink chan<- *ContractEpochReleased, epochId []*big.Int) (event.Subscription, error) {
+// Solidity: event EpochReleased(address indexed dataMarketAddress, uint256 indexed epochId, uint256 begin, uint256 end, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchEpochReleased(opts *bind.WatchOpts, sink chan<- *ContractEpochReleased, dataMarketAddress []common.Address, epochId []*big.Int) (event.Subscription, error) {
 
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "EpochReleased", epochIdRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "EpochReleased", dataMarketAddressRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -3605,12 +4223,146 @@ func (_Contract *ContractFilterer) WatchEpochReleased(opts *bind.WatchOpts, sink
 	}), nil
 }
 
-// ParseEpochReleased is a log parse operation binding the contract event 0x108f87075a74f81fa2271fdf9fc0883a1811431182601fc65d24513970336640.
+// ParseEpochReleased is a log parse operation binding the contract event 0xf7d2257d4a1c445138ab52bd3c22425bfed29da81d0173961c697dc14fcba60c.
 //
-// Solidity: event EpochReleased(uint256 indexed epochId, uint256 begin, uint256 end, uint256 timestamp)
+// Solidity: event EpochReleased(address indexed dataMarketAddress, uint256 indexed epochId, uint256 begin, uint256 end, uint256 timestamp)
 func (_Contract *ContractFilterer) ParseEpochReleased(log types.Log) (*ContractEpochReleased, error) {
 	event := new(ContractEpochReleased)
 	if err := _Contract.contract.UnpackLog(event, "EpochReleased", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// ContractInitializedIterator is returned from FilterInitialized and is used to iterate over the raw logs and unpacked data for Initialized events raised by the Contract contract.
+type ContractInitializedIterator struct {
+	Event *ContractInitialized // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractInitializedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractInitialized)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractInitialized)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractInitializedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractInitializedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractInitialized represents a Initialized event raised by the Contract contract.
+type ContractInitialized struct {
+	Version uint64
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterInitialized is a free log retrieval operation binding the contract event 0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2.
+//
+// Solidity: event Initialized(uint64 version)
+func (_Contract *ContractFilterer) FilterInitialized(opts *bind.FilterOpts) (*ContractInitializedIterator, error) {
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "Initialized")
+	if err != nil {
+		return nil, err
+	}
+	return &ContractInitializedIterator{contract: _Contract.contract, event: "Initialized", logs: logs, sub: sub}, nil
+}
+
+// WatchInitialized is a free log subscription operation binding the contract event 0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2.
+//
+// Solidity: event Initialized(uint64 version)
+func (_Contract *ContractFilterer) WatchInitialized(opts *bind.WatchOpts, sink chan<- *ContractInitialized) (event.Subscription, error) {
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "Initialized")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractInitialized)
+				if err := _Contract.contract.UnpackLog(event, "Initialized", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseInitialized is a log parse operation binding the contract event 0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2.
+//
+// Solidity: event Initialized(uint64 version)
+func (_Contract *ContractFilterer) ParseInitialized(log types.Log) (*ContractInitialized, error) {
+	event := new(ContractInitialized)
+	if err := _Contract.contract.UnpackLog(event, "Initialized", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
@@ -3839,30 +4591,41 @@ func (it *ContractProjectTypeUpdatedIterator) Close() error {
 
 // ContractProjectTypeUpdated represents a ProjectTypeUpdated event raised by the Contract contract.
 type ContractProjectTypeUpdated struct {
-	ProjectType   string
-	Allowed       bool
-	EnableEpochId *big.Int
-	Raw           types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	ProjectType       string
+	Allowed           bool
+	EnableEpochId     *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterProjectTypeUpdated is a free log retrieval operation binding the contract event 0xcd1b466e0de4e12ecf0bc286450d3e5b4aa88db70272ed5c11508b16acb35bfc.
+// FilterProjectTypeUpdated is a free log retrieval operation binding the contract event 0x3c6dc99dfc227a11ad701f84af7d44db829ba6c5e71c85f0ba80da02a2c20b42.
 //
-// Solidity: event ProjectTypeUpdated(string projectType, bool allowed, uint256 enableEpochId)
-func (_Contract *ContractFilterer) FilterProjectTypeUpdated(opts *bind.FilterOpts) (*ContractProjectTypeUpdatedIterator, error) {
+// Solidity: event ProjectTypeUpdated(address indexed dataMarketAddress, string projectType, bool allowed, uint256 enableEpochId)
+func (_Contract *ContractFilterer) FilterProjectTypeUpdated(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractProjectTypeUpdatedIterator, error) {
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "ProjectTypeUpdated")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "ProjectTypeUpdated", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractProjectTypeUpdatedIterator{contract: _Contract.contract, event: "ProjectTypeUpdated", logs: logs, sub: sub}, nil
 }
 
-// WatchProjectTypeUpdated is a free log subscription operation binding the contract event 0xcd1b466e0de4e12ecf0bc286450d3e5b4aa88db70272ed5c11508b16acb35bfc.
+// WatchProjectTypeUpdated is a free log subscription operation binding the contract event 0x3c6dc99dfc227a11ad701f84af7d44db829ba6c5e71c85f0ba80da02a2c20b42.
 //
-// Solidity: event ProjectTypeUpdated(string projectType, bool allowed, uint256 enableEpochId)
-func (_Contract *ContractFilterer) WatchProjectTypeUpdated(opts *bind.WatchOpts, sink chan<- *ContractProjectTypeUpdated) (event.Subscription, error) {
+// Solidity: event ProjectTypeUpdated(address indexed dataMarketAddress, string projectType, bool allowed, uint256 enableEpochId)
+func (_Contract *ContractFilterer) WatchProjectTypeUpdated(opts *bind.WatchOpts, sink chan<- *ContractProjectTypeUpdated, dataMarketAddress []common.Address) (event.Subscription, error) {
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "ProjectTypeUpdated")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "ProjectTypeUpdated", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
@@ -3894,12 +4657,159 @@ func (_Contract *ContractFilterer) WatchProjectTypeUpdated(opts *bind.WatchOpts,
 	}), nil
 }
 
-// ParseProjectTypeUpdated is a log parse operation binding the contract event 0xcd1b466e0de4e12ecf0bc286450d3e5b4aa88db70272ed5c11508b16acb35bfc.
+// ParseProjectTypeUpdated is a log parse operation binding the contract event 0x3c6dc99dfc227a11ad701f84af7d44db829ba6c5e71c85f0ba80da02a2c20b42.
 //
-// Solidity: event ProjectTypeUpdated(string projectType, bool allowed, uint256 enableEpochId)
+// Solidity: event ProjectTypeUpdated(address indexed dataMarketAddress, string projectType, bool allowed, uint256 enableEpochId)
 func (_Contract *ContractFilterer) ParseProjectTypeUpdated(log types.Log) (*ContractProjectTypeUpdated, error) {
 	event := new(ContractProjectTypeUpdated)
 	if err := _Contract.contract.UnpackLog(event, "ProjectTypeUpdated", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// ContractProjectsUpdatedIterator is returned from FilterProjectsUpdated and is used to iterate over the raw logs and unpacked data for ProjectsUpdated events raised by the Contract contract.
+type ContractProjectsUpdatedIterator struct {
+	Event *ContractProjectsUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractProjectsUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractProjectsUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractProjectsUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractProjectsUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractProjectsUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractProjectsUpdated represents a ProjectsUpdated event raised by the Contract contract.
+type ContractProjectsUpdated struct {
+	DataMarketAddress common.Address
+	Projects          []string
+	Status            []bool
+	EnableEpochId     *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
+}
+
+// FilterProjectsUpdated is a free log retrieval operation binding the contract event 0xcbf1b93d76451f05244e2f6139bf7266a14bac5182e5ed8981ab0ce36479efbf.
+//
+// Solidity: event ProjectsUpdated(address indexed dataMarketAddress, string[] projects, bool[] status, uint256 enableEpochId)
+func (_Contract *ContractFilterer) FilterProjectsUpdated(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractProjectsUpdatedIterator, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "ProjectsUpdated", dataMarketAddressRule)
+	if err != nil {
+		return nil, err
+	}
+	return &ContractProjectsUpdatedIterator{contract: _Contract.contract, event: "ProjectsUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchProjectsUpdated is a free log subscription operation binding the contract event 0xcbf1b93d76451f05244e2f6139bf7266a14bac5182e5ed8981ab0ce36479efbf.
+//
+// Solidity: event ProjectsUpdated(address indexed dataMarketAddress, string[] projects, bool[] status, uint256 enableEpochId)
+func (_Contract *ContractFilterer) WatchProjectsUpdated(opts *bind.WatchOpts, sink chan<- *ContractProjectsUpdated, dataMarketAddress []common.Address) (event.Subscription, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "ProjectsUpdated", dataMarketAddressRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractProjectsUpdated)
+				if err := _Contract.contract.UnpackLog(event, "ProjectsUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseProjectsUpdated is a log parse operation binding the contract event 0xcbf1b93d76451f05244e2f6139bf7266a14bac5182e5ed8981ab0ce36479efbf.
+//
+// Solidity: event ProjectsUpdated(address indexed dataMarketAddress, string[] projects, bool[] status, uint256 enableEpochId)
+func (_Contract *ContractFilterer) ParseProjectsUpdated(log types.Log) (*ContractProjectsUpdated, error) {
+	event := new(ContractProjectsUpdated)
+	if err := _Contract.contract.UnpackLog(event, "ProjectsUpdated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
@@ -3975,29 +4885,40 @@ func (it *ContractSequencersUpdatedIterator) Close() error {
 
 // ContractSequencersUpdated represents a SequencersUpdated event raised by the Contract contract.
 type ContractSequencersUpdated struct {
-	SequencerAddress common.Address
-	Allowed          bool
-	Raw              types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	SequencerAddress  common.Address
+	Allowed           bool
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterSequencersUpdated is a free log retrieval operation binding the contract event 0xe8706f0696b5c674b870163744013b1f5a0e18dfbf77e57997e1ab22148beae0.
+// FilterSequencersUpdated is a free log retrieval operation binding the contract event 0xad12010237fe83915c67abe51836e693a16f8a2592b9a4e959374ab33ae7a697.
 //
-// Solidity: event SequencersUpdated(address sequencerAddress, bool allowed)
-func (_Contract *ContractFilterer) FilterSequencersUpdated(opts *bind.FilterOpts) (*ContractSequencersUpdatedIterator, error) {
+// Solidity: event SequencersUpdated(address indexed dataMarketAddress, address sequencerAddress, bool allowed)
+func (_Contract *ContractFilterer) FilterSequencersUpdated(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractSequencersUpdatedIterator, error) {
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "SequencersUpdated")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "SequencersUpdated", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractSequencersUpdatedIterator{contract: _Contract.contract, event: "SequencersUpdated", logs: logs, sub: sub}, nil
 }
 
-// WatchSequencersUpdated is a free log subscription operation binding the contract event 0xe8706f0696b5c674b870163744013b1f5a0e18dfbf77e57997e1ab22148beae0.
+// WatchSequencersUpdated is a free log subscription operation binding the contract event 0xad12010237fe83915c67abe51836e693a16f8a2592b9a4e959374ab33ae7a697.
 //
-// Solidity: event SequencersUpdated(address sequencerAddress, bool allowed)
-func (_Contract *ContractFilterer) WatchSequencersUpdated(opts *bind.WatchOpts, sink chan<- *ContractSequencersUpdated) (event.Subscription, error) {
+// Solidity: event SequencersUpdated(address indexed dataMarketAddress, address sequencerAddress, bool allowed)
+func (_Contract *ContractFilterer) WatchSequencersUpdated(opts *bind.WatchOpts, sink chan<- *ContractSequencersUpdated, dataMarketAddress []common.Address) (event.Subscription, error) {
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "SequencersUpdated")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "SequencersUpdated", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
@@ -4029,9 +4950,9 @@ func (_Contract *ContractFilterer) WatchSequencersUpdated(opts *bind.WatchOpts, 
 	}), nil
 }
 
-// ParseSequencersUpdated is a log parse operation binding the contract event 0xe8706f0696b5c674b870163744013b1f5a0e18dfbf77e57997e1ab22148beae0.
+// ParseSequencersUpdated is a log parse operation binding the contract event 0xad12010237fe83915c67abe51836e693a16f8a2592b9a4e959374ab33ae7a697.
 //
-// Solidity: event SequencersUpdated(address sequencerAddress, bool allowed)
+// Solidity: event SequencersUpdated(address indexed dataMarketAddress, address sequencerAddress, bool allowed)
 func (_Contract *ContractFilterer) ParseSequencersUpdated(log types.Log) (*ContractSequencersUpdated, error) {
 	event := new(ContractSequencersUpdated)
 	if err := _Contract.contract.UnpackLog(event, "SequencersUpdated", log); err != nil {
@@ -4110,17 +5031,23 @@ func (it *ContractSnapshotBatchAttestationSubmittedIterator) Close() error {
 
 // ContractSnapshotBatchAttestationSubmitted represents a SnapshotBatchAttestationSubmitted event raised by the Contract contract.
 type ContractSnapshotBatchAttestationSubmitted struct {
-	BatchId       *big.Int
-	EpochId       *big.Int
-	Timestamp     *big.Int
-	ValidatorAddr common.Address
-	Raw           types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	BatchId           *big.Int
+	EpochId           *big.Int
+	Timestamp         *big.Int
+	ValidatorAddr     common.Address
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterSnapshotBatchAttestationSubmitted is a free log retrieval operation binding the contract event 0xae8d67af6c2cb7ba8591211569b509740c04331b67af5d4839cf25d3b0208604.
+// FilterSnapshotBatchAttestationSubmitted is a free log retrieval operation binding the contract event 0xf4b2e45e85a2dfbff1f3d17d57722c58599f10a2a3b9764b6106e7ca0c21d22f.
 //
-// Solidity: event SnapshotBatchAttestationSubmitted(uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
-func (_Contract *ContractFilterer) FilterSnapshotBatchAttestationSubmitted(opts *bind.FilterOpts, epochId []*big.Int, validatorAddr []common.Address) (*ContractSnapshotBatchAttestationSubmittedIterator, error) {
+// Solidity: event SnapshotBatchAttestationSubmitted(address indexed dataMarketAddress, uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
+func (_Contract *ContractFilterer) FilterSnapshotBatchAttestationSubmitted(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int, validatorAddr []common.Address) (*ContractSnapshotBatchAttestationSubmittedIterator, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
@@ -4132,17 +5059,22 @@ func (_Contract *ContractFilterer) FilterSnapshotBatchAttestationSubmitted(opts 
 		validatorAddrRule = append(validatorAddrRule, validatorAddrItem)
 	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "SnapshotBatchAttestationSubmitted", epochIdRule, validatorAddrRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "SnapshotBatchAttestationSubmitted", dataMarketAddressRule, epochIdRule, validatorAddrRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractSnapshotBatchAttestationSubmittedIterator{contract: _Contract.contract, event: "SnapshotBatchAttestationSubmitted", logs: logs, sub: sub}, nil
 }
 
-// WatchSnapshotBatchAttestationSubmitted is a free log subscription operation binding the contract event 0xae8d67af6c2cb7ba8591211569b509740c04331b67af5d4839cf25d3b0208604.
+// WatchSnapshotBatchAttestationSubmitted is a free log subscription operation binding the contract event 0xf4b2e45e85a2dfbff1f3d17d57722c58599f10a2a3b9764b6106e7ca0c21d22f.
 //
-// Solidity: event SnapshotBatchAttestationSubmitted(uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
-func (_Contract *ContractFilterer) WatchSnapshotBatchAttestationSubmitted(opts *bind.WatchOpts, sink chan<- *ContractSnapshotBatchAttestationSubmitted, epochId []*big.Int, validatorAddr []common.Address) (event.Subscription, error) {
+// Solidity: event SnapshotBatchAttestationSubmitted(address indexed dataMarketAddress, uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
+func (_Contract *ContractFilterer) WatchSnapshotBatchAttestationSubmitted(opts *bind.WatchOpts, sink chan<- *ContractSnapshotBatchAttestationSubmitted, dataMarketAddress []common.Address, epochId []*big.Int, validatorAddr []common.Address) (event.Subscription, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
@@ -4154,7 +5086,7 @@ func (_Contract *ContractFilterer) WatchSnapshotBatchAttestationSubmitted(opts *
 		validatorAddrRule = append(validatorAddrRule, validatorAddrItem)
 	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "SnapshotBatchAttestationSubmitted", epochIdRule, validatorAddrRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "SnapshotBatchAttestationSubmitted", dataMarketAddressRule, epochIdRule, validatorAddrRule)
 	if err != nil {
 		return nil, err
 	}
@@ -4186,9 +5118,9 @@ func (_Contract *ContractFilterer) WatchSnapshotBatchAttestationSubmitted(opts *
 	}), nil
 }
 
-// ParseSnapshotBatchAttestationSubmitted is a log parse operation binding the contract event 0xae8d67af6c2cb7ba8591211569b509740c04331b67af5d4839cf25d3b0208604.
+// ParseSnapshotBatchAttestationSubmitted is a log parse operation binding the contract event 0xf4b2e45e85a2dfbff1f3d17d57722c58599f10a2a3b9764b6106e7ca0c21d22f.
 //
-// Solidity: event SnapshotBatchAttestationSubmitted(uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
+// Solidity: event SnapshotBatchAttestationSubmitted(address indexed dataMarketAddress, uint256 batchId, uint256 indexed epochId, uint256 timestamp, address indexed validatorAddr)
 func (_Contract *ContractFilterer) ParseSnapshotBatchAttestationSubmitted(log types.Log) (*ContractSnapshotBatchAttestationSubmitted, error) {
 	event := new(ContractSnapshotBatchAttestationSubmitted)
 	if err := _Contract.contract.UnpackLog(event, "SnapshotBatchAttestationSubmitted", log); err != nil {
@@ -4267,17 +5199,22 @@ func (it *ContractSnapshotBatchFinalizedIterator) Close() error {
 
 // ContractSnapshotBatchFinalized represents a SnapshotBatchFinalized event raised by the Contract contract.
 type ContractSnapshotBatchFinalized struct {
-	EpochId   *big.Int
-	BatchId   *big.Int
-	Timestamp *big.Int
-	Raw       types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	EpochId           *big.Int
+	BatchId           *big.Int
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterSnapshotBatchFinalized is a free log retrieval operation binding the contract event 0x5234f54aa94bd8e44799076dbbe59404d669eb94833cfbff03360715b9820e40.
+// FilterSnapshotBatchFinalized is a free log retrieval operation binding the contract event 0x9737b8e7fb3913ba98706f4b1758ac14f5cf26afbb2457117aa3360b9cc85de1.
 //
-// Solidity: event SnapshotBatchFinalized(uint256 indexed epochId, uint256 indexed batchId, uint256 timestamp)
-func (_Contract *ContractFilterer) FilterSnapshotBatchFinalized(opts *bind.FilterOpts, epochId []*big.Int, batchId []*big.Int) (*ContractSnapshotBatchFinalizedIterator, error) {
+// Solidity: event SnapshotBatchFinalized(address indexed dataMarketAddress, uint256 indexed epochId, uint256 indexed batchId, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterSnapshotBatchFinalized(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int, batchId []*big.Int) (*ContractSnapshotBatchFinalizedIterator, error) {
 
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
@@ -4287,18 +5224,22 @@ func (_Contract *ContractFilterer) FilterSnapshotBatchFinalized(opts *bind.Filte
 		batchIdRule = append(batchIdRule, batchIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "SnapshotBatchFinalized", epochIdRule, batchIdRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "SnapshotBatchFinalized", dataMarketAddressRule, epochIdRule, batchIdRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractSnapshotBatchFinalizedIterator{contract: _Contract.contract, event: "SnapshotBatchFinalized", logs: logs, sub: sub}, nil
 }
 
-// WatchSnapshotBatchFinalized is a free log subscription operation binding the contract event 0x5234f54aa94bd8e44799076dbbe59404d669eb94833cfbff03360715b9820e40.
+// WatchSnapshotBatchFinalized is a free log subscription operation binding the contract event 0x9737b8e7fb3913ba98706f4b1758ac14f5cf26afbb2457117aa3360b9cc85de1.
 //
-// Solidity: event SnapshotBatchFinalized(uint256 indexed epochId, uint256 indexed batchId, uint256 timestamp)
-func (_Contract *ContractFilterer) WatchSnapshotBatchFinalized(opts *bind.WatchOpts, sink chan<- *ContractSnapshotBatchFinalized, epochId []*big.Int, batchId []*big.Int) (event.Subscription, error) {
+// Solidity: event SnapshotBatchFinalized(address indexed dataMarketAddress, uint256 indexed epochId, uint256 indexed batchId, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchSnapshotBatchFinalized(opts *bind.WatchOpts, sink chan<- *ContractSnapshotBatchFinalized, dataMarketAddress []common.Address, epochId []*big.Int, batchId []*big.Int) (event.Subscription, error) {
 
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
@@ -4308,7 +5249,7 @@ func (_Contract *ContractFilterer) WatchSnapshotBatchFinalized(opts *bind.WatchO
 		batchIdRule = append(batchIdRule, batchIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "SnapshotBatchFinalized", epochIdRule, batchIdRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "SnapshotBatchFinalized", dataMarketAddressRule, epochIdRule, batchIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -4340,9 +5281,9 @@ func (_Contract *ContractFilterer) WatchSnapshotBatchFinalized(opts *bind.WatchO
 	}), nil
 }
 
-// ParseSnapshotBatchFinalized is a log parse operation binding the contract event 0x5234f54aa94bd8e44799076dbbe59404d669eb94833cfbff03360715b9820e40.
+// ParseSnapshotBatchFinalized is a log parse operation binding the contract event 0x9737b8e7fb3913ba98706f4b1758ac14f5cf26afbb2457117aa3360b9cc85de1.
 //
-// Solidity: event SnapshotBatchFinalized(uint256 indexed epochId, uint256 indexed batchId, uint256 timestamp)
+// Solidity: event SnapshotBatchFinalized(address indexed dataMarketAddress, uint256 indexed epochId, uint256 indexed batchId, uint256 timestamp)
 func (_Contract *ContractFilterer) ParseSnapshotBatchFinalized(log types.Log) (*ContractSnapshotBatchFinalized, error) {
 	event := new(ContractSnapshotBatchFinalized)
 	if err := _Contract.contract.UnpackLog(event, "SnapshotBatchFinalized", log); err != nil {
@@ -4421,41 +5362,52 @@ func (it *ContractSnapshotBatchSubmittedIterator) Close() error {
 
 // ContractSnapshotBatchSubmitted represents a SnapshotBatchSubmitted event raised by the Contract contract.
 type ContractSnapshotBatchSubmitted struct {
-	BatchId   *big.Int
-	BatchCid  string
-	EpochId   *big.Int
-	Timestamp *big.Int
-	Raw       types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	BatchId           *big.Int
+	BatchCid          string
+	EpochId           *big.Int
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterSnapshotBatchSubmitted is a free log retrieval operation binding the contract event 0x71f7e37d775c89547d94f23aae240bec29afd96657dc34975abbdd326e8e6d5d.
+// FilterSnapshotBatchSubmitted is a free log retrieval operation binding the contract event 0x0b4031b6dda76fc423ccf9fba3aa5b0936474be3c9b7080c165c0744a002fe75.
 //
-// Solidity: event SnapshotBatchSubmitted(uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
-func (_Contract *ContractFilterer) FilterSnapshotBatchSubmitted(opts *bind.FilterOpts, epochId []*big.Int) (*ContractSnapshotBatchSubmittedIterator, error) {
+// Solidity: event SnapshotBatchSubmitted(address indexed dataMarketAddress, uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterSnapshotBatchSubmitted(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int) (*ContractSnapshotBatchSubmittedIterator, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "SnapshotBatchSubmitted", epochIdRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "SnapshotBatchSubmitted", dataMarketAddressRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractSnapshotBatchSubmittedIterator{contract: _Contract.contract, event: "SnapshotBatchSubmitted", logs: logs, sub: sub}, nil
 }
 
-// WatchSnapshotBatchSubmitted is a free log subscription operation binding the contract event 0x71f7e37d775c89547d94f23aae240bec29afd96657dc34975abbdd326e8e6d5d.
+// WatchSnapshotBatchSubmitted is a free log subscription operation binding the contract event 0x0b4031b6dda76fc423ccf9fba3aa5b0936474be3c9b7080c165c0744a002fe75.
 //
-// Solidity: event SnapshotBatchSubmitted(uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
-func (_Contract *ContractFilterer) WatchSnapshotBatchSubmitted(opts *bind.WatchOpts, sink chan<- *ContractSnapshotBatchSubmitted, epochId []*big.Int) (event.Subscription, error) {
+// Solidity: event SnapshotBatchSubmitted(address indexed dataMarketAddress, uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchSnapshotBatchSubmitted(opts *bind.WatchOpts, sink chan<- *ContractSnapshotBatchSubmitted, dataMarketAddress []common.Address, epochId []*big.Int) (event.Subscription, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "SnapshotBatchSubmitted", epochIdRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "SnapshotBatchSubmitted", dataMarketAddressRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -4487,9 +5439,9 @@ func (_Contract *ContractFilterer) WatchSnapshotBatchSubmitted(opts *bind.WatchO
 	}), nil
 }
 
-// ParseSnapshotBatchSubmitted is a log parse operation binding the contract event 0x71f7e37d775c89547d94f23aae240bec29afd96657dc34975abbdd326e8e6d5d.
+// ParseSnapshotBatchSubmitted is a log parse operation binding the contract event 0x0b4031b6dda76fc423ccf9fba3aa5b0936474be3c9b7080c165c0744a002fe75.
 //
-// Solidity: event SnapshotBatchSubmitted(uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
+// Solidity: event SnapshotBatchSubmitted(address indexed dataMarketAddress, uint256 batchId, string batchCid, uint256 indexed epochId, uint256 timestamp)
 func (_Contract *ContractFilterer) ParseSnapshotBatchSubmitted(log types.Log) (*ContractSnapshotBatchSubmitted, error) {
 	event := new(ContractSnapshotBatchSubmitted)
 	if err := _Contract.contract.UnpackLog(event, "SnapshotBatchSubmitted", log); err != nil {
@@ -4568,42 +5520,51 @@ func (it *ContractSnapshotFinalizedIterator) Close() error {
 
 // ContractSnapshotFinalized represents a SnapshotFinalized event raised by the Contract contract.
 type ContractSnapshotFinalized struct {
-	EpochId     *big.Int
-	EpochEnd    *big.Int
-	ProjectId   string
-	SnapshotCid string
-	Timestamp   *big.Int
-	Raw         types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	EpochId           *big.Int
+	EpochEnd          *big.Int
+	ProjectId         string
+	SnapshotCid       string
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterSnapshotFinalized is a free log retrieval operation binding the contract event 0xe5231a68c59ef23c90b7da4209eae4c795477f0d5dcfa14a612ea96f69a18e15.
+// FilterSnapshotFinalized is a free log retrieval operation binding the contract event 0x1746fd35c2b9c905f8e7ef34232f796acb536f2fd87f01d201f57fb338eab9a6.
 //
-// Solidity: event SnapshotFinalized(uint256 indexed epochId, uint256 epochEnd, string projectId, string snapshotCid, uint256 timestamp)
-func (_Contract *ContractFilterer) FilterSnapshotFinalized(opts *bind.FilterOpts, epochId []*big.Int) (*ContractSnapshotFinalizedIterator, error) {
+// Solidity: event SnapshotFinalized(address indexed dataMarketAddress, uint256 indexed epochId, uint256 epochEnd, string projectId, string snapshotCid, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterSnapshotFinalized(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int) (*ContractSnapshotFinalizedIterator, error) {
 
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "SnapshotFinalized", epochIdRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "SnapshotFinalized", dataMarketAddressRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractSnapshotFinalizedIterator{contract: _Contract.contract, event: "SnapshotFinalized", logs: logs, sub: sub}, nil
 }
 
-// WatchSnapshotFinalized is a free log subscription operation binding the contract event 0xe5231a68c59ef23c90b7da4209eae4c795477f0d5dcfa14a612ea96f69a18e15.
+// WatchSnapshotFinalized is a free log subscription operation binding the contract event 0x1746fd35c2b9c905f8e7ef34232f796acb536f2fd87f01d201f57fb338eab9a6.
 //
-// Solidity: event SnapshotFinalized(uint256 indexed epochId, uint256 epochEnd, string projectId, string snapshotCid, uint256 timestamp)
-func (_Contract *ContractFilterer) WatchSnapshotFinalized(opts *bind.WatchOpts, sink chan<- *ContractSnapshotFinalized, epochId []*big.Int) (event.Subscription, error) {
+// Solidity: event SnapshotFinalized(address indexed dataMarketAddress, uint256 indexed epochId, uint256 epochEnd, string projectId, string snapshotCid, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchSnapshotFinalized(opts *bind.WatchOpts, sink chan<- *ContractSnapshotFinalized, dataMarketAddress []common.Address, epochId []*big.Int) (event.Subscription, error) {
 
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "SnapshotFinalized", epochIdRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "SnapshotFinalized", dataMarketAddressRule, epochIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -4635,9 +5596,9 @@ func (_Contract *ContractFilterer) WatchSnapshotFinalized(opts *bind.WatchOpts, 
 	}), nil
 }
 
-// ParseSnapshotFinalized is a log parse operation binding the contract event 0xe5231a68c59ef23c90b7da4209eae4c795477f0d5dcfa14a612ea96f69a18e15.
+// ParseSnapshotFinalized is a log parse operation binding the contract event 0x1746fd35c2b9c905f8e7ef34232f796acb536f2fd87f01d201f57fb338eab9a6.
 //
-// Solidity: event SnapshotFinalized(uint256 indexed epochId, uint256 epochEnd, string projectId, string snapshotCid, uint256 timestamp)
+// Solidity: event SnapshotFinalized(address indexed dataMarketAddress, uint256 indexed epochId, uint256 epochEnd, string projectId, string snapshotCid, uint256 timestamp)
 func (_Contract *ContractFilterer) ParseSnapshotFinalized(log types.Log) (*ContractSnapshotFinalized, error) {
 	event := new(ContractSnapshotFinalized)
 	if err := _Contract.contract.UnpackLog(event, "SnapshotFinalized", log); err != nil {
@@ -4647,9 +5608,9 @@ func (_Contract *ContractFilterer) ParseSnapshotFinalized(log types.Log) (*Contr
 	return event, nil
 }
 
-// ContractSnapshotSubmittedIterator is returned from FilterSnapshotSubmitted and is used to iterate over the raw logs and unpacked data for SnapshotSubmitted events raised by the Contract contract.
-type ContractSnapshotSubmittedIterator struct {
-	Event *ContractSnapshotSubmitted // Event containing the contract specifics and raw log
+// ContractTriggerBatchResubmissionIterator is returned from FilterTriggerBatchResubmission and is used to iterate over the raw logs and unpacked data for TriggerBatchResubmission events raised by the Contract contract.
+type ContractTriggerBatchResubmissionIterator struct {
+	Event *ContractTriggerBatchResubmission // Event containing the contract specifics and raw log
 
 	contract *bind.BoundContract // Generic contract to use for unpacking event data
 	event    string              // Event name to use for unpacking event data
@@ -4663,7 +5624,7 @@ type ContractSnapshotSubmittedIterator struct {
 // Next advances the iterator to the subsequent event, returning whether there
 // are any more events found. In case of a retrieval or parsing error, false is
 // returned and Error() can be queried for the exact failure.
-func (it *ContractSnapshotSubmittedIterator) Next() bool {
+func (it *ContractTriggerBatchResubmissionIterator) Next() bool {
 	// If the iterator failed, stop iterating
 	if it.fail != nil {
 		return false
@@ -4672,7 +5633,7 @@ func (it *ContractSnapshotSubmittedIterator) Next() bool {
 	if it.done {
 		select {
 		case log := <-it.logs:
-			it.Event = new(ContractSnapshotSubmitted)
+			it.Event = new(ContractTriggerBatchResubmission)
 			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 				it.fail = err
 				return false
@@ -4687,7 +5648,7 @@ func (it *ContractSnapshotSubmittedIterator) Next() bool {
 	// Iterator still in progress, wait for either a data or an error event
 	select {
 	case log := <-it.logs:
-		it.Event = new(ContractSnapshotSubmitted)
+		it.Event = new(ContractTriggerBatchResubmission)
 		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 			it.fail = err
 			return false
@@ -4703,66 +5664,70 @@ func (it *ContractSnapshotSubmittedIterator) Next() bool {
 }
 
 // Error returns any retrieval or parsing error occurred during filtering.
-func (it *ContractSnapshotSubmittedIterator) Error() error {
+func (it *ContractTriggerBatchResubmissionIterator) Error() error {
 	return it.fail
 }
 
 // Close terminates the iteration process, releasing any pending underlying
 // resources.
-func (it *ContractSnapshotSubmittedIterator) Close() error {
+func (it *ContractTriggerBatchResubmissionIterator) Close() error {
 	it.sub.Unsubscribe()
 	return nil
 }
 
-// ContractSnapshotSubmitted represents a SnapshotSubmitted event raised by the Contract contract.
-type ContractSnapshotSubmitted struct {
-	SnapshotterAddr common.Address
-	SlotId          *big.Int
-	SnapshotCid     string
-	EpochId         *big.Int
-	ProjectId       string
-	Timestamp       *big.Int
-	Raw             types.Log // Blockchain specific contextual infos
+// ContractTriggerBatchResubmission represents a TriggerBatchResubmission event raised by the Contract contract.
+type ContractTriggerBatchResubmission struct {
+	DataMarketAddress common.Address
+	EpochId           *big.Int
+	BatchId           *big.Int
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterSnapshotSubmitted is a free log retrieval operation binding the contract event 0x8d9341fa1766ade9f55ddb87e37a11648afefce0f76a389675dd56a5d555b8d3.
+// FilterTriggerBatchResubmission is a free log retrieval operation binding the contract event 0x4a87247b65ffdb6c5ebb776b6e70fc9bddc3402b413d82060701fd9c30a3ff07.
 //
-// Solidity: event SnapshotSubmitted(address indexed snapshotterAddr, uint256 slotId, string snapshotCid, uint256 indexed epochId, string projectId, uint256 timestamp)
-func (_Contract *ContractFilterer) FilterSnapshotSubmitted(opts *bind.FilterOpts, snapshotterAddr []common.Address, epochId []*big.Int) (*ContractSnapshotSubmittedIterator, error) {
+// Solidity: event TriggerBatchResubmission(address indexed dataMarketAddress, uint256 indexed epochId, uint256 indexed batchId, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterTriggerBatchResubmission(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int, batchId []*big.Int) (*ContractTriggerBatchResubmissionIterator, error) {
 
-	var snapshotterAddrRule []interface{}
-	for _, snapshotterAddrItem := range snapshotterAddr {
-		snapshotterAddrRule = append(snapshotterAddrRule, snapshotterAddrItem)
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
 	}
-
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
+	var batchIdRule []interface{}
+	for _, batchIdItem := range batchId {
+		batchIdRule = append(batchIdRule, batchIdItem)
+	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "SnapshotSubmitted", snapshotterAddrRule, epochIdRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "TriggerBatchResubmission", dataMarketAddressRule, epochIdRule, batchIdRule)
 	if err != nil {
 		return nil, err
 	}
-	return &ContractSnapshotSubmittedIterator{contract: _Contract.contract, event: "SnapshotSubmitted", logs: logs, sub: sub}, nil
+	return &ContractTriggerBatchResubmissionIterator{contract: _Contract.contract, event: "TriggerBatchResubmission", logs: logs, sub: sub}, nil
 }
 
-// WatchSnapshotSubmitted is a free log subscription operation binding the contract event 0x8d9341fa1766ade9f55ddb87e37a11648afefce0f76a389675dd56a5d555b8d3.
+// WatchTriggerBatchResubmission is a free log subscription operation binding the contract event 0x4a87247b65ffdb6c5ebb776b6e70fc9bddc3402b413d82060701fd9c30a3ff07.
 //
-// Solidity: event SnapshotSubmitted(address indexed snapshotterAddr, uint256 slotId, string snapshotCid, uint256 indexed epochId, string projectId, uint256 timestamp)
-func (_Contract *ContractFilterer) WatchSnapshotSubmitted(opts *bind.WatchOpts, sink chan<- *ContractSnapshotSubmitted, snapshotterAddr []common.Address, epochId []*big.Int) (event.Subscription, error) {
+// Solidity: event TriggerBatchResubmission(address indexed dataMarketAddress, uint256 indexed epochId, uint256 indexed batchId, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchTriggerBatchResubmission(opts *bind.WatchOpts, sink chan<- *ContractTriggerBatchResubmission, dataMarketAddress []common.Address, epochId []*big.Int, batchId []*big.Int) (event.Subscription, error) {
 
-	var snapshotterAddrRule []interface{}
-	for _, snapshotterAddrItem := range snapshotterAddr {
-		snapshotterAddrRule = append(snapshotterAddrRule, snapshotterAddrItem)
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
 	}
-
 	var epochIdRule []interface{}
 	for _, epochIdItem := range epochId {
 		epochIdRule = append(epochIdRule, epochIdItem)
 	}
+	var batchIdRule []interface{}
+	for _, batchIdItem := range batchId {
+		batchIdRule = append(batchIdRule, batchIdItem)
+	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "SnapshotSubmitted", snapshotterAddrRule, epochIdRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "TriggerBatchResubmission", dataMarketAddressRule, epochIdRule, batchIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -4772,8 +5737,8 @@ func (_Contract *ContractFilterer) WatchSnapshotSubmitted(opts *bind.WatchOpts, 
 			select {
 			case log := <-logs:
 				// New log arrived, parse the event and forward to the user
-				event := new(ContractSnapshotSubmitted)
-				if err := _Contract.contract.UnpackLog(event, "SnapshotSubmitted", log); err != nil {
+				event := new(ContractTriggerBatchResubmission)
+				if err := _Contract.contract.UnpackLog(event, "TriggerBatchResubmission", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -4794,12 +5759,320 @@ func (_Contract *ContractFilterer) WatchSnapshotSubmitted(opts *bind.WatchOpts, 
 	}), nil
 }
 
-// ParseSnapshotSubmitted is a log parse operation binding the contract event 0x8d9341fa1766ade9f55ddb87e37a11648afefce0f76a389675dd56a5d555b8d3.
+// ParseTriggerBatchResubmission is a log parse operation binding the contract event 0x4a87247b65ffdb6c5ebb776b6e70fc9bddc3402b413d82060701fd9c30a3ff07.
 //
-// Solidity: event SnapshotSubmitted(address indexed snapshotterAddr, uint256 slotId, string snapshotCid, uint256 indexed epochId, string projectId, uint256 timestamp)
-func (_Contract *ContractFilterer) ParseSnapshotSubmitted(log types.Log) (*ContractSnapshotSubmitted, error) {
-	event := new(ContractSnapshotSubmitted)
-	if err := _Contract.contract.UnpackLog(event, "SnapshotSubmitted", log); err != nil {
+// Solidity: event TriggerBatchResubmission(address indexed dataMarketAddress, uint256 indexed epochId, uint256 indexed batchId, uint256 timestamp)
+func (_Contract *ContractFilterer) ParseTriggerBatchResubmission(log types.Log) (*ContractTriggerBatchResubmission, error) {
+	event := new(ContractTriggerBatchResubmission)
+	if err := _Contract.contract.UnpackLog(event, "TriggerBatchResubmission", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// ContractUpgradedIterator is returned from FilterUpgraded and is used to iterate over the raw logs and unpacked data for Upgraded events raised by the Contract contract.
+type ContractUpgradedIterator struct {
+	Event *ContractUpgraded // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractUpgradedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractUpgraded)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractUpgraded)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractUpgradedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractUpgradedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractUpgraded represents a Upgraded event raised by the Contract contract.
+type ContractUpgraded struct {
+	Implementation common.Address
+	Raw            types.Log // Blockchain specific contextual infos
+}
+
+// FilterUpgraded is a free log retrieval operation binding the contract event 0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b.
+//
+// Solidity: event Upgraded(address indexed implementation)
+func (_Contract *ContractFilterer) FilterUpgraded(opts *bind.FilterOpts, implementation []common.Address) (*ContractUpgradedIterator, error) {
+
+	var implementationRule []interface{}
+	for _, implementationItem := range implementation {
+		implementationRule = append(implementationRule, implementationItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "Upgraded", implementationRule)
+	if err != nil {
+		return nil, err
+	}
+	return &ContractUpgradedIterator{contract: _Contract.contract, event: "Upgraded", logs: logs, sub: sub}, nil
+}
+
+// WatchUpgraded is a free log subscription operation binding the contract event 0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b.
+//
+// Solidity: event Upgraded(address indexed implementation)
+func (_Contract *ContractFilterer) WatchUpgraded(opts *bind.WatchOpts, sink chan<- *ContractUpgraded, implementation []common.Address) (event.Subscription, error) {
+
+	var implementationRule []interface{}
+	for _, implementationItem := range implementation {
+		implementationRule = append(implementationRule, implementationItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "Upgraded", implementationRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractUpgraded)
+				if err := _Contract.contract.UnpackLog(event, "Upgraded", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseUpgraded is a log parse operation binding the contract event 0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b.
+//
+// Solidity: event Upgraded(address indexed implementation)
+func (_Contract *ContractFilterer) ParseUpgraded(log types.Log) (*ContractUpgraded, error) {
+	event := new(ContractUpgraded)
+	if err := _Contract.contract.UnpackLog(event, "Upgraded", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// ContractValidatorAttestationsInvalidatedIterator is returned from FilterValidatorAttestationsInvalidated and is used to iterate over the raw logs and unpacked data for ValidatorAttestationsInvalidated events raised by the Contract contract.
+type ContractValidatorAttestationsInvalidatedIterator struct {
+	Event *ContractValidatorAttestationsInvalidated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractValidatorAttestationsInvalidatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractValidatorAttestationsInvalidated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractValidatorAttestationsInvalidated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractValidatorAttestationsInvalidatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractValidatorAttestationsInvalidatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractValidatorAttestationsInvalidated represents a ValidatorAttestationsInvalidated event raised by the Contract contract.
+type ContractValidatorAttestationsInvalidated struct {
+	DataMarketAddress common.Address
+	EpochId           *big.Int
+	BatchId           *big.Int
+	Validator         common.Address
+	Timestamp         *big.Int
+	Raw               types.Log // Blockchain specific contextual infos
+}
+
+// FilterValidatorAttestationsInvalidated is a free log retrieval operation binding the contract event 0x714caf86f735bcfc9ca5f4e56456c4c16a6630870eaee41fa5748b2502a1317a.
+//
+// Solidity: event ValidatorAttestationsInvalidated(address indexed dataMarketAddress, uint256 indexed epochId, uint256 indexed batchId, address validator, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterValidatorAttestationsInvalidated(opts *bind.FilterOpts, dataMarketAddress []common.Address, epochId []*big.Int, batchId []*big.Int) (*ContractValidatorAttestationsInvalidatedIterator, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+	var epochIdRule []interface{}
+	for _, epochIdItem := range epochId {
+		epochIdRule = append(epochIdRule, epochIdItem)
+	}
+	var batchIdRule []interface{}
+	for _, batchIdItem := range batchId {
+		batchIdRule = append(batchIdRule, batchIdItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "ValidatorAttestationsInvalidated", dataMarketAddressRule, epochIdRule, batchIdRule)
+	if err != nil {
+		return nil, err
+	}
+	return &ContractValidatorAttestationsInvalidatedIterator{contract: _Contract.contract, event: "ValidatorAttestationsInvalidated", logs: logs, sub: sub}, nil
+}
+
+// WatchValidatorAttestationsInvalidated is a free log subscription operation binding the contract event 0x714caf86f735bcfc9ca5f4e56456c4c16a6630870eaee41fa5748b2502a1317a.
+//
+// Solidity: event ValidatorAttestationsInvalidated(address indexed dataMarketAddress, uint256 indexed epochId, uint256 indexed batchId, address validator, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchValidatorAttestationsInvalidated(opts *bind.WatchOpts, sink chan<- *ContractValidatorAttestationsInvalidated, dataMarketAddress []common.Address, epochId []*big.Int, batchId []*big.Int) (event.Subscription, error) {
+
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+	var epochIdRule []interface{}
+	for _, epochIdItem := range epochId {
+		epochIdRule = append(epochIdRule, epochIdItem)
+	}
+	var batchIdRule []interface{}
+	for _, batchIdItem := range batchId {
+		batchIdRule = append(batchIdRule, batchIdItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "ValidatorAttestationsInvalidated", dataMarketAddressRule, epochIdRule, batchIdRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractValidatorAttestationsInvalidated)
+				if err := _Contract.contract.UnpackLog(event, "ValidatorAttestationsInvalidated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseValidatorAttestationsInvalidated is a log parse operation binding the contract event 0x714caf86f735bcfc9ca5f4e56456c4c16a6630870eaee41fa5748b2502a1317a.
+//
+// Solidity: event ValidatorAttestationsInvalidated(address indexed dataMarketAddress, uint256 indexed epochId, uint256 indexed batchId, address validator, uint256 timestamp)
+func (_Contract *ContractFilterer) ParseValidatorAttestationsInvalidated(log types.Log) (*ContractValidatorAttestationsInvalidated, error) {
+	event := new(ContractValidatorAttestationsInvalidated)
+	if err := _Contract.contract.UnpackLog(event, "ValidatorAttestationsInvalidated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
@@ -4875,29 +6148,40 @@ func (it *ContractValidatorsUpdatedIterator) Close() error {
 
 // ContractValidatorsUpdated represents a ValidatorsUpdated event raised by the Contract contract.
 type ContractValidatorsUpdated struct {
-	ValidatorAddress common.Address
-	Allowed          bool
-	Raw              types.Log // Blockchain specific contextual infos
+	DataMarketAddress common.Address
+	ValidatorAddress  common.Address
+	Allowed           bool
+	Raw               types.Log // Blockchain specific contextual infos
 }
 
-// FilterValidatorsUpdated is a free log retrieval operation binding the contract event 0x7f3079c058f3e3dee87048158309898b46e9741ff53b6c7a3afac7c370649afc.
+// FilterValidatorsUpdated is a free log retrieval operation binding the contract event 0x2a93c48a2a98c035cd37b0e8a3e25c15ce5dd0caa1fb0553603c249c37db24b8.
 //
-// Solidity: event ValidatorsUpdated(address validatorAddress, bool allowed)
-func (_Contract *ContractFilterer) FilterValidatorsUpdated(opts *bind.FilterOpts) (*ContractValidatorsUpdatedIterator, error) {
+// Solidity: event ValidatorsUpdated(address indexed dataMarketAddress, address validatorAddress, bool allowed)
+func (_Contract *ContractFilterer) FilterValidatorsUpdated(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractValidatorsUpdatedIterator, error) {
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "ValidatorsUpdated")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "ValidatorsUpdated", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
 	return &ContractValidatorsUpdatedIterator{contract: _Contract.contract, event: "ValidatorsUpdated", logs: logs, sub: sub}, nil
 }
 
-// WatchValidatorsUpdated is a free log subscription operation binding the contract event 0x7f3079c058f3e3dee87048158309898b46e9741ff53b6c7a3afac7c370649afc.
+// WatchValidatorsUpdated is a free log subscription operation binding the contract event 0x2a93c48a2a98c035cd37b0e8a3e25c15ce5dd0caa1fb0553603c249c37db24b8.
 //
-// Solidity: event ValidatorsUpdated(address validatorAddress, bool allowed)
-func (_Contract *ContractFilterer) WatchValidatorsUpdated(opts *bind.WatchOpts, sink chan<- *ContractValidatorsUpdated) (event.Subscription, error) {
+// Solidity: event ValidatorsUpdated(address indexed dataMarketAddress, address validatorAddress, bool allowed)
+func (_Contract *ContractFilterer) WatchValidatorsUpdated(opts *bind.WatchOpts, sink chan<- *ContractValidatorsUpdated, dataMarketAddress []common.Address) (event.Subscription, error) {
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "ValidatorsUpdated")
+	var dataMarketAddressRule []interface{}
+	for _, dataMarketAddressItem := range dataMarketAddress {
+		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "ValidatorsUpdated", dataMarketAddressRule)
 	if err != nil {
 		return nil, err
 	}
@@ -4929,147 +6213,12 @@ func (_Contract *ContractFilterer) WatchValidatorsUpdated(opts *bind.WatchOpts, 
 	}), nil
 }
 
-// ParseValidatorsUpdated is a log parse operation binding the contract event 0x7f3079c058f3e3dee87048158309898b46e9741ff53b6c7a3afac7c370649afc.
+// ParseValidatorsUpdated is a log parse operation binding the contract event 0x2a93c48a2a98c035cd37b0e8a3e25c15ce5dd0caa1fb0553603c249c37db24b8.
 //
-// Solidity: event ValidatorsUpdated(address validatorAddress, bool allowed)
+// Solidity: event ValidatorsUpdated(address indexed dataMarketAddress, address validatorAddress, bool allowed)
 func (_Contract *ContractFilterer) ParseValidatorsUpdated(log types.Log) (*ContractValidatorsUpdated, error) {
 	event := new(ContractValidatorsUpdated)
 	if err := _Contract.contract.UnpackLog(event, "ValidatorsUpdated", log); err != nil {
-		return nil, err
-	}
-	event.Raw = log
-	return event, nil
-}
-
-// ContractAllSnapshottersUpdatedIterator is returned from FilterAllSnapshottersUpdated and is used to iterate over the raw logs and unpacked data for AllSnapshottersUpdated events raised by the Contract contract.
-type ContractAllSnapshottersUpdatedIterator struct {
-	Event *ContractAllSnapshottersUpdated // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log        // Log channel receiving the found contract events
-	sub  ethereum.Subscription // Subscription for errors, completion and termination
-	done bool                  // Whether the subscription completed delivering logs
-	fail error                 // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *ContractAllSnapshottersUpdatedIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(ContractAllSnapshottersUpdated)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(ContractAllSnapshottersUpdated)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *ContractAllSnapshottersUpdatedIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *ContractAllSnapshottersUpdatedIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// ContractAllSnapshottersUpdated represents a AllSnapshottersUpdated event raised by the Contract contract.
-type ContractAllSnapshottersUpdated struct {
-	SnapshotterAddress common.Address
-	Allowed            bool
-	Raw                types.Log // Blockchain specific contextual infos
-}
-
-// FilterAllSnapshottersUpdated is a free log retrieval operation binding the contract event 0x743e47fbcd2e3a64a2ab8f5dcdeb4c17f892c17c9f6ab58d3a5c235953d60058.
-//
-// Solidity: event allSnapshottersUpdated(address snapshotterAddress, bool allowed)
-func (_Contract *ContractFilterer) FilterAllSnapshottersUpdated(opts *bind.FilterOpts) (*ContractAllSnapshottersUpdatedIterator, error) {
-
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "allSnapshottersUpdated")
-	if err != nil {
-		return nil, err
-	}
-	return &ContractAllSnapshottersUpdatedIterator{contract: _Contract.contract, event: "allSnapshottersUpdated", logs: logs, sub: sub}, nil
-}
-
-// WatchAllSnapshottersUpdated is a free log subscription operation binding the contract event 0x743e47fbcd2e3a64a2ab8f5dcdeb4c17f892c17c9f6ab58d3a5c235953d60058.
-//
-// Solidity: event allSnapshottersUpdated(address snapshotterAddress, bool allowed)
-func (_Contract *ContractFilterer) WatchAllSnapshottersUpdated(opts *bind.WatchOpts, sink chan<- *ContractAllSnapshottersUpdated) (event.Subscription, error) {
-
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "allSnapshottersUpdated")
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(ContractAllSnapshottersUpdated)
-				if err := _Contract.contract.UnpackLog(event, "allSnapshottersUpdated", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// ParseAllSnapshottersUpdated is a log parse operation binding the contract event 0x743e47fbcd2e3a64a2ab8f5dcdeb4c17f892c17c9f6ab58d3a5c235953d60058.
-//
-// Solidity: event allSnapshottersUpdated(address snapshotterAddress, bool allowed)
-func (_Contract *ContractFilterer) ParseAllSnapshottersUpdated(log types.Log) (*ContractAllSnapshottersUpdated, error) {
-	event := new(ContractAllSnapshottersUpdated)
-	if err := _Contract.contract.UnpackLog(event, "allSnapshottersUpdated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
