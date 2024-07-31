@@ -20,6 +20,7 @@ Clone the repository against the testnet branch.
         - `RENDEZVOUS_POINT`: The identifier for locating all relayer peers which are the only way to access the sequencer and submit snapshots.
         - `PROTOCOL_STATE_CONTRACT`: The contract address for the protocol state.
         - `PROST_RPC_URL`: The URL for the PROST RPC service.
+        - `DATA_MARKET_ADDRESS`: The contract address of data market this listener is for.
 
     - Optionally, you may also set the following variables:
         - `REDIS_HOST` & `REDIS_PORT`: The redis server connection url (if you wish to use a separate one).

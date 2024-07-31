@@ -1,45 +1,75 @@
 package config
 
 import (
-	"encoding/json"
 	log "github.com/sirupsen/logrus"
 	"os"
-	"strings"
 )
 
 var SettingsObj *Settings
 
 type Settings struct {
-	ClientUrl              string `json:"ClientUrl"`
-	ContractAddress        string `json:"ContractAddress"`
-	RedisHost              string `json:"RedisHost"`
-	RedisPort              string `json:"RedisPort"`
-	RelayerRendezvousPoint string `json:"RelayerRendezvousPoint"`
-	RelayerPrivateKey      string `json:"RelayerPrivateKey"`
-	AuthReadToken          string `json:"AuthReadToken"`
-	SlackReportingUrl      string `json:"SlackReportingUrl"`
+	ClientUrl              string
+	ContractAddress        string
+	RedisHost              string
+	RedisPort              string
+	RelayerRendezvousPoint string
+	RelayerPrivateKey      string
+	AuthReadToken          string
+	SlackReportingUrl      string
+	DataMarketAddress      string
 }
 
 func LoadConfig() {
-	//time.Sleep(10 * time.Second)
-	file, err := os.Open(strings.TrimSuffix(os.Getenv("CONFIG_PATH"), "/") + "/config/settings.json")
-	//file, err := os.Open("/Users/mukundrawat/power2/proto-snapshot-collector/config/settings.json")
-	if err != nil {
-		log.Fatalf("Failed to open config file: %v", err)
+	config := Settings{
+		ClientUrl:              getEnv("PROST_RPC_URL", ""),
+		ContractAddress:        getEnv("PROTOCOL_STATE_CONTRACT", ""),
+		RedisHost:              getEnv("REDIS_HOST", ""),
+		RedisPort:              getEnv("REDIS_PORT", ""),
+		RelayerRendezvousPoint: getEnv("RELAYER_RENDEZVOUS_POINT", ""),
+		RelayerPrivateKey:      getEnv("RELAYER_PRIVATE_KEY", ""),
+		AuthReadToken:          getEnv("AUTH_READ_TOKEN", ""),
+		SlackReportingUrl:      getEnv("SLACK_REPORTING_URL", ""),
+		DataMarketAddress:      getEnv("DATA_MARKET_ADDRESS", ""),
 	}
-	defer func(file *os.File) {
-		err = file.Close()
-		if err != nil {
-			log.Errorf("Unable to close file: %s", err.Error())
-		}
-	}(file)
 
-	decoder := json.NewDecoder(file)
-	config := Settings{}
-	err = decoder.Decode(&config)
-	if err != nil {
-		log.Debugf("Failed to decode config file: %v", err)
+	// Check for any missing required environment variables and log errors
+	missingEnvVars := []string{}
+	if config.ClientUrl == "" {
+		missingEnvVars = append(missingEnvVars, "PROST_RPC_URL")
 	}
+	if config.ContractAddress == "" {
+		missingEnvVars = append(missingEnvVars, "PROTOCOL_STATE_CONTRACT")
+	}
+	if config.RelayerRendezvousPoint == "" {
+		missingEnvVars = append(missingEnvVars, "RENDEZVOUS_POINT")
+	}
+	if config.DataMarketAddress == "" {
+		missingEnvVars = append(missingEnvVars, "DATA_MARKET_ADDRESS")
+	}
+
+	if len(missingEnvVars) > 0 {
+		log.Fatalf("Missing required environment variables: %v", missingEnvVars)
+	}
+
+	checkOptionalEnvVar(config.AuthReadToken, "AUTH_READ_TOKEN")
+	checkOptionalEnvVar(config.SlackReportingUrl, "SLACK_REPORTING_URL")
+	checkOptionalEnvVar(config.RedisHost, "REDIS_HOST")
+	checkOptionalEnvVar(config.RedisPort, "REDIS_PORT")
+	checkOptionalEnvVar(config.RelayerPrivateKey, "RELAYER_PRIVATE_KEY")
 
 	SettingsObj = &config
+}
+
+func getEnv(key, defaultValue string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return defaultValue
+	}
+	return value
+}
+
+func checkOptionalEnvVar(value, key string) {
+	if value == "" {
+		log.Warnf("Optional environment variable %s is not set", key)
+	}
 }

@@ -1,43 +1,148 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "epochSize",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint256",
-        "name": "sourceChainId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "sourceChainBlockTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "useBlockNumberAsEpochId",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "slotsPerDay",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "externalStateAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "AddressEmptyCode",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "ERC1967InvalidImplementation",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ERC1967NonPayable",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FailedInnerCall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidInitialization",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotInitializing",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UUPSUnauthorizedCallContext",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "slot",
+        "type": "bytes32"
+      }
+    ],
+    "name": "UUPSUnsupportedProxiableUUID",
+    "type": "error"
+  },
+  {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "adminAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "allowed",
+        "type": "bool"
+      }
+    ],
+    "name": "AdminsUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "epochId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "BatchSubmissionsCompleted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "address",
@@ -70,6 +175,61 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "ownerAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "epochSize",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "sourceChainId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "sourceChainBlockTime",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "useBlockNumberAsEpochId",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "protocolState",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      }
+    ],
+    "name": "DataMarketCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
         "indexed": false,
         "internalType": "uint256",
         "name": "dayId",
@@ -88,6 +248,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "uint256",
@@ -120,6 +286,12 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
         "indexed": false,
         "internalType": "uint256",
         "name": "batchId",
@@ -150,6 +322,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
       {
         "indexed": true,
         "internalType": "address",
@@ -195,6 +373,12 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
         "internalType": "uint256",
         "name": "epochId",
         "type": "uint256"
@@ -225,6 +409,19 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "version",
+        "type": "uint64"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
@@ -243,6 +440,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "string",
@@ -269,6 +472,43 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string[]",
+        "name": "projects",
+        "type": "string[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool[]",
+        "name": "status",
+        "type": "bool[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "enableEpochId",
+        "type": "uint256"
+      }
+    ],
+    "name": "ProjectsUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
         "indexed": false,
         "internalType": "address",
         "name": "sequencerAddress",
@@ -287,6 +527,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "uint256",
@@ -320,6 +566,12 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
         "internalType": "uint256",
         "name": "epochId",
         "type": "uint256"
@@ -343,6 +595,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "uint256",
@@ -374,6 +632,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
       {
         "indexed": true,
         "internalType": "uint256",
@@ -414,20 +678,8 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "snapshotterAddr",
+        "name": "dataMarketAddress",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "slotId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "snapshotCid",
-        "type": "string"
       },
       {
         "indexed": true,
@@ -436,10 +688,10 @@
         "type": "uint256"
       },
       {
-        "indexed": false,
-        "internalType": "string",
-        "name": "projectId",
-        "type": "string"
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "batchId",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -448,12 +700,68 @@
         "type": "uint256"
       }
     ],
-    "name": "SnapshotSubmitted",
+    "name": "TriggerBatchResubmission",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "epochId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "batchId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "validator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "ValidatorAttestationsInvalidated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "address",
@@ -471,52 +779,13 @@
     "type": "event"
   },
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "snapshotterAddress",
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "allowed",
-        "type": "bool"
       }
     ],
-    "name": "allSnapshottersUpdated",
-    "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "DailySnapshotQuota",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "DeploymentBlockNumber",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "EPOCH_SIZE",
     "outputs": [
       {
@@ -529,20 +798,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "SLOTS_PER_DAY",
-    "outputs": [
+    "inputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "SOURCE_CHAIN_BLOCK_TIME",
     "outputs": [
       {
@@ -555,7 +817,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "SOURCE_CHAIN_ID",
     "outputs": [
       {
@@ -569,12 +837,12 @@
   },
   {
     "inputs": [],
-    "name": "USE_BLOCK_NUMBER_AS_EPOCH_ID",
+    "name": "UPGRADE_INTERFACE_VERSION",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "string",
         "name": "",
-        "type": "bool"
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -583,64 +851,12 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "slotId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "snapshotCid",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "epochId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "projectId",
-        "type": "string"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "slotId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "deadline",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "snapshotCid",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "epochId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "projectId",
-            "type": "string"
-          }
-        ],
-        "internalType": "struct PowerloomProtocolState.Request",
-        "name": "request",
-        "type": "tuple"
-      },
-      {
-        "internalType": "bytes",
-        "name": "signature",
-        "type": "bytes"
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
       }
     ],
-    "name": "acceptSnapshot",
+    "name": "USE_BLOCK_NUMBER_AS_EPOCH_ID",
     "outputs": [
       {
         "internalType": "bool",
@@ -673,6 +889,11 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
         "internalType": "string",
         "name": "projectType",
         "type": "string"
@@ -692,29 +913,29 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "epochId",
-        "type": "uint256"
+        "internalType": "uint256[]",
+        "name": "_slotIds",
+        "type": "uint256[]"
       },
       {
-        "internalType": "string",
-        "name": "projectId",
-        "type": "string"
+        "internalType": "address[]",
+        "name": "_snapshotterAddresses",
+        "type": "address[]"
       }
     ],
-    "name": "attestationFinalizedStatus",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "finalized",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "assignSnapshotterToSlots",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "attestationSubmissionWindow",
     "outputs": [
       {
@@ -729,13 +950,18 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "batchId",
         "type": "uint256"
       },
       {
         "internalType": "address",
-        "name": "validatorAddr",
+        "name": "validator",
         "type": "address"
       }
     ],
@@ -753,13 +979,18 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "batchId",
         "type": "uint256"
       },
       {
         "internalType": "bytes32",
-        "name": "rootHash",
+        "name": "finalizedCidsRootHash",
         "type": "bytes32"
       }
     ],
@@ -767,7 +998,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "count",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -776,6 +1007,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "batchId",
@@ -786,7 +1022,7 @@
     "outputs": [
       {
         "internalType": "bool",
-        "name": "status",
+        "name": "",
         "type": "bool"
       }
     ],
@@ -796,13 +1032,71 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "batchId",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
+        "name": "idx",
+        "type": "uint256"
+      }
+    ],
+    "name": "batchIdDivergentValidators",
+    "outputs": [
+      {
+        "internalType": "address",
         "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "batchId",
+        "type": "uint256"
+      }
+    ],
+    "name": "batchIdSequencerAttestation",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "batchId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "idx",
         "type": "uint256"
       }
     ],
@@ -810,7 +1104,7 @@
     "outputs": [
       {
         "internalType": "string",
-        "name": "projectids",
+        "name": "",
         "type": "string"
       }
     ],
@@ -818,7 +1112,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "batchSubmissionWindow",
     "outputs": [
       {
@@ -832,6 +1132,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "batchId",
@@ -857,6 +1162,11 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "slotId",
         "type": "uint256"
@@ -879,7 +1189,52 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "ownerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint8",
+        "name": "epochSize",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sourceChainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sourceChainBlockTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "useBlockNumberAsEpochId",
+        "type": "bool"
+      }
+    ],
+    "name": "createDataMarket",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "currentBatchId",
     "outputs": [
       {
@@ -892,7 +1247,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "currentEpoch",
     "outputs": [
       {
@@ -915,7 +1276,150 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
+    "name": "dailySnapshotQuota",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
+    "name": "dataMarketCount",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      }
+    ],
+    "name": "dataMarketEnabled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dataMarketFactory",
+    "outputs": [
+      {
+        "internalType": "contract DataMarketFactory",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "dataMarketId",
+        "type": "uint8"
+      }
+    ],
+    "name": "dataMarketIdToAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "dataMarkets",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "ownerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint8",
+        "name": "epochSize",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sourceChainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sourceChainBlockTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "useBlockNumberAsEpochId",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "createdAt",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "dayCounter",
     "outputs": [
       {
@@ -930,8 +1434,79 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
+    "name": "deploymentBlockNumber",
+    "outputs": [
+      {
         "internalType": "uint256",
         "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "epochId",
+        "type": "uint256"
+      }
+    ],
+    "name": "endBatchSubmissions",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "epochId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "idx",
+        "type": "uint256"
+      }
+    ],
+    "name": "epochIdToBatchIds",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "epochId",
         "type": "uint256"
       }
     ],
@@ -957,7 +1532,32 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
+    "name": "epochManager",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "epochsInADay",
     "outputs": [
       {
@@ -970,20 +1570,12 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "externalState",
-    "outputs": [
-      {
-        "internalType": "contract IExternalState",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "batchId",
@@ -1003,6 +1595,11 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "begin",
         "type": "uint256"
@@ -1019,14 +1616,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "forceStartDay",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "getEpochManager",
     "outputs": [
       {
@@ -1039,7 +1635,32 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
+    "name": "getSequencerId",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "getSequencers",
     "outputs": [
       {
@@ -1053,6 +1674,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "slotId",
@@ -1075,22 +1701,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "timeSlot",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
             "name": "rewardPoints",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "currentStreak",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "currentStreakBonus",
             "type": "uint256"
           },
           {
@@ -1099,7 +1710,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct PowerloomProtocolState.SlotInfo",
+        "internalType": "struct PowerloomDataMarket.SlotInfo",
         "name": "",
         "type": "tuple"
       }
@@ -1115,11 +1726,11 @@
         "type": "uint256"
       }
     ],
-    "name": "getSlotStreak",
+    "name": "getSlotRewards",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "rewards",
         "type": "uint256"
       }
     ],
@@ -1129,24 +1740,11 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_slotId",
-        "type": "uint256"
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
       }
     ],
-    "name": "getSnapshotterTimeSlot",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "getTotalSequencersCount",
     "outputs": [
       {
@@ -1172,7 +1770,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "getTotalValidatorsCount",
     "outputs": [
       {
@@ -1185,7 +1789,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "getValidators",
     "outputs": [
       {
@@ -1200,6 +1810,24 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "initialOwner",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
         "internalType": "string",
         "name": "projectId",
         "type": "string"
@@ -1209,25 +1837,6 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "epochId",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "lastSnapshotterAddressUpdate",
-    "outputs": [
-      {
-        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -1237,6 +1846,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "_dayCounter",
@@ -1250,6 +1864,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "slotId",
@@ -1274,6 +1893,11 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "batchId",
         "type": "uint256"
@@ -1283,7 +1907,7 @@
     "outputs": [
       {
         "internalType": "bytes32",
-        "name": "rootHash",
+        "name": "",
         "type": "bytes32"
       }
     ],
@@ -1292,6 +1916,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "batchId",
@@ -1302,7 +1931,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "count",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -1311,6 +1940,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "string",
         "name": "projectId",
@@ -1336,53 +1970,11 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "projectId",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "epochId",
-        "type": "uint256"
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
       }
     ],
-    "name": "maxSnapshotsCidMap",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "snapshotCid",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "maxSnapshotsCount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "minAttestationsForConsensus",
     "outputs": [
       {
@@ -1395,7 +1987,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "minSubmissionsForConsensus",
     "outputs": [
       {
@@ -1423,6 +2021,11 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
         "internalType": "string",
         "name": "projectId",
         "type": "string"
@@ -1432,8 +2035,21 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "epochId",
+        "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       }
     ],
     "stateMutability": "view",
@@ -1442,29 +2058,10 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "messageHash",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "bytes",
-        "name": "signature",
-        "type": "bytes"
-      }
-    ],
-    "name": "recoverAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
         "type": "address"
-      }
-    ],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
+      },
       {
         "internalType": "uint256",
         "name": "begin",
@@ -1489,7 +2086,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "rewardBasePoints",
     "outputs": [
       {
@@ -1502,7 +2105,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "rewardsEnabled",
     "outputs": [
       {
@@ -1512,6 +2121,24 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_sequencerId",
+        "type": "string"
+      }
+    ],
+    "name": "setSequencerId",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1530,12 +2157,36 @@
   {
     "inputs": [
       {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "slotId",
+        "type": "uint256"
+      }
+    ],
+    "name": "slotRewardPoints",
+    "outputs": [
+      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
-    "name": "slotRewardPoints",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "slotRewards",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1568,24 +2219,10 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "slotId",
-        "type": "uint256"
-      }
-    ],
-    "name": "slotStreakCounter",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "streak",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "slotId",
@@ -1593,7 +2230,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "day",
+        "name": "dayId",
         "type": "uint256"
       }
     ],
@@ -1601,7 +2238,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "count",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -1610,6 +2247,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
       {
         "internalType": "string",
         "name": "projectId",
@@ -1624,7 +2266,7 @@
     "name": "snapshotStatus",
     "outputs": [
       {
-        "internalType": "enum PowerloomProtocolState.SnapshotStatus",
+        "internalType": "enum PowerloomDataMarket.SnapshotStatus",
         "name": "status",
         "type": "uint8"
       },
@@ -1643,7 +2285,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
     "name": "snapshotSubmissionWindow",
     "outputs": [
       {
@@ -1656,107 +2304,25 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "snapshotterState",
+    "outputs": [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
+        "internalType": "contract SnapshotterState",
         "name": "",
         "type": "address"
       }
     ],
-    "name": "snapshotsReceived",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
       },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "name": "snapshotsReceivedCount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "snapshotsReceivedSlot",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "streakBonusPoints",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
       {
         "internalType": "uint256",
         "name": "batchId",
@@ -1781,315 +2347,10 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "batchCid",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "batchId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "epochId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string[]",
-        "name": "projectIds",
-        "type": "string[]"
-      },
-      {
-        "internalType": "string[]",
-        "name": "snapshotCids",
-        "type": "string[]"
-      }
-    ],
-    "name": "submitSubmissionBatch",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "timeSlotCheck",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "slot",
-        "type": "uint256"
-      }
-    ],
-    "name": "timeSlotPreference",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "toggleRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "toggleTimeSlotCheck",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "totalSnapshotsReceived",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOwner",
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
         "type": "address"
-      }
-    ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "enum PowerloomProtocolState.Role",
-        "name": "role",
-        "type": "uint8"
       },
-      {
-        "internalType": "address[]",
-        "name": "_addresses",
-        "type": "address[]"
-      },
-      {
-        "internalType": "bool[]",
-        "name": "_status",
-        "type": "bool[]"
-      }
-    ],
-    "name": "updateAddresses",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_projectType",
-        "type": "string"
-      },
-      {
-        "internalType": "bool",
-        "name": "_status",
-        "type": "bool"
-      }
-    ],
-    "name": "updateAllowedProjectType",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newattestationSubmissionWindow",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateAttestationSubmissionWindow",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newbatchSubmissionWindow",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateBatchSubmissionWindow",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "dailySnapshotQuota",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateDailySnapshotQuota",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
-    ],
-    "name": "updateEpochManager",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "externalStateAddress",
-        "type": "address"
-      }
-    ],
-    "name": "updateExternalStateAddress",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_minAttestationsForConsensus",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateMinAttestationsForConsensus",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_minSubmissionsForConsensus",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateMinSnapshottersForConsensus",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "slotIds",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "submissionsList",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256",
-        "name": "day",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newsnapshotSubmissionWindow",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateSnapshotSubmissionWindow",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newrewardBasePoints",
-        "type": "uint256"
-      }
-    ],
-    "name": "updaterewardBasePoints",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newstreakBonusPoints",
-        "type": "uint256"
-      }
-    ],
-    "name": "updatestreakBonusPoints",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
       {
         "internalType": "uint256",
         "name": "slotId",
@@ -2138,7 +2399,7 @@
             "type": "string"
           }
         ],
-        "internalType": "struct PowerloomProtocolState.Request",
+        "internalType": "struct PowerloomDataMarket.Request",
         "name": "request",
         "type": "tuple"
       },
@@ -2146,22 +2407,424 @@
         "internalType": "bytes",
         "name": "signature",
         "type": "bytes"
-      },
-      {
-        "internalType": "address",
-        "name": "signer",
-        "type": "address"
       }
     ],
-    "name": "verify",
-    "outputs": [
+    "name": "submitSnapshot",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "batchCid",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "batchId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "epochId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string[]",
+        "name": "projectIds",
+        "type": "string[]"
+      },
+      {
+        "internalType": "string[]",
+        "name": "snapshotCids",
+        "type": "string[]"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "finalizedCidsRootHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "submitSubmissionBatch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "dataMarketAddress",
+        "type": "address"
+      },
       {
         "internalType": "bool",
-        "name": "",
+        "name": "enabled",
         "type": "bool"
       }
     ],
-    "stateMutability": "view",
+    "name": "toggleDataMarket",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
+    "name": "toggleFallback",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      }
+    ],
+    "name": "toggleRewards",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "enum PowerloomDataMarket.Role",
+        "name": "role",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_addresses",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bool[]",
+        "name": "_status",
+        "type": "bool[]"
+      }
+    ],
+    "name": "updateAddresses",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_projectType",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "_status",
+        "type": "bool"
+      }
+    ],
+    "name": "updateAllowedProjectType",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newattestationSubmissionWindow",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateAttestationSubmissionWindow",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newbatchSubmissionWindow",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateBatchSubmissionWindow",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "dailySnapshotQuota",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateDailySnapshotQuota",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "updateDataMarketFactory",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "updateEpochManager",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_fallbackNodes",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bool[]",
+        "name": "_status",
+        "type": "bool[]"
+      }
+    ],
+    "name": "updateFallbackNodes",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minAttestationsForConsensus",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateMinAttestationsForConsensus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minSubmissionsForConsensus",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateMinSnapshottersForConsensus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_projects",
+        "type": "string[]"
+      },
+      {
+        "internalType": "bool[]",
+        "name": "_status",
+        "type": "bool[]"
+      }
+    ],
+    "name": "updateProjects",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newRewardBasePoints",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateRewardBasePoints",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "slotIds",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "submissionsList",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "day",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateRewards",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract PowerloomDataMarket",
+        "name": "dataMarket",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newsnapshotSubmissionWindow",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateSnapshotSubmissionWindow",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "updateSnapshotterState",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   }
 ]
