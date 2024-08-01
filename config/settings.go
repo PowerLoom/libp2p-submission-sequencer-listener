@@ -14,7 +14,6 @@ type Settings struct {
 	RedisPort              string
 	RelayerRendezvousPoint string
 	RelayerPrivateKey      string
-	AuthReadToken          string
 	SlackReportingUrl      string
 	DataMarketAddress      string
 }
@@ -27,7 +26,6 @@ func LoadConfig() {
 		RedisPort:              getEnv("REDIS_PORT", ""),
 		RelayerRendezvousPoint: getEnv("RELAYER_RENDEZVOUS_POINT", ""),
 		RelayerPrivateKey:      getEnv("RELAYER_PRIVATE_KEY", ""),
-		AuthReadToken:          getEnv("AUTH_READ_TOKEN", ""),
 		SlackReportingUrl:      getEnv("SLACK_REPORTING_URL", ""),
 		DataMarketAddress:      getEnv("DATA_MARKET_ADDRESS", ""),
 	}
@@ -51,7 +49,6 @@ func LoadConfig() {
 		log.Fatalf("Missing required environment variables: %v", missingEnvVars)
 	}
 
-	checkOptionalEnvVar(config.AuthReadToken, "AUTH_READ_TOKEN")
 	checkOptionalEnvVar(config.SlackReportingUrl, "SLACK_REPORTING_URL")
 	checkOptionalEnvVar(config.RedisHost, "REDIS_HOST")
 	checkOptionalEnvVar(config.RedisPort, "REDIS_PORT")

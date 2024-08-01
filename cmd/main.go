@@ -23,9 +23,8 @@ func main() {
 	redis.RedisClient = redis.NewRedisClient()
 
 	service.ConfigureRelayer()
-	service.StartCollectorServer()
 
 	wg.Add(1)
-	go service.StartApiServer()
+	go service.StartCollectorServer()
 	wg.Wait()
 }
