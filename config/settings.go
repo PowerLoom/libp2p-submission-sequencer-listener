@@ -16,6 +16,7 @@ type Settings struct {
 	RelayerPrivateKey      string
 	SlackReportingUrl      string
 	DataMarketAddress      string
+	RedisDB                string
 }
 
 func LoadConfig() {
@@ -28,6 +29,7 @@ func LoadConfig() {
 		RelayerPrivateKey:      getEnv("RELAYER_PRIVATE_KEY", ""),
 		SlackReportingUrl:      getEnv("SLACK_REPORTING_URL", ""),
 		DataMarketAddress:      getEnv("DATA_MARKET_ADDRESS", ""),
+		RedisDB:                getEnv("REDIS_DB", ""),
 	}
 
 	// Check for any missing required environment variables and log errors
@@ -43,6 +45,9 @@ func LoadConfig() {
 	}
 	if config.DataMarketAddress == "" {
 		missingEnvVars = append(missingEnvVars, "DATA_MARKET_ADDRESS")
+	}
+	if config.RedisDB == "" {
+		missingEnvVars = append(missingEnvVars, "REDIS_DB")
 	}
 
 	if len(missingEnvVars) > 0 {

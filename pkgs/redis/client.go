@@ -8,6 +8,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-redis/redis/v8"
+	log "github.com/sirupsen/logrus"
+	"strconv"
 	"time"
 )
 
@@ -15,10 +17,14 @@ var RedisClient *redis.Client
 
 // TODO: Pool size failures to be checked
 func NewRedisClient() *redis.Client {
+	db, err := strconv.Atoi(config.SettingsObj.RedisDB)
+	if err != nil {
+		log.Fatalf("Incorrect redis db: %s", err.Error())
+	}
 	return redis.NewClient(&redis.Options{
 		Addr:         fmt.Sprintf("%s:%s", config.SettingsObj.RedisHost, config.SettingsObj.RedisPort), // Redis server address
 		Password:     "",                                                                               // no password set
-		DB:           0,
+		DB:           db,
 		PoolSize:     1000,
 		ReadTimeout:  200 * time.Millisecond,
 		WriteTimeout: 200 * time.Millisecond,
