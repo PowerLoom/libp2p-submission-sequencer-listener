@@ -22,7 +22,11 @@ FROM scratch
 # Copy the binary from the builder stage
 COPY --from=builder /listener /listener
 
-# Expose port 9000
+# Expose port 9000 for collector server
+EXPOSE 9100
+
+# Expose port 9988 for API server
+EXPOSE 9988
 
 # Command to run the application
 CMD ["/listener"]
