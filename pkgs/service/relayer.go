@@ -151,6 +151,9 @@ func ConfigureRelayer() {
 	// Create a discovery service using the DHT
 	routingDiscovery := routing.NewRoutingDiscovery(kademliaDHT)
 
+	log.Debugln("Listener ID:", collectorHost.ID().String())
+	log.Debugln("Peerable addresses: ", collectorHost.Addrs())
+
 	// Form initial connections to all peers available
 	go ConnectToPeers(context.Background(), routingDiscovery, config.SettingsObj.RelayerRendezvousPoint, collectorHost)
 
