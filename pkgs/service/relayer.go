@@ -4,6 +4,10 @@ import (
 	"Listen/config"
 	"context"
 	"encoding/base64"
+	"os"
+	"syscall"
+	"time"
+
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p/core/crypto"
 	"github.com/libp2p/go-libp2p/core/host"
@@ -16,12 +20,9 @@ import (
 	libp2ptls "github.com/libp2p/go-libp2p/p2p/security/tls"
 	ma "github.com/multiformats/go-multiaddr"
 	log "github.com/sirupsen/logrus"
-	"os"
-	"syscall"
-	"time"
 )
 
-var collectorHost host.Host
+var RelayerHost host.Host
 var activeConnections int
 
 func handleConnectionEstablished(network network.Network, conn network.Conn) {
@@ -127,7 +128,7 @@ func ConfigureRelayer() {
 		}
 	}
 
-	collectorHost, err = libp2p.New(
+	RelayerHost, err = libp2p.New(
 		libp2p.EnableRelay(),
 		libp2p.Identity(pk),
 		libp2p.ConnectionManager(connManager),
@@ -141,24 +142,24 @@ func ConfigureRelayer() {
 		libp2p.EnableHolePunching(),
 		libp2p.Muxer(yamux.ID, yamux.DefaultTransport),
 	)
-	collectorHost.Network().Notify(&network.NotifyBundle{
+	RelayerHost.Network().Notify(&network.NotifyBundle{
 		ConnectedF:    handleConnectionEstablished,
 		DisconnectedF: handleConnectionClosed,
 	})
 
-	kademliaDHT := ConfigureDHT(context.Background(), collectorHost)
+	kademliaDHT := ConfigureDHT(context.Background(), RelayerHost)
 
 	// Create a discovery service using the DHT
 	routingDiscovery := routing.NewRoutingDiscovery(kademliaDHT)
 
-	log.Debugln("Listener ID:", collectorHost.ID().String())
-	log.Debugln("Peerable addresses: ", collectorHost.Addrs())
+	log.Debugln("Listener ID:", RelayerHost.ID().String())
+	log.Debugln("Peerable addresses: ", RelayerHost.Addrs())
 
 	// Form initial connections to all peers available
-	go ConnectToPeers(context.Background(), routingDiscovery, config.SettingsObj.RelayerRendezvousPoint, collectorHost)
+	go ConnectToPeers(context.Background(), routingDiscovery, config.SettingsObj.RelayerRendezvousPoint, RelayerHost)
 
 	// Keep checking for new peers at a set interval
-	go DiscoverAtInterval(context.Background(), routingDiscovery, config.SettingsObj.RelayerRendezvousPoint, collectorHost, time.NewTicker(5*time.Minute))
+	go DiscoverAtInterval(context.Background(), routingDiscovery, config.SettingsObj.RelayerRendezvousPoint, RelayerHost, time.NewTicker(5*time.Minute))
 
-	log.Debugf("Collector relayer info: %s", collectorHost.ID().String())
+	log.Debugf("Listener host info: %s", RelayerHost.ID().String())
 }
