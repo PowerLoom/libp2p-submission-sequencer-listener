@@ -1,11 +1,11 @@
 module Listen
 
-go 1.19
+go 1.23
 
 require (
 	github.com/alicebob/miniredis/v2 v2.33.0
 	github.com/cenkalti/backoff/v4 v4.2.0
-	github.com/ethereum/go-ethereum v1.13.12
+	github.com/ethereum/go-ethereum v1.14.7
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/google/uuid v1.3.1
 	github.com/libp2p/go-libp2p v0.32.2
@@ -148,4 +148,4 @@ require (
 	lukechampine.com/blake3 v1.2.1 // indirect
 )
 
-replace github.com/ethereum/go-ethereum v1.13.12 => github.com/muku314115/go-ethereum v1.13.12
+replace github.com/ethereum/go-ethereum v1.14.7 => github.com/powerloom/go-ethereum v1.14.7-unsupported-tx-final
