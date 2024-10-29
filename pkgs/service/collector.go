@@ -36,7 +36,7 @@ func handleStream(stream network.Stream) {
 		// Extract data market address
 		// EVM address is a fixed length of 42 characters (0x followed by 40 hex digits)
 		dataMarketAddress := common.HexToAddress(string(buf[36:78])).Hex()
-
+		log.Debugln("Data market address found for submission with ID: ", submissionID.String(), " and address: ", dataMarketAddress)
 		// Add submission to Redis queue
 		queueData := map[string]interface{}{
 			"submission_id":       submissionID.String(),
