@@ -1,17 +1,44 @@
 package service
 
 import (
+	"Listen/config"
 	"context"
 	"encoding/json"
+	"errors"
 	"io"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/google/uuid"
 	"github.com/libp2p/go-libp2p/core/network"
 	log "github.com/sirupsen/logrus"
 
 	"Listen/pkgs/redis"
 )
+
+func parseSubmissionBytes(data []byte) (address, uuid string, submission []byte, err error) {
+	currentPos := 0
+	// If DataMarketInRequest is true
+	if config.SettingsObj.DataMarketInRequest {
+		if len(data) < 42 {
+			return "", "", nil, errors.New("data too short for address")
+		}
+		address = string(data[:42])
+		currentPos = 42
+	} else {
+		address = config.SettingsObj.DataMarketAddress
+	}
+
+	// Parse UUID
+	if len(data[currentPos:]) < 36 {
+		return "", "", nil, errors.New("data too short for UUID")
+	}
+	uuid = string(data[currentPos : currentPos+36])
+	currentPos += 36
+	log.Debugln("Data market address found for submission with ID: ", uuid, " and address: ", address)
+
+	// Rest is the submission JSON
+	submission = data[currentPos:]
+
+	return address, uuid, submission, nil
+}
 
 func handleStream(stream network.Stream) {
 	defer stream.Close()
@@ -27,21 +54,16 @@ func handleStream(stream network.Stream) {
 			return
 		}
 
-		submissionID, err := uuid.ParseBytes(buf[:36])
+		address, submissionID, submission, err := parseSubmissionBytes(buf[:length])
 		if err != nil {
-			log.Debugln("Unable to parse UUID for submission: ", string(buf[:36]))
+			log.Debugln("Unable to parse submission: ", err)
 			return
 		}
-
-		// Extract data market address
-		// EVM address is a fixed length of 42 characters (0x followed by 40 hex digits)
-		dataMarketAddress := common.HexToAddress(string(buf[36:78])).Hex()
-		log.Debugln("Data market address found for submission with ID: ", submissionID.String(), " and address: ", dataMarketAddress)
 		// Add submission to Redis queue
 		queueData := map[string]interface{}{
-			"submission_id":       submissionID.String(),
-			"data_market_address": dataMarketAddress,
-			"data":                string(buf[78:length]),
+			"submission_id":       submissionID,
+			"data_market_address": address,
+			"data":                string(submission),
 		}
 		queueDataJSON, err := json.Marshal(queueData)
 		if err != nil {

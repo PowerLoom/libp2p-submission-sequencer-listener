@@ -1,8 +1,10 @@
 package config
 
 import (
-	log "github.com/sirupsen/logrus"
 	"os"
+	"strconv"
+
+	log "github.com/sirupsen/logrus"
 )
 
 var SettingsObj *Settings
@@ -16,10 +18,15 @@ type Settings struct {
 	RelayerPrivateKey      string
 	SlackReportingUrl      string
 	DataMarketAddress      string
+	DataMarketInRequest    bool
 	RedisDB                string
 }
 
 func LoadConfig() {
+	dataMarketInRequest, err := strconv.ParseBool(getEnv("DATA_MARKET_IN_REQUEST", "false"))
+	if err != nil {
+		log.Fatalf("Invalid value for DATA_MARKET_IN_REQUEST: %v", err)
+	}
 	config := Settings{
 		ClientUrl:              getEnv("PROST_RPC_URL", ""),
 		ContractAddress:        getEnv("PROTOCOL_STATE_CONTRACT", ""),
@@ -30,6 +37,7 @@ func LoadConfig() {
 		SlackReportingUrl:      getEnv("SLACK_REPORTING_URL", ""),
 		DataMarketAddress:      getEnv("DATA_MARKET_ADDRESS", ""),
 		RedisDB:                getEnv("REDIS_DB", ""),
+		DataMarketInRequest:    dataMarketInRequest,
 	}
 
 	// Check for any missing required environment variables and log errors
