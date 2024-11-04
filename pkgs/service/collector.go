@@ -4,7 +4,6 @@ import (
 	"Listen/config"
 	"context"
 	"encoding/json"
-	"errors"
 	"io"
 
 	"github.com/libp2p/go-libp2p/core/network"
@@ -15,24 +14,17 @@ import (
 
 func parseSubmissionBytes(data []byte) (address, uuid string, submission []byte, err error) {
 	currentPos := 0
+	uuid = string(data[currentPos : currentPos+36])
+	currentPos += 36
+	log.Debugln("Data market address found for submission with ID: ", uuid)
+
 	// If DataMarketInRequest is true
 	if config.SettingsObj.DataMarketInRequest {
-		if len(data) < 42 {
-			return "", "", nil, errors.New("data too short for address")
-		}
-		address = string(data[:42])
-		currentPos = 42
+		address = string(data[currentPos : currentPos+42])
+		currentPos += 42
 	} else {
 		address = config.SettingsObj.DataMarketAddress
 	}
-
-	// Parse UUID
-	if len(data[currentPos:]) < 36 {
-		return "", "", nil, errors.New("data too short for UUID")
-	}
-	uuid = string(data[currentPos : currentPos+36])
-	currentPos += 36
-	log.Debugln("Data market address found for submission with ID: ", uuid, " and address: ", address)
 
 	// Rest is the submission JSON
 	submission = data[currentPos:]

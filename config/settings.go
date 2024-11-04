@@ -39,6 +39,7 @@ func LoadConfig() {
 		RedisDB:                getEnv("REDIS_DB", ""),
 		DataMarketInRequest:    dataMarketInRequest,
 	}
+	
 
 	// Check for any missing required environment variables and log errors
 	missingEnvVars := []string{}
