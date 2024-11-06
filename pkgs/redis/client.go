@@ -7,10 +7,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/go-redis/redis/v8"
-	log "github.com/sirupsen/logrus"
 	"strconv"
 	"time"
+
+	"github.com/go-redis/redis/v8"
+	log "github.com/sirupsen/logrus"
 )
 
 var RedisClient *redis.Client
@@ -31,6 +32,14 @@ func NewRedisClient() *redis.Client {
 		DialTimeout:  5 * time.Second,
 		IdleTimeout:  5 * time.Minute,
 	})
+}
+
+func Incr(ctx context.Context, key string) (int64, error) {
+	result, err := RedisClient.Incr(ctx, key).Result()
+	if err != nil {
+		return 0, err
+	}
+	return result, nil
 }
 
 func AddToSet(ctx context.Context, set string, keys ...string) error {

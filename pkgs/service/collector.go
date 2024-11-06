@@ -2,6 +2,7 @@ package service
 
 import (
 	"Listen/config"
+	"Listen/pkgs"
 	"context"
 	"encoding/json"
 	"io"
@@ -69,6 +70,13 @@ func handleStream(stream network.Stream) {
 			continue
 		}
 		log.Debugln("Queued snapshot: ", queueData)
+		var actualSubmission pkgs.SnapshotSubmission
+		err = json.Unmarshal(submission, &actualSubmission)
+		if err != nil {
+			log.Debugln("Error unmarshalling submission", err, "with body: ", string(submission))
+			continue
+		}
+		redis.Incr(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(address, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId))
 	}
 }
 

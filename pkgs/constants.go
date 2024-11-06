@@ -3,6 +3,7 @@ package pkgs
 import "time"
 
 const CollectorKey = "SnapshotCollector"
+const EpochSubmissionCountsReceivedInSlotKey = "EpochSubmissionCountsReceivedInSlotKey"
 const TxsKey = "SnapshotTransactions"
 const TimeSlotKey = "TimeSlotPreference"
 const SlotSubmissionsKey = "SlotSubmissionsKey"
