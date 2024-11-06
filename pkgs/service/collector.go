@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"io"
+	"time"
 
 	"github.com/libp2p/go-libp2p/core/network"
 	log "github.com/sirupsen/logrus"
@@ -76,7 +77,12 @@ func handleStream(stream network.Stream) {
 			log.Debugln("Error unmarshalling submission", err, "with body: ", string(submission))
 			continue
 		}
-		redis.Incr(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(address, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId))
+		count, err := redis.Incr(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(address, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId))
+		if err != nil {
+			log.Debugln("Error incrementing submission count", err)
+		}
+		log.Debugln("Submission count for slot", actualSubmission.Request.SlotId, "and epoch", actualSubmission.Request.EpochId, "is", count)
+		redis.RedisClient.Expire(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(address, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId), 5*time.Minute)
 	}
 }
 
