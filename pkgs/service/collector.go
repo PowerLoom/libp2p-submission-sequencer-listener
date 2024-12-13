@@ -1,8 +1,6 @@
 package service
 
 import (
-	"Listen/config"
-	"Listen/pkgs"
 	"context"
 	"encoding/json"
 	"io"
@@ -11,6 +9,7 @@ import (
 	"github.com/libp2p/go-libp2p/core/network"
 	log "github.com/sirupsen/logrus"
 
+	"Listen/pkgs"
 	"Listen/pkgs/redis"
 )
 
@@ -69,13 +68,13 @@ func handleStream(stream network.Stream) {
 			continue
 		}
 		log.Debugln("Queued snapshot: ", queueData)
-		
-		count, err := redis.Incr(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(address, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId))
+
+		count, err := redis.Incr(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(actualSubmission.DataMarket, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId))
 		if err != nil {
 			log.Debugln("Error incrementing submission count", err)
 		}
 		log.Debugln("Submission count for slot", actualSubmission.Request.SlotId, "and epoch", actualSubmission.Request.EpochId, "is", count)
-		redis.RedisClient.Expire(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(address, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId), 5*time.Minute)
+		redis.RedisClient.Expire(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(actualSubmission.DataMarket, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId), 5*time.Minute)
 	}
 }
 

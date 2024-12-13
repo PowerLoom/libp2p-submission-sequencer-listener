@@ -2,7 +2,6 @@ package config
 
 import (
 	"os"
-	"strconv"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -33,7 +32,6 @@ func LoadConfig() {
 		DataMarketAddress:      getEnv("DATA_MARKET_ADDRESS", ""),
 		RedisDB:                getEnv("REDIS_DB", ""),
 	}
-	
 
 	// Check for any missing required environment variables and log errors
 	missingEnvVars := []string{}
