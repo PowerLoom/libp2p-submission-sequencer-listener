@@ -14,24 +14,16 @@ import (
 	"Listen/pkgs/redis"
 )
 
-func parseSubmissionBytes(data []byte) (address, uuid string, submission []byte, err error) {
+func parseSubmissionBytes(data []byte) (uuid string, submission []byte, err error) {
 	currentPos := 0
 	uuid = string(data[currentPos : currentPos+36])
 	currentPos += 36
 	log.Debugln("Data market address found for submission with ID: ", uuid)
 
-	// If DataMarketInRequest is true
-	if config.SettingsObj.DataMarketInRequest {
-		address = string(data[currentPos : currentPos+42])
-		currentPos += 42
-	} else {
-		address = config.SettingsObj.DataMarketAddress
-	}
-
 	// Rest is the submission JSON
 	submission = data[currentPos:]
 
-	return address, uuid, submission, nil
+	return uuid, submission, nil
 }
 
 func handleStream(stream network.Stream) {
@@ -48,7 +40,7 @@ func handleStream(stream network.Stream) {
 			return
 		}
 
-		address, submissionID, submission, err := parseSubmissionBytes(buf[:length])
+		submissionID, submission, err := parseSubmissionBytes(buf[:length])
 		if err != nil {
 			log.Debugln("Unable to parse submission: ", err)
 			return
