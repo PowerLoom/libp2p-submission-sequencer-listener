@@ -53,10 +53,16 @@ func handleStream(stream network.Stream) {
 			log.Debugln("Unable to parse submission: ", err)
 			return
 		}
+		var actualSubmission pkgs.SnapshotSubmission
+		err = json.Unmarshal(submission, &actualSubmission)
+		if err != nil {
+			log.Debugln("Error unmarshalling submission", err, "with body: ", string(submission))
+			continue
+		}
 		// Add submission to Redis queue
 		queueData := map[string]interface{}{
 			"submission_id":       submissionID,
-			"data_market_address": address,
+			"data_market_address": actualSubmission.DataMarket,
 			"data":                string(submission),
 		}
 		queueDataJSON, err := json.Marshal(queueData)
@@ -71,8 +77,7 @@ func handleStream(stream network.Stream) {
 			continue
 		}
 		log.Debugln("Queued snapshot: ", queueData)
-		var actualSubmission pkgs.SnapshotSubmission
-		err = json.Unmarshal(submission, &actualSubmission)
+
 		if err != nil {
 			log.Debugln("Error unmarshalling submission", err, "with body: ", string(submission))
 			continue
