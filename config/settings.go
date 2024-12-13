@@ -31,7 +31,7 @@ func LoadConfig() {
 		RelayerPrivateKey:      getEnv("RELAYER_PRIVATE_KEY", ""),
 		SlackReportingUrl:      getEnv("SLACK_REPORTING_URL", ""),
 		DataMarketAddress:      getEnv("DATA_MARKET_ADDRESS", ""),
-		RedisDB:                getEnv("REDIS_DB", "")
+		RedisDB:                getEnv("REDIS_DB", ""),
 	}
 	
 
