@@ -77,11 +77,7 @@ func handleStream(stream network.Stream) {
 			continue
 		}
 		log.Debugln("Queued snapshot: ", queueData)
-
-		if err != nil {
-			log.Debugln("Error unmarshalling submission", err, "with body: ", string(submission))
-			continue
-		}
+		
 		count, err := redis.Incr(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(address, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId))
 		if err != nil {
 			log.Debugln("Error incrementing submission count", err)
