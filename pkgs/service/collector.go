@@ -1,8 +1,6 @@
 package service
 
 import (
-	"Listen/config"
-	"Listen/pkgs"
 	"context"
 	"encoding/json"
 	"io"
@@ -11,27 +9,20 @@ import (
 	"github.com/libp2p/go-libp2p/core/network"
 	log "github.com/sirupsen/logrus"
 
+	"Listen/pkgs"
 	"Listen/pkgs/redis"
 )
 
-func parseSubmissionBytes(data []byte) (address, uuid string, submission []byte, err error) {
+func parseSubmissionBytes(data []byte) (uuid string, submission []byte, err error) {
 	currentPos := 0
 	uuid = string(data[currentPos : currentPos+36])
 	currentPos += 36
 	log.Debugln("Data market address found for submission with ID: ", uuid)
 
-	// If DataMarketInRequest is true
-	if config.SettingsObj.DataMarketInRequest {
-		address = string(data[currentPos : currentPos+42])
-		currentPos += 42
-	} else {
-		address = config.SettingsObj.DataMarketAddress
-	}
-
 	// Rest is the submission JSON
 	submission = data[currentPos:]
 
-	return address, uuid, submission, nil
+	return uuid, submission, nil
 }
 
 func handleStream(stream network.Stream) {
@@ -48,15 +39,21 @@ func handleStream(stream network.Stream) {
 			return
 		}
 
-		address, submissionID, submission, err := parseSubmissionBytes(buf[:length])
+		submissionID, submission, err := parseSubmissionBytes(buf[:length])
 		if err != nil {
 			log.Debugln("Unable to parse submission: ", err)
 			return
 		}
+		var actualSubmission pkgs.SnapshotSubmission
+		err = json.Unmarshal(submission, &actualSubmission)
+		if err != nil {
+			log.Debugln("Error unmarshalling submission", err, "with body: ", string(submission))
+			continue
+		}
 		// Add submission to Redis queue
 		queueData := map[string]interface{}{
 			"submission_id":       submissionID,
-			"data_market_address": address,
+			"data_market_address": actualSubmission.DataMarket,
 			"data":                string(submission),
 		}
 		queueDataJSON, err := json.Marshal(queueData)
@@ -71,18 +68,13 @@ func handleStream(stream network.Stream) {
 			continue
 		}
 		log.Debugln("Queued snapshot: ", queueData)
-		var actualSubmission pkgs.SnapshotSubmission
-		err = json.Unmarshal(submission, &actualSubmission)
-		if err != nil {
-			log.Debugln("Error unmarshalling submission", err, "with body: ", string(submission))
-			continue
-		}
-		count, err := redis.Incr(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(address, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId))
+
+		count, err := redis.Incr(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(actualSubmission.DataMarket, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId))
 		if err != nil {
 			log.Debugln("Error incrementing submission count", err)
 		}
 		log.Debugln("Submission count for slot", actualSubmission.Request.SlotId, "and epoch", actualSubmission.Request.EpochId, "is", count)
-		redis.RedisClient.Expire(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(address, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId), 5*time.Minute)
+		redis.RedisClient.Expire(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(actualSubmission.DataMarket, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId), 5*time.Minute)
 	}
 }
 
