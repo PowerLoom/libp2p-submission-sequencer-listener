@@ -1,86 +1,64 @@
 package service
 
 import (
-	"context"
-	"encoding/json"
-	"io"
-	"time"
-
-	"github.com/libp2p/go-libp2p/core/network"
-	log "github.com/sirupsen/logrus"
-
 	"Listen/pkgs"
 	"Listen/pkgs/redis"
+	"context"
+	"encoding/json"
+	"time"
+
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	log "github.com/sirupsen/logrus"
 )
 
-func parseSubmissionBytes(data []byte) (uuid string, submission []byte, err error) {
-	currentPos := 0
-	uuid = string(data[currentPos : currentPos+36])
-	currentPos += 36
-	log.Debugln("Data market address found for submission with ID: ", uuid)
-
-	// Rest is the submission JSON
-	submission = data[currentPos:]
-
-	return uuid, submission, nil
-}
-
-func handleStream(stream network.Stream) {
-	defer stream.Close()
+func GossipsubMessageHandler(ctx context.Context, sub *pubsub.Subscription) {
 	for {
-		buf := make([]byte, 1024)
-		length, err := stream.Read(buf)
+		msg, err := sub.Next(ctx)
 		if err != nil {
-			if err == io.EOF {
-				log.Debugln("End of stream reached")
-				break
-			}
-			log.Debugln("Error reading:", err)
-			return
-		}
-
-		submissionID, submission, err := parseSubmissionBytes(buf[:length])
-		if err != nil {
-			log.Debugln("Unable to parse submission: ", err)
-			return
-		}
-		var actualSubmission pkgs.SnapshotSubmission
-		err = json.Unmarshal(submission, &actualSubmission)
-		if err != nil {
-			log.Debugln("Error unmarshalling submission", err, "with body: ", string(submission))
+			log.Errorf("Error getting next message from topic %s: %v", sub.Topic(), err)
 			continue
 		}
+
+		
+
+		log.Infof("Received message from %s on topic %s", msg.GetFrom(), sub.Topic())
+
+		var actualSubmission pkgs.SnapshotSubmission
+		err = json.Unmarshal(msg.Data, &actualSubmission)
+		if err != nil {
+			log.Errorf("Error unmarshalling submission on topic %s: %v", sub.Topic(), err)
+			continue
+		}
+
+		// Use a unique ID for the submission in the queue to avoid duplicates if needed,
+		// here we are just using the message ID.
+		submissionID := msg.ID
+
 		// Add submission to Redis queue
 		queueData := map[string]interface{}{
 			"submission_id":       submissionID,
 			"data_market_address": actualSubmission.DataMarket,
-			"data":                string(submission),
+			"data":                string(msg.Data),
 		}
 		queueDataJSON, err := json.Marshal(queueData)
 		if err != nil {
-			log.Debugln("Error marshalling queue data:", err)
+			log.Errorf("Error marshalling queue data for topic %s: %v", sub.Topic(), err)
 			continue
 		}
 
 		err = redis.RedisClient.LPush(context.Background(), "submissionQueue", queueDataJSON).Err()
 		if err != nil {
-			log.Debugln("Error adding to Redis queue:", err)
+			log.Errorf("Error adding to Redis queue for topic %s: %v", sub.Topic(), err)
 			continue
 		}
-		log.Debugln("Queued snapshot: ", queueData)
+		log.Infof("Queued snapshot from topic %s: %s", sub.Topic(), submissionID)
 
+		// Increment submission count
 		count, err := redis.Incr(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(actualSubmission.DataMarket, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId))
 		if err != nil {
-			log.Debugln("Error incrementing submission count", err)
+			log.Errorf("Error incrementing submission count for topic %s: %v", sub.Topic(), err)
 		}
-		log.Debugln("Submission count for slot", actualSubmission.Request.SlotId, "and epoch", actualSubmission.Request.EpochId, "is", count)
+		log.Infof("Submission count for slot %d and epoch %d on topic %s is %d", actualSubmission.Request.SlotId, actualSubmission.Request.EpochId, sub.Topic(), count)
 		redis.RedisClient.Expire(context.Background(), redis.EpochSubmissionCountsReceivedInSlotKey(actualSubmission.DataMarket, actualSubmission.Request.SlotId, actualSubmission.Request.EpochId), 5*time.Minute)
 	}
-}
-
-func StartCollectorServer() {
-	if RelayerHost == nil {
-		log.Fatal("RelayerHost is not initialized. Make sure ConfigureRelayer() is called before StartCollectorServer()")
-	}
-	RelayerHost.SetStreamHandler("/collect", handleStream)
 }

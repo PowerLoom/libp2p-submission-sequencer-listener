@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  listener:
+    build: .
+    container_name: submission-sequencer-listener
+    env_file:
+      - .env
+    ports:
+      - "9100:9100"
+      - "9988:9988"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    container_name: submission-sequencer-redis
+    ports:
+      - "6379:6379"

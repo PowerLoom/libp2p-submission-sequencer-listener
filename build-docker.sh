@@ -1,1 +1,2 @@
-docker build -t proto-snapshot-listener . --no-cache
+#!/bin/bash
+docker-compose build

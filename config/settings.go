@@ -13,24 +13,24 @@ type Settings struct {
 	ContractAddress        string
 	RedisHost              string
 	RedisPort              string
-	RelayerRendezvousPoint string
-	RelayerPrivateKey      string
 	SlackReportingUrl      string
 	DataMarketAddress      string
 	RedisDB                string
+	BootstrapPeers         string
+	RendezvousPoint        string
 }
 
 func LoadConfig() {
 	config := Settings{
 		ClientUrl:              getEnv("PROST_RPC_URL", ""),
 		ContractAddress:        getEnv("PROTOCOL_STATE_CONTRACT", ""),
-		RedisHost:              getEnv("REDIS_HOST", ""),
-		RedisPort:              getEnv("REDIS_PORT", ""),
-		RelayerRendezvousPoint: getEnv("RELAYER_RENDEZVOUS_POINT", ""),
-		RelayerPrivateKey:      getEnv("RELAYER_PRIVATE_KEY", ""),
+		RedisHost:              getEnv("REDIS_HOST", "localhost"),
+		RedisPort:              getEnv("REDIS_PORT", "6379"),
 		SlackReportingUrl:      getEnv("SLACK_REPORTING_URL", ""),
 		DataMarketAddress:      getEnv("DATA_MARKET_ADDRESS", ""),
-		RedisDB:                getEnv("REDIS_DB", ""),
+		RedisDB:                getEnv("REDIS_DB", "0"),
+		BootstrapPeers:         getEnv("BOOTSTRAP_PEERS", ""),
+		RendezvousPoint:        getEnv("RENDEZVOUS_POINT", ""),
 	}
 
 	// Check for any missing required environment variables and log errors
@@ -41,9 +41,7 @@ func LoadConfig() {
 	if config.ContractAddress == "" {
 		missingEnvVars = append(missingEnvVars, "PROTOCOL_STATE_CONTRACT")
 	}
-	if config.RelayerRendezvousPoint == "" {
-		missingEnvVars = append(missingEnvVars, "RENDEZVOUS_POINT")
-	}
+	
 	if config.DataMarketAddress == "" {
 		missingEnvVars = append(missingEnvVars, "DATA_MARKET_ADDRESS")
 	}
@@ -55,10 +53,8 @@ func LoadConfig() {
 		log.Fatalf("Missing required environment variables: %v", missingEnvVars)
 	}
 
-	checkOptionalEnvVar(config.SlackReportingUrl, "SLACK_REPORTING_URL")
-	checkOptionalEnvVar(config.RedisHost, "REDIS_HOST")
-	checkOptionalEnvVar(config.RedisPort, "REDIS_PORT")
-	checkOptionalEnvVar(config.RelayerPrivateKey, "RELAYER_PRIVATE_KEY")
+		checkOptionalEnvVar(config.SlackReportingUrl, "SLACK_REPORTING_URL")
+	
 
 	SettingsObj = &config
 }

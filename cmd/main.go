@@ -6,6 +6,8 @@ import (
 	"Listen/pkgs/redis"
 	"Listen/pkgs/service"
 	"Listen/pkgs/utils"
+	"context"
+	log "github.com/sirupsen/logrus"
 	"sync"
 	"time"
 )
@@ -22,9 +24,16 @@ func main() {
 	prost.ConfigureContractInstance()
 	redis.RedisClient = redis.NewRedisClient()
 
-	service.ConfigureRelayer()
+	gossipManager, err := service.NewGossipsubManager(context.Background(), config.SettingsObj, redis.RedisClient)
+	if err != nil {
+		log.Fatalf("Failed to create gossipsub manager: %v", err)
+	}
 
 	wg.Add(1)
-	go service.StartCollectorServer()
+	go func() {
+		defer wg.Done()
+		gossipManager.Start(context.Background())
+	}()
+
 	wg.Wait()
 }

@@ -20,17 +20,13 @@ var RedisClient *redis.Client
 func NewRedisClient() *redis.Client {
 	db, err := strconv.Atoi(config.SettingsObj.RedisDB)
 	if err != nil {
-		log.Fatalf("Incorrect redis db: %s", err.Error())
+		log.Warnf("Invalid Redis DB number: %s, using default DB 0", config.SettingsObj.RedisDB)
+		db = 0
 	}
+
 	return redis.NewClient(&redis.Options{
-		Addr:         fmt.Sprintf("%s:%s", config.SettingsObj.RedisHost, config.SettingsObj.RedisPort), // Redis server address
-		Password:     "",                                                                               // no password set
-		DB:           db,
-		PoolSize:     1000,
-		ReadTimeout:  200 * time.Millisecond,
-		WriteTimeout: 200 * time.Millisecond,
-		DialTimeout:  5 * time.Second,
-		IdleTimeout:  5 * time.Minute,
+		Addr: config.SettingsObj.RedisHost + ":" + config.SettingsObj.RedisPort,
+		DB:       db,
 	})
 }
 
