@@ -19,6 +19,9 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /listener ./cmd/main.go
 # Use a minimal base image
 FROM scratch
 
+# Copy the abi definitions from the builder stage
+COPY --from=builder /app/abis /abis
+
 # Copy the binary from the builder stage
 COPY --from=builder /listener /listener
 
