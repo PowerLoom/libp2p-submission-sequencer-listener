@@ -9,6 +9,7 @@ require (
 	github.com/libp2p/go-libp2p v0.32.2
 	github.com/libp2p/go-libp2p-kad-dht v0.25.2
 	github.com/libp2p/go-libp2p-pubsub v0.10.0
+	github.com/multiformats/go-multiaddr v0.12.1
 	github.com/sirupsen/logrus v1.9.3
 	google.golang.org/protobuf v1.34.2
 )
@@ -82,7 +83,6 @@ require (
 	github.com/mikioh/tcpinfo v0.0.0-20190314235526-30a79bb1804b // indirect
 	github.com/mikioh/tcpopt v0.0.0-20190314235656-172688c1accc // indirect
 	github.com/mmcloughlin/addchain v0.4.0 // indirect
-	github.com/multiformats/go-multiaddr v0.12.1 // indirect
 	github.com/multiformats/go-multiaddr-dns v0.3.1 // indirect
 	github.com/multiformats/go-multiaddr-fmt v0.1.0 // indirect
 	github.com/onsi/ginkgo/v2 v2.13.0 // indirect

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"sync"
 
@@ -14,19 +15,22 @@ import (
 )
 
 // NewHost creates a new libp2p host and connects to bootstrap peers.
-func NewHost(ctx context.Context, bootstrapPeers string) (host.Host, error) {
-	h, err := libp2p.New()
+func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h host.Host, kademliaDHT *dht.IpfsDHT, err error) {
+	listenAddr := fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", listenerPort)
+	h, err = libp2p.New(
+		libp2p.ListenAddrStrings(listenAddr),
+	)
 	if err != nil {
-		return nil, err
+		return
 	}
 
-	kademliaDHT, err := dht.New(ctx, h)
+	kademliaDHT, err = dht.New(ctx, h)
 	if err != nil {
-		return nil, err
+		return
 	}
 
 	if err = kademliaDHT.Bootstrap(ctx); err != nil {
-		return nil, err
+		return
 	}
 
 	if bootstrapPeers != "" {
@@ -34,7 +38,7 @@ func NewHost(ctx context.Context, bootstrapPeers string) (host.Host, error) {
 	}
 
 	log.Infof("Libp2p host created with ID: %s", h.ID())
-	return h, nil
+	return
 }
 
 // ConnectToBootstrapPeers connects the host to a list of bootstrap peers.
@@ -59,7 +63,7 @@ func ConnectToBootstrapPeers(ctx context.Context, h host.Host, peers string) {
 				return
 			}
 			if err := h.Connect(ctx, *peerInfo); err != nil {
-				log.Warningf("Failed to connect to bootstrap peer %s: %v", peerString, err)
+				log.Errorf("Failed to connect to bootstrap peer %s: %v", peerString, err)
 			} else {
 				log.Infof("Successfully connected to bootstrap peer: %s", peerString)
 			}

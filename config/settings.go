@@ -18,6 +18,9 @@ type Settings struct {
 	RedisDB                string
 	BootstrapPeers         string
 	RendezvousPoint        string
+	ListenerP2PPort        string
+	ABIFilePath     string
+	OnlyEpoch0      bool
 }
 
 func LoadConfig() {
@@ -31,6 +34,9 @@ func LoadConfig() {
 		RedisDB:                getEnv("REDIS_DB", "0"),
 		BootstrapPeers:         getEnv("BOOTSTRAP_PEERS", ""),
 		RendezvousPoint:        getEnv("RENDEZVOUS_POINT", ""),
+		ListenerP2PPort:        getEnv("LISTENER_P2P_PORT", "0"),
+		ABIFilePath:     getEnv("ABI_FILE_PATH", "abis/PowerloomProtocolState.json"),
+		OnlyEpoch0:      getEnv("ONLY_EPOCH_0", "false") == "true",
 	}
 
 	// Check for any missing required environment variables and log errors

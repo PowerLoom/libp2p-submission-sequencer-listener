@@ -18,10 +18,12 @@ func GossipsubMessageHandler(ctx context.Context, sub *pubsub.Subscription) {
 			log.Errorf("Error getting next message from topic %s: %v", sub.Topic(), err)
 			continue
 		}
+		log.Infof("GossipsubMessageHandler: Received a message from topic %s", sub.Topic())
 
 		
 
 		log.Infof("Received message from %s on topic %s", msg.GetFrom(), sub.Topic())
+		log.Infof("RAW_MESSAGE_DATA: %s", string(msg.Data))
 
 		var actualSubmission pkgs.SnapshotSubmission
 		err = json.Unmarshal(msg.Data, &actualSubmission)

@@ -8,6 +8,8 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/libp2p/go-libp2p/core/host"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	dht "github.com/libp2p/go-libp2p-kad-dht"
+	"github.com/libp2p/go-libp2p/p2p/discovery/routing"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -22,13 +24,8 @@ type GossipsubManager struct {
 }
 
 // NewGossipsubManager creates a new manager for gossip subscriptions.
-func NewGossipsubManager(ctx context.Context, cfg *config.Settings, redisClient *redis.Client) (*GossipsubManager, error) {
-	h, err := NewHost(ctx, cfg.BootstrapPeers)
-	if err != nil {
-		return nil, err
-	}
-
-	ps, err := pubsub.NewGossipSub(ctx, h)
+func NewGossipsubManager(ctx context.Context, cfg *config.Settings, redisClient *redis.Client, h host.Host, kademliaDHT *dht.IpfsDHT) (*GossipsubManager, error) {
+	ps, err := pubsub.NewGossipSub(ctx, h, pubsub.WithDiscovery(routing.NewRoutingDiscovery(kademliaDHT)))
 	if err != nil {
 		return nil, err
 	}
@@ -85,5 +82,5 @@ func (m *GossipsubManager) joinTopic(ctx context.Context, topicName string) {
 	m.topics[topicName] = sub
 	go GossipsubMessageHandler(ctx, sub)
 
-	log.Infof("Successfully joined and subscribed to topic: %s", topicName)
+	log.Infof("Successfully joined and subscribed to topic: %s. Host ID: %s", topicName, m.host.ID())
 }
