@@ -4,6 +4,7 @@ import (
 	"Listen/config"
 	"context"
 	"sync"
+	"time"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/libp2p/go-libp2p/core/host"
@@ -83,4 +84,23 @@ func (m *GossipsubManager) joinTopic(ctx context.Context, topicName string) {
 	go GossipsubMessageHandler(ctx, sub)
 
 	log.Infof("Successfully joined and subscribed to topic: %s. Host ID: %s", topicName, m.host.ID())
+
+	// Start periodic diagnostic logging for the new topic
+	go func() {
+		ticker := time.NewTicker(30 * time.Second)
+		defer ticker.Stop()
+		for {
+			select {
+			case <-ticker.C:
+				peersInTopic := m.pubsub.ListPeers(topicName)
+				log.WithFields(log.Fields{
+					"topic":      topicName,
+					"peer_count": len(peersInTopic),
+					"peers":      peersInTopic,
+				}).Info("DIAGNOSTIC: Periodic check of peers in topic")
+			case <-ctx.Done():
+				return
+			}
+		}
+	}()
 }

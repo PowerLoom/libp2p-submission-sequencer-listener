@@ -1,6 +1,7 @@
 package service
 
 import (
+	"Listen/config"
 	"context"
 	"fmt"
 	"strings"
@@ -10,6 +11,8 @@ import (
 	"github.com/libp2p/go-libp2p/core/host"
 	"github.com/libp2p/go-libp2p/core/peer"
 	dht "github.com/libp2p/go-libp2p-kad-dht"
+	"github.com/libp2p/go-libp2p/p2p/discovery/routing"
+	dutil "github.com/libp2p/go-libp2p/p2p/discovery/util"
 	"github.com/multiformats/go-multiaddr"
 	log "github.com/sirupsen/logrus"
 )
@@ -36,6 +39,12 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 	if bootstrapPeers != "" {
 		ConnectToBootstrapPeers(ctx, h, bootstrapPeers)
 	}
+
+	// Announce our presence using the rendezvous point
+	log.Info("Announcing ourselves...")
+	routingDiscovery := routing.NewRoutingDiscovery(kademliaDHT)
+	dutil.Advertise(ctx, routingDiscovery, config.SettingsObj.RendezvousPoint)
+	log.Info("Successfully announced!")
 
 	log.Infof("Libp2p host created with ID: %s", h.ID())
 	return
