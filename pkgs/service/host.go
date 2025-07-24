@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p/core/host"
@@ -55,10 +56,30 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 	}
 
 	// Announce our presence using the rendezvous point
-	log.Info("Announcing ourselves...")
-	routingDiscovery := routing.NewRoutingDiscovery(kademliaDHT)
-	dutil.Advertise(ctx, routingDiscovery, config.SettingsObj.RendezvousPoint)
-	log.Info("Successfully announced!")
+	go func() {
+		log.Info("Starting rendezvous announcement loop...")
+		routingDiscovery := routing.NewRoutingDiscovery(kademliaDHT)
+		ticker := time.NewTicker(4 * time.Hour) // Re-advertise every 4 hours
+		defer ticker.Stop()
+
+		for {
+			log.Infof("Advertising our presence for rendezvous point: %s", config.SettingsObj.RendezvousPoint)
+			ttl, err := routingDiscovery.Advertise(ctx, config.SettingsObj.RendezvousPoint)
+			if err != nil {
+				log.Errorf("Failed to advertise rendezvous point: %v", err)
+			} else {
+				log.Infof("Successfully advertised! Time to live for advertisement: %s", ttl)
+			}
+
+			select {
+			case <-ticker.C:
+				// Continue to next iteration
+			case <-ctx.Done():
+				log.Info("Stopping rendezvous announcement loop.")
+				return
+			}
+		}
+	}()
 
 	log.Infof("Libp2p host created with ID: %s", h.ID())
 	return
