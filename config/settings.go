@@ -19,6 +19,7 @@ type Settings struct {
 	BootstrapPeers         string
 	RendezvousPoint        string
 	ListenerP2PPort        string
+	PublicIP               string
 	ABIFilePath     string
 	OnlyEpoch0      bool
 }
@@ -34,7 +35,8 @@ func LoadConfig() {
 		RedisDB:                getEnv("REDIS_DB", "0"),
 		BootstrapPeers:         getEnv("BOOTSTRAP_PEERS", ""),
 		RendezvousPoint:        getEnv("RENDEZVOUS_POINT", ""),
-		ListenerP2PPort:        getEnv("LISTENER_P2P_PORT", "0"),
+		ListenerP2PPort:        getEnv("LISTENER_P2P_PORT", "4001"),
+		PublicIP:               getEnv("PUBLIC_IP", ""),
 		ABIFilePath:     getEnv("ABI_FILE_PATH", "abis/PowerloomProtocolState.json"),
 		OnlyEpoch0:      getEnv("ONLY_EPOCH_0", "false") == "true",
 	}

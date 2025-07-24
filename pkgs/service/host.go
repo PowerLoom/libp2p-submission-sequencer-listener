@@ -20,9 +20,23 @@ import (
 // NewHost creates a new libp2p host and connects to bootstrap peers.
 func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h host.Host, kademliaDHT *dht.IpfsDHT, err error) {
 	listenAddr := fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", listenerPort)
-	h, err = libp2p.New(
+
+	opts := []libp2p.Option{
 		libp2p.ListenAddrStrings(listenAddr),
-	)
+	}
+
+	if config.SettingsObj.PublicIP != "" {
+		publicAddr, err := multiaddr.NewMultiaddr(fmt.Sprintf("/ip4/%s/tcp/%s", config.SettingsObj.PublicIP, listenerPort))
+		if err != nil {
+			log.Errorf("Failed to create public multiaddr: %v", err)
+		} else {
+			opts = append(opts, libp2p.AddrsFactory(func(addrs []multiaddr.Multiaddr) []multiaddr.Multiaddr {
+				return append(addrs, publicAddr)
+			}))
+		}
+	}
+
+	h, err = libp2p.New(opts...)
 	if err != nil {
 		return
 	}
