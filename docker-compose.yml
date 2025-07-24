@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     ports:
-      - "4001:4001"
+      - "8001:8001"
     depends_on:
       - redis
 
@@ -15,4 +15,4 @@ services:
     image: redis:latest
     container_name: submission-sequencer-redis
     ports:
-      - "6379:6379"
+      - "6380:6379"
