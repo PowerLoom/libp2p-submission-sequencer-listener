@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	log "github.com/sirupsen/logrus"
+	logging "github.com/ipfs/go-log/v2"
 )
 
 var SettingsObj *Settings
@@ -28,6 +29,29 @@ type Settings struct {
 }
 
 func LoadConfig() {
+	// Set libp2p logging level based on environment variable
+	libp2pLogLevel := os.Getenv("LIBP2P_LOGGING")
+	if libp2pLogLevel != "" {
+		switch libp2pLogLevel {
+		case "debug":
+			logging.SetAllLoggers(logging.LevelDebug)
+		case "info":
+			logging.SetAllLoggers(logging.LevelInfo)
+		case "warn":
+			logging.SetAllLoggers(logging.LevelWarn)
+		case "error":
+			logging.SetAllLoggers(logging.LevelError)
+		case "fatal":
+			logging.SetAllLoggers(logging.LevelFatal)
+		default:
+			log.Warnf("Unknown LIBP2P_LOGGING level: %s. Defaulting to info.", libp2pLogLevel)
+			logging.SetAllLoggers(logging.LevelInfo)
+		}
+	} else {
+		// Default libp2p logging to info if not specified
+		logging.SetAllLoggers(logging.LevelInfo)
+	}
+
 	config := Settings{
 		ClientUrl:              getEnv("PROST_RPC_URL", ""),
 		ContractAddress:        getEnv("PROTOCOL_STATE_CONTRACT", ""),
