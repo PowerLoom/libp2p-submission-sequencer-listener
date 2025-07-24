@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strconv"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -22,6 +23,8 @@ type Settings struct {
 	PublicIP               string
 	ABIFilePath     string
 	OnlyEpoch0      bool
+	AdvertiseRetries int
+	AdvertiseRetryDelaySec int
 }
 
 func LoadConfig() {
@@ -39,6 +42,8 @@ func LoadConfig() {
 		PublicIP:               getEnv("PUBLIC_IP", ""),
 		ABIFilePath:     getEnv("ABI_FILE_PATH", "abis/PowerloomProtocolState.json"),
 		OnlyEpoch0:      getEnv("ONLY_EPOCH_0", "false") == "true",
+		AdvertiseRetries:       getEnvAsInt("ADVERTISE_RETRIES", 5),
+		AdvertiseRetryDelaySec: getEnvAsInt("ADVERTISE_RETRY_DELAY_SEC", 5),
 	}
 
 	// Check for any missing required environment variables and log errors
@@ -70,6 +75,19 @@ func LoadConfig() {
 func getEnv(key, defaultValue string) string {
 	value := os.Getenv(key)
 	if value == "" {
+		return defaultValue
+	}
+	return value
+}
+
+func getEnvAsInt(key string, defaultValue int) int {
+	valueStr := os.Getenv(key)
+	if valueStr == "" {
+		return defaultValue
+	}
+	value, err := strconv.Atoi(valueStr)
+	if err != nil {
+		log.Warnf("Invalid integer value for environment variable %s: %s. Using default value %d", key, valueStr, defaultValue)
 		return defaultValue
 	}
 	return value

@@ -63,11 +63,19 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 
 		for {
 			log.Infof("Advertising our presence for rendezvous point: %s", config.SettingsObj.RendezvousPoint)
-			ttl, err := routingDiscovery.Advertise(ctx, config.SettingsObj.RendezvousPoint)
-			if err != nil {
-				log.Errorf("Failed to advertise rendezvous point: %v", err)
-			} else {
-				log.Infof("Successfully advertised! Time to live for advertisement: %s", ttl)
+			
+			// Retry advertisement until successful or context is done
+			for i := 0; i < config.SettingsObj.AdvertiseRetries; i++ { // Try up to configurable times
+				ttl, err := routingDiscovery.Advertise(ctx, config.SettingsObj.RendezvousPoint)
+				if err == nil {
+					log.Infof("Successfully advertised! Time to live for advertisement: %s", ttl)
+					break // Exit retry loop on success
+				} else {
+					log.Errorf("Failed to advertise rendezvous point (attempt %d/%d): %v", i+1, config.SettingsObj.AdvertiseRetries, err)
+					if i < config.SettingsObj.AdvertiseRetries-1 { // Don't sleep after last attempt
+						time.Sleep(time.Duration(config.SettingsObj.AdvertiseRetryDelaySec) * time.Second) // Wait before retrying
+					}
+				}
 			}
 
 			select {
