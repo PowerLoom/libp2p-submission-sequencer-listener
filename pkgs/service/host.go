@@ -14,15 +14,25 @@ import (
 	dht "github.com/libp2p/go-libp2p-kad-dht"
 	"github.com/libp2p/go-libp2p/p2p/discovery/routing"
 	"github.com/multiformats/go-multiaddr"
+	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
 	log "github.com/sirupsen/logrus"
 )
 
 // NewHost creates a new libp2p host and connects to bootstrap peers.
 func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h host.Host, kademliaDHT *dht.IpfsDHT, err error) {
 	listenAddr := fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", listenerPort)
+	cm, err := connmgr.NewConnManager(
+		100, // Lowwater
+		400, // Highwater
+		connmgr.WithGracePeriod(time.Minute),
+	)
+	if err != nil {
+		return
+	}
 
 	opts := []libp2p.Option{
 		libp2p.ListenAddrStrings(listenAddr),
+		libp2p.ConnectionManager(cm),
 	}
 
 	if config.SettingsObj.PublicIP != "" {
