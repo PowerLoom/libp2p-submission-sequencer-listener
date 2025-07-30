@@ -64,53 +64,42 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 	// Parse bootstrap peers
 	bootstrapAddrInfos, err := parseBootstrapPeers(bootstrapPeers)
 	if err != nil {
-		log.Errorf("Failed to parse bootstrap peers: %v", err)
-		// Continue without bootstrap peers if parsing fails
+		// Log the error but continue, the node might discover peers through other means
+		log.Warnf("Failed to parse bootstrap peers: %v", err)
 	}
 
-	// Create a new Kademlia DHT
+	// Create a new Kademlia DHT in client mode, providing the bootstrap peers.
+	// The DHT will automatically use these peers to bootstrap itself.
 	kademliaDHT, err = dht.New(ctx, h, dht.Mode(dht.ModeClient), dht.BootstrapPeers(bootstrapAddrInfos...))
 	if err != nil {
 		return
 	}
 
-	// Connect to the bootstrap peers
-	if len(bootstrapAddrInfos) > 0 {
-		ConnectToBootstrapPeers(ctx, h, bootstrapAddrInfos)
-		if err = kademliaDHT.Bootstrap(ctx); err != nil {
-			log.Warnf("DHT bootstrap failed: %v", err)
-			// This is not a fatal error, the node can still discover peers over time
+	// It's good practice to trigger a bootstrap process in the background.
+	// This ensures the DHT actively seeks to connect and populate its routing table.
+	go func() {
+		if err := kademliaDHT.Bootstrap(ctx); err != nil {
+			log.Warnf("Initial DHT bootstrap failed: %v", err)
 		}
-	}
-
-	// Add a delay to allow the DHT to populate before we start advertising.
-	// This is a temporary diagnostic step.
-	log.Info("Waiting for 5 seconds for DHT to populate...")
-	time.Sleep(5 * time.Second)
-
+	}()
 
 	// Announce our presence using the rendezvous point
 	go func() {
 		log.Info("Starting rendezvous announcement loop...")
 		routingDiscovery := routing.NewRoutingDiscovery(kademliaDHT)
-		ticker := time.NewTicker(10 * time.Second) // Advertise more frequently for debugging
+		// Give the DHT a moment to connect to bootstrap peers before starting to advertise.
+		time.Sleep(5 * time.Second)
+		ticker := time.NewTicker(15 * time.Second) // Advertise every 15 seconds
 		defer ticker.Stop()
 
 		for {
 			log.Infof("Advertising our presence for rendezvous point: %s", config.SettingsObj.RendezvousPoint)
 
-			// Retry advertisement until successful or context is done
-			for i := 0; i < config.SettingsObj.AdvertiseRetries; i++ { // Try up to configurable times
-				ttl, err := routingDiscovery.Advertise(ctx, config.SettingsObj.RendezvousPoint)
-				if err == nil {
-					log.Infof("Successfully advertised! Time to live for advertisement: %s", ttl)
-					break // Exit retry loop on success
-				} else {
-					log.Errorf("Failed to advertise rendezvous point (attempt %d/%d): %v", i+1, config.SettingsObj.AdvertiseRetries, err)
-					if i < config.SettingsObj.AdvertiseRetries-1 { // Don't sleep after last attempt
-						time.Sleep(time.Duration(config.SettingsObj.AdvertiseRetryDelaySec) * time.Second) // Wait before retrying
-					}
-				}
+			ttl, err := routingDiscovery.Advertise(ctx, config.SettingsObj.RendezvousPoint)
+			if err != nil {
+				log.Errorf("Failed to advertise rendezvous point: %v", err)
+			} else {
+				log.Infof("Successfully advertised! Time to live for advertisement: %s", ttl)
 			}
 
 			select {
@@ -149,6 +138,7 @@ func parseBootstrapPeers(peers string) ([]peer.AddrInfo, error) {
 }
 
 // ConnectToBootstrapPeers connects the host to a list of bootstrap peers.
+// This function is kept for potential future debugging but is not actively used in the NewHost flow.
 func ConnectToBootstrapPeers(ctx context.Context, h host.Host, addrInfos []peer.AddrInfo) {
 	var wg sync.WaitGroup
 	for _, pi := range addrInfos {
