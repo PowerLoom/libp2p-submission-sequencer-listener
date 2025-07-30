@@ -5,44 +5,61 @@ import (
 	"context"
 	"fmt"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p/core/host"
 	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/libp2p/go-libp2p/core/routing"
 	dht "github.com/libp2p/go-libp2p-kad-dht"
-	"github.com/libp2p/go-libp2p/p2p/discovery/routing"
-	"github.com/multiformats/go-multiaddr"
+	"github.com/libp2p/go-libp2p/p2p/discovery/util"
+	routing_discovery "github.com/libp2p/go-libp2p/p2p/discovery/routing"
 	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
 	rcmgr "github.com/libp2p/go-libp2p/p2p/host/resource-manager"
+	"github.com/multiformats/go-multiaddr"
 	log "github.com/sirupsen/logrus"
 )
 
 // NewHost creates a new libp2p host and connects to bootstrap peers.
 func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h host.Host, kademliaDHT *dht.IpfsDHT, err error) {
 	listenAddr := fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", listenerPort)
-	
-	// Create a new resource manager with scaled limits.
+
+	// 1. Create a new resource manager with scaled limits.
 	limiter := rcmgr.NewFixedLimiter(rcmgr.DefaultLimits.AutoScale())
 	rscMgr, err := rcmgr.NewResourceManager(limiter)
 	if err != nil {
-		return
+		return nil, nil, fmt.Errorf("failed to create resource manager: %w", err)
 	}
 
+	// 2. Create the connection manager
 	cm, err := connmgr.NewConnManager(
 		100, // Lowwater
 		400, // Highwater
 		connmgr.WithGracePeriod(time.Minute),
 	)
 	if err != nil {
-		return
+		return nil, nil, fmt.Errorf("failed to create connection manager: %w", err)
 	}
 
+	// 3. Parse bootstrap peers
+	bootstrapAddrInfos, err := parseBootstrapPeers(bootstrapPeers)
+	if err != nil {
+		log.Warnf("Failed to parse bootstrap peers: %v", err)
+	}
+
+	var kadDHT *dht.IpfsDHT
+	// 4. Build the libp2p host
 	opts := []libp2p.Option{
 		libp2p.ListenAddrStrings(listenAddr),
 		libp2p.ConnectionManager(cm),
 		libp2p.ResourceManager(rscMgr),
+		libp2p.Routing(func(h host.Host) (routing.PeerRouting, error) {
+			var err error
+			kadDHT, err = dht.New(ctx, h, dht.Mode(dht.ModeClient), dht.BootstrapPeers(bootstrapAddrInfos...))
+			return kadDHT, err
+		}),
+		libp2p.EnableRelay(),
+		libp2p.EnableHolePunching(),
 	}
 
 	if config.SettingsObj.PublicIP != "" {
@@ -58,65 +75,30 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 
 	h, err = libp2p.New(opts...)
 	if err != nil {
-		return
+		return nil, nil, fmt.Errorf("failed to create libp2p host: %w", err)
 	}
 
-	// Parse bootstrap peers
-	bootstrapAddrInfos, err := parseBootstrapPeers(bootstrapPeers)
-	if err != nil {
-		// Log the error but continue, the node might discover peers through other means
-		log.Warnf("Failed to parse bootstrap peers: %v", err)
-	}
-
-	// Create a new Kademlia DHT in client mode, providing the bootstrap peers.
-	// The DHT will automatically use these peers to bootstrap itself.
-	kademliaDHT, err = dht.New(ctx, h, dht.Mode(dht.ModeClient), dht.BootstrapPeers(bootstrapAddrInfos...))
-	if err != nil {
-		return
-	}
-
-	// It's good practice to trigger a bootstrap process in the background.
-	// This ensures the DHT actively seeks to connect and populate its routing table.
+	// 5. Bootstrap the DHT in the background
 	go func() {
-		if err := kademliaDHT.Bootstrap(ctx); err != nil {
-			log.Warnf("Initial DHT bootstrap failed: %v", err)
+		log.Info("Starting DHT bootstrap process...")
+		if err := kadDHT.Bootstrap(ctx); err != nil {
+			log.Errorf("DHT bootstrap failed: %v", err)
+		} else {
+			log.Info("DHT bootstrap completed.")
 		}
 	}()
 
-	// Announce our presence using the rendezvous point
+	// 6. Announce our presence
 	go func() {
 		log.Info("Starting rendezvous announcement loop...")
-		routingDiscovery := routing.NewRoutingDiscovery(kademliaDHT)
-		// Give the DHT a moment to connect to bootstrap peers before starting to advertise.
-		time.Sleep(5 * time.Second)
-		ticker := time.NewTicker(15 * time.Second) // Advertise every 15 seconds
-		defer ticker.Stop()
-
-		for {
-			log.Infof("Advertising our presence for rendezvous point: %s", config.SettingsObj.RendezvousPoint)
-
-			ttl, err := routingDiscovery.Advertise(ctx, config.SettingsObj.RendezvousPoint)
-			if err != nil {
-				log.Errorf("Failed to advertise rendezvous point: %v", err)
-			} else {
-				log.Infof("Successfully advertised! Time to live for advertisement: %s", ttl)
-			}
-
-			select {
-			case <-ticker.C:
-				// Continue to next iteration
-			case <-ctx.Done():
-				log.Info("Stopping rendezvous announcement loop.")
-				return
-			}
-		}
+		routingDiscovery := routing_discovery.NewRoutingDiscovery(kadDHT)
+		util.Advertise(ctx, routingDiscovery, config.SettingsObj.RendezvousPoint)
 	}()
 
 	log.Infof("Libp2p host created with ID: %s", h.ID())
-	return
+	return h, kadDHT, nil
 }
 
-// parseBootstrapPeers converts a comma-separated string of multiaddresses into a slice of AddrInfo.
 func parseBootstrapPeers(peers string) ([]peer.AddrInfo, error) {
 	if peers == "" {
 		return nil, nil
@@ -137,30 +119,11 @@ func parseBootstrapPeers(peers string) ([]peer.AddrInfo, error) {
 	return addrInfos, nil
 }
 
-// ConnectToBootstrapPeers connects the host to a list of bootstrap peers.
-// This function is kept for potential future debugging but is not actively used in the NewHost flow.
-func ConnectToBootstrapPeers(ctx context.Context, h host.Host, addrInfos []peer.AddrInfo) {
-	var wg sync.WaitGroup
-	for _, pi := range addrInfos {
-		wg.Add(1)
-		go func(peerInfo peer.AddrInfo) {
-			defer wg.Done()
-			if err := h.Connect(ctx, peerInfo); err != nil {
-				log.Errorf("Failed to connect to bootstrap peer %s: %v", peerInfo.ID, err)
-			} else {
-				log.Infof("Successfully connected to bootstrap peer: %s", peerInfo.ID)
-			}
-		}(pi)
-	}
-	wg.Wait()
-}
-
-
-// DiscoverPeers finds peers for a given rendezvous point.
+// This function is not actively used but kept for potential debugging.
 func DiscoverPeers(ctx context.Context, h host.Host, dht *dht.IpfsDHT, rendezvousPoint string) {
 	log.Infof("Discovering peers for rendezvous point: %s", rendezvousPoint)
 
-	routingDiscovery := routing.NewRoutingDiscovery(dht)
+	routingDiscovery := routing_discovery.NewRoutingDiscovery(dht)
 	peerChan, err := routingDiscovery.FindPeers(ctx, rendezvousPoint)
 	if err != nil {
 		log.Errorf("Failed to find peers: %v", err)
@@ -179,3 +142,4 @@ func DiscoverPeers(ctx context.Context, h host.Host, dht *dht.IpfsDHT, rendezvou
 		}
 	}
 }
+
