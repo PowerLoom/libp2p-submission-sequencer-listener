@@ -15,12 +15,21 @@ import (
 	"github.com/libp2p/go-libp2p/p2p/discovery/routing"
 	"github.com/multiformats/go-multiaddr"
 	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
+	rcmgr "github.com/libp2p/go-libp2p/p2p/host/resource-manager"
 	log "github.com/sirupsen/logrus"
 )
 
 // NewHost creates a new libp2p host and connects to bootstrap peers.
 func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h host.Host, kademliaDHT *dht.IpfsDHT, err error) {
 	listenAddr := fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", listenerPort)
+	
+	// Create a new resource manager with scaled limits.
+	limiter := rcmgr.NewFixedLimiter(rcmgr.DefaultLimits.AutoScale())
+	rscMgr, err := rcmgr.NewResourceManager(limiter)
+	if err != nil {
+		return
+	}
+
 	cm, err := connmgr.NewConnManager(
 		100, // Lowwater
 		400, // Highwater
@@ -33,6 +42,7 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 	opts := []libp2p.Option{
 		libp2p.ListenAddrStrings(listenAddr),
 		libp2p.ConnectionManager(cm),
+		libp2p.ResourceManager(rscMgr),
 	}
 
 	if config.SettingsObj.PublicIP != "" {
@@ -130,4 +140,29 @@ func ConnectToBootstrapPeers(ctx context.Context, h host.Host, peers string) {
 		}(peerString)
 	}
 	wg.Wait()
+}
+
+
+// DiscoverPeers finds peers for a given rendezvous point.
+func DiscoverPeers(ctx context.Context, h host.Host, dht *dht.IpfsDHT, rendezvousPoint string) {
+	log.Infof("Discovering peers for rendezvous point: %s", rendezvousPoint)
+
+	routingDiscovery := routing.NewRoutingDiscovery(dht)
+	peerChan, err := routingDiscovery.FindPeers(ctx, rendezvousPoint)
+	if err != nil {
+		log.Errorf("Failed to find peers: %v", err)
+		return
+	}
+
+	for p := range peerChan {
+		if p.ID == h.ID() {
+			continue
+		}
+		log.Infof("Found peer: %s", p.ID.String())
+		if err := h.Connect(ctx, p); err != nil {
+			log.Warnf("Failed to connect to peer %s: %s", p.ID.String(), err)
+		} else {
+			log.Infof("Connected to peer: %s", p.ID.String())
+		}
+	}
 }
