@@ -51,17 +51,16 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 		return
 	}
 
-	kademliaDHT, err = dht.New(ctx, h)
+	kademliaDHT, err = dht.New(ctx, h, dht.Mode(dht.ModeClient), dht.BootstrapPeersFunc(func() []peer.AddrInfo { return []peer.AddrInfo{} }))
 	if err != nil {
-		return
-	}
-
-	if err = kademliaDHT.Bootstrap(ctx); err != nil {
 		return
 	}
 
 	if bootstrapPeers != "" {
 		ConnectToBootstrapPeers(ctx, h, bootstrapPeers)
+		if err = kademliaDHT.Bootstrap(ctx); err != nil {
+			return
+		}
 	}
 
 	// Announce our presence using the rendezvous point
