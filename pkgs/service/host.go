@@ -61,28 +61,44 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 		return
 	}
 
-	kademliaDHT, err = dht.New(ctx, h, dht.Mode(dht.ModeClient), dht.BootstrapPeersFunc(func() []peer.AddrInfo { return []peer.AddrInfo{} }))
+	// Parse bootstrap peers
+	bootstrapAddrInfos, err := parseBootstrapPeers(bootstrapPeers)
+	if err != nil {
+		log.Errorf("Failed to parse bootstrap peers: %v", err)
+		// Continue without bootstrap peers if parsing fails
+	}
+
+	// Create a new Kademlia DHT
+	kademliaDHT, err = dht.New(ctx, h, dht.Mode(dht.ModeClient), dht.BootstrapPeers(bootstrapAddrInfos...))
 	if err != nil {
 		return
 	}
 
-	if bootstrapPeers != "" {
-		ConnectToBootstrapPeers(ctx, h, bootstrapPeers)
+	// Connect to the bootstrap peers
+	if len(bootstrapAddrInfos) > 0 {
+		ConnectToBootstrapPeers(ctx, h, bootstrapAddrInfos)
 		if err = kademliaDHT.Bootstrap(ctx); err != nil {
-			return
+			log.Warnf("DHT bootstrap failed: %v", err)
+			// This is not a fatal error, the node can still discover peers over time
 		}
 	}
+
+	// Add a delay to allow the DHT to populate before we start advertising.
+	// This is a temporary diagnostic step.
+	log.Info("Waiting for 5 seconds for DHT to populate...")
+	time.Sleep(5 * time.Second)
+
 
 	// Announce our presence using the rendezvous point
 	go func() {
 		log.Info("Starting rendezvous announcement loop...")
 		routingDiscovery := routing.NewRoutingDiscovery(kademliaDHT)
-		ticker := time.NewTicker(4 * time.Hour) // Re-advertise every 4 hours
+		ticker := time.NewTicker(10 * time.Second) // Advertise more frequently for debugging
 		defer ticker.Stop()
 
 		for {
 			log.Infof("Advertising our presence for rendezvous point: %s", config.SettingsObj.RendezvousPoint)
-			
+
 			// Retry advertisement until successful or context is done
 			for i := 0; i < config.SettingsObj.AdvertiseRetries; i++ { // Try up to configurable times
 				ttl, err := routingDiscovery.Advertise(ctx, config.SettingsObj.RendezvousPoint)
@@ -111,33 +127,40 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 	return
 }
 
-// ConnectToBootstrapPeers connects the host to a list of bootstrap peers.
-func ConnectToBootstrapPeers(ctx context.Context, h host.Host, peers string) {
+// parseBootstrapPeers converts a comma-separated string of multiaddresses into a slice of AddrInfo.
+func parseBootstrapPeers(peers string) ([]peer.AddrInfo, error) {
+	if peers == "" {
+		return nil, nil
+	}
 	peerStrings := strings.Split(peers, ",")
-	var wg sync.WaitGroup
+	addrInfos := make([]peer.AddrInfo, 0, len(peerStrings))
 	for _, peerString := range peerStrings {
-		if peerString == "" {
-			continue
+		addr, err := multiaddr.NewMultiaddr(peerString)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse multiaddr '%s': %w", peerString, err)
 		}
+		peerInfo, err := peer.AddrInfoFromP2pAddr(addr)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get peer info from multiaddr '%s': %w", peerString, err)
+		}
+		addrInfos = append(addrInfos, *peerInfo)
+	}
+	return addrInfos, nil
+}
+
+// ConnectToBootstrapPeers connects the host to a list of bootstrap peers.
+func ConnectToBootstrapPeers(ctx context.Context, h host.Host, addrInfos []peer.AddrInfo) {
+	var wg sync.WaitGroup
+	for _, pi := range addrInfos {
 		wg.Add(1)
-		go func(peerString string) {
+		go func(peerInfo peer.AddrInfo) {
 			defer wg.Done()
-			addr, err := multiaddr.NewMultiaddr(peerString)
-			if err != nil {
-				log.Errorf("Failed to parse multiaddr: %v", err)
-				return
-			}
-			peerInfo, err := peer.AddrInfoFromP2pAddr(addr)
-			if err != nil {
-				log.Errorf("Failed to get peer info from multiaddr: %v", err)
-				return
-			}
-			if err := h.Connect(ctx, *peerInfo); err != nil {
-				log.Errorf("Failed to connect to bootstrap peer %s: %v", peerString, err)
+			if err := h.Connect(ctx, peerInfo); err != nil {
+				log.Errorf("Failed to connect to bootstrap peer %s: %v", peerInfo.ID, err)
 			} else {
-				log.Infof("Successfully connected to bootstrap peer: %s", peerString)
+				log.Infof("Successfully connected to bootstrap peer: %s", peerInfo.ID)
 			}
-		}(peerString)
+		}(pi)
 	}
 	wg.Wait()
 }
