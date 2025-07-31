@@ -42,7 +42,7 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 	}
 	limits := cfg.Build(scaledDefaultLimits)
 	limiter := rcmgr.NewFixedLimiter(limits)
-	rscMgr, err := rcmgr.NewResourceManager(limiter, rcmgr.WithMetricsDisabled())
+		rscMgr, err := rcmgr.NewResourceManager(limiter, rcmgr.WithMetricsDisabled())
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to create resource manager: %w", err)
 	}
@@ -67,8 +67,8 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 	// 4. Build the libp2p host
 	opts := []libp2p.Option{
 		libp2p.ListenAddrStrings(listenAddr),
-		libp2p.ConnectionManager(cm),
 		libp2p.ResourceManager(rscMgr),
+		libp2p.ConnectionManager(cm),
 		libp2p.Routing(func(h host.Host) (routing.PeerRouting, error) {
 			var err error
 			kadDHT, err = dht.New(ctx, h, dht.Mode(dht.ModeClient), dht.BootstrapPeers(bootstrapAddrInfos...))
