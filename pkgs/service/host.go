@@ -17,6 +17,8 @@ import (
 	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
 	rcmgr "github.com/libp2p/go-libp2p/p2p/host/resource-manager"
 	"github.com/multiformats/go-multiaddr"
+	"github.com/libp2p/go-libp2p/p2p/security/noise"
+	libp2ptls "github.com/libp2p/go-libp2p/p2p/security/tls"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -83,6 +85,8 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 		}),
 		libp2p.EnableRelay(),
 		libp2p.EnableHolePunching(),
+		libp2p.Security(noise.ID, noise.New),
+		libp2p.Security(libp2ptls.ID, libp2ptls.New),
 	}
 
 	if config.SettingsObj.PublicIP != "" {
