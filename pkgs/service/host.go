@@ -28,25 +28,20 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 	scalingLimits := rcmgr.DefaultLimits
 	libp2p.SetDefaultServiceLimits(&scalingLimits)
 
+		limits := rcmgr.ResourceLimits{
+		StreamsOutbound: rcmgr.Unlimited,
+		StreamsInbound:  rcmgr.Unlimited,
+		Streams:         rcmgr.Unlimited,
+		Conns:           rcmgr.Unlimited,
+		ConnsOutbound:   rcmgr.Unlimited,
+		ConnsInbound:    rcmgr.Unlimited,
+		FD:              rcmgr.Unlimited,
+		Memory:          rcmgr.LimitVal64(rcmgr.Unlimited),
+	}
+
 	cfg := rcmgr.PartialLimitConfig{
-		System: rcmgr.ResourceLimits{
-			Conns:         rcmgr.Unlimited,
-			ConnsInbound:  rcmgr.Unlimited,
-			ConnsOutbound: rcmgr.Unlimited,
-			Streams:       rcmgr.Unlimited,
-			StreamsInbound: rcmgr.Unlimited,
-			StreamsOutbound: rcmgr.Unlimited,
-			FD:            rcmgr.Unlimited,
-			Memory:        rcmgr.LimitVal64(rcmgr.Unlimited),
-		},
-		Transient: rcmgr.ResourceLimits{
-			Conns:         rcmgr.Unlimited,
-			ConnsInbound:  rcmgr.Unlimited,
-			ConnsOutbound: rcmgr.Unlimited,
-			Streams:       rcmgr.Unlimited,
-			StreamsInbound: rcmgr.Unlimited,
-			StreamsOutbound: rcmgr.Unlimited,
-		},
+		System:    limits,
+		Transient: limits,
 	}
 
 	limiter := rcmgr.NewFixedLimiter(cfg.Build(scalingLimits.AutoScale()))
