@@ -26,6 +26,8 @@ type Settings struct {
 	OnlyEpoch0      bool
 	AdvertiseRetries int
 	AdvertiseRetryDelaySec int
+	ConnManagerLowWater    int
+	ConnManagerHighWater   int
 }
 
 func LoadConfig() {
@@ -68,6 +70,8 @@ func LoadConfig() {
 		OnlyEpoch0:      getEnv("ONLY_EPOCH_0", "false") == "true",
 		AdvertiseRetries:       getEnvAsInt("ADVERTISE_RETRIES", 5),
 		AdvertiseRetryDelaySec: getEnvAsInt("ADVERTISE_RETRY_DELAY_SEC", 5),
+		ConnManagerLowWater:    getEnvAsInt("CONN_MANAGER_LOW_WATER", 10000),
+		ConnManagerHighWater:   getEnvAsInt("CONN_MANAGER_HIGH_WATER", 40000),
 	}
 
 	// Check for any missing required environment variables and log errors

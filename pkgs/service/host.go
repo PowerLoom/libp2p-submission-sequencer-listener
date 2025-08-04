@@ -59,8 +59,8 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 
 	// 2. Create the connection manager
 	cm, err := connmgr.NewConnManager(
-		100, // Lowwater
-		400, // Highwater
+		config.SettingsObj.ConnManagerLowWater,  // Lowwater
+		config.SettingsObj.ConnManagerHighWater, // Highwater
 		connmgr.WithGracePeriod(time.Minute),
 	)
 	if err != nil {
@@ -107,13 +107,29 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 		return nil, nil, fmt.Errorf("failed to create libp2p host: %w", err)
 	}
 
-	// 5. Bootstrap the DHT in the background
+	// 5. Bootstrap the DHT in the background with retries
 	go func() {
-		log.Info("Starting DHT bootstrap process...")
+		log.Info("Starting DHT bootstrap process with retries...")
+		// Give the host a moment to fully initialize before the first bootstrap attempt
+		time.Sleep(2 * time.Second)
+
+		maxRetries := 5
+		retryDelay := 5 * time.Second
+
+		for i := 0; i < maxRetries; i++ {
+			err := kadDHT.Bootstrap(ctx)
+			if err == nil {
+				log.Info("DHT bootstrap completed.")
+				break
+			}
+
+			log.Errorf("DHT bootstrap failed (attempt %d/%d): %v. Retrying in %v...", i+1, maxRetries, err, retryDelay)
+			time.Sleep(retryDelay)
+			retryDelay *= 2 // Exponential backoff
+		}
+
 		if err := kadDHT.Bootstrap(ctx); err != nil {
-			log.Errorf("DHT bootstrap failed: %v", err)
-		} else {
-			log.Info("DHT bootstrap completed.")
+			log.Errorf("DHT bootstrap failed after %d attempts: %v", maxRetries, err)
 		}
 	}()
 
