@@ -8,18 +8,19 @@ import (
 	"time"
 
 	"github.com/libp2p/go-libp2p"
+	dht "github.com/libp2p/go-libp2p-kad-dht"
 	"github.com/libp2p/go-libp2p/core/host"
+	"github.com/libp2p/go-libp2p/core/network"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/libp2p/go-libp2p/core/routing"
-	dht "github.com/libp2p/go-libp2p-kad-dht"
-	"github.com/libp2p/go-libp2p/p2p/discovery/util"
 	routing_discovery "github.com/libp2p/go-libp2p/p2p/discovery/routing"
-	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
+	"github.com/libp2p/go-libp2p/p2p/discovery/util"
 	rcmgr "github.com/libp2p/go-libp2p/p2p/host/resource-manager"
-	"github.com/multiformats/go-multiaddr"
+	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
 	"github.com/libp2p/go-libp2p/p2p/security/noise"
 	libp2ptls "github.com/libp2p/go-libp2p/p2p/security/tls"
 	"github.com/libp2p/go-libp2p/p2p/transport/tcp"
+	"github.com/multiformats/go-multiaddr"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -120,6 +121,7 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 			err := kadDHT.Bootstrap(ctx)
 			if err == nil {
 				log.Info("DHT bootstrap completed.")
+				log.Infof("Listener DHT routing table size: %d", kadDHT.RoutingTable().Size()) // ADDED
 				break
 			}
 
@@ -140,7 +142,17 @@ func NewHost(ctx context.Context, bootstrapPeers string, listenerPort string) (h
 		util.Advertise(ctx, routingDiscovery, config.SettingsObj.RendezvousPoint)
 	}()
 
-	log.Infof("Libp2p host created with ID: %s", h.ID())
+	log.Infof("Libp2p host created with ID: %s, listening on: %v", h.ID(), h.Addrs())
+
+	h.Network().Notify(&network.NotifyBundle{
+		ConnectedF: func(_ network.Network, conn network.Conn) {
+			log.Infof("Listener Peer connected: %s, Addr: %s", conn.RemotePeer(), conn.RemoteMultiaddr())
+		},
+		DisconnectedF: func(_ network.Network, conn network.Conn) {
+			log.Infof("Listener Peer disconnected: %s, Addr: %s", conn.RemotePeer(), conn.RemoteMultiaddr())
+		},
+	})
+
 	return h, kadDHT, nil
 }
 
@@ -187,4 +199,3 @@ func DiscoverPeers(ctx context.Context, h host.Host, dht *dht.IpfsDHT, rendezvou
 		}
 	}
 }
-
