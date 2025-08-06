@@ -10,6 +10,13 @@ services:
       - "8001:8001"
     depends_on:
       - redis
+    volumes:
+      # Persist logs on the host VPS
+      - ./logs:/app/logs
+      - ./logs/archive:/app/logs/archive
+    environment:
+      - LOG_FILE=/app/logs/listener.log
+      - LOG_LEVEL=${LOG_LEVEL:-info}
 
   redis:
     image: redis:latest
