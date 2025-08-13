@@ -15,6 +15,7 @@ require (
 	github.com/multiformats/go-multiaddr v0.16.0
 	github.com/sirupsen/logrus v1.9.3
 	google.golang.org/protobuf v1.36.6
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
 
 require (
